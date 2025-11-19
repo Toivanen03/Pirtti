@@ -85,7 +85,7 @@ function App() {
   }, [lastScrollY])
 
   return (
-    <Router>
+    <Router basename='pirtti'>
       <AuthProvider>
         {!loaded && <div className="loader-overlay"><Loader /></div>}
         <div className="app-wrapper">

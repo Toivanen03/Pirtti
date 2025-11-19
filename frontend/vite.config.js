@@ -10,6 +10,7 @@ export default defineConfig({
       },
     }),
   ],
+  base: '/pirtti/',
   css: {
     preprocessorOptions: {
       scss: {
