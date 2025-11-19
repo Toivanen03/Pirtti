@@ -10,7 +10,9 @@ import jwt from 'jsonwebtoken'
 import User from './models/User.js'
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs'
 
-dotenv.config({ path: '.env.development' })
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({ path: '.env.development' })
+}
 
 const app = express()
 const server = new ApolloServer({ typeDefs, resolvers })
