@@ -11,7 +11,7 @@ const FbPlugin = ({ width }) => {
       key={width}
       className="fb-page mt-4 me-3 p-0"
       data-href="https://www.facebook.com/paivakotiyhdistyspirttiry"
-      data-tabs="timeline"
+      data-show-posts="true"
       data-height={window.innerHeight + 100}
       data-width={(width / 6).toFixed(0)}
     >
