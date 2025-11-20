@@ -14,6 +14,9 @@ const ConfirmModal = ({ title, setConfirmTitle, onConfirm, showCancel = false, c
 
   if (title && typeof title === 'string' && title.toLowerCase().startsWith('virhe: ')) {
     title = title.replace('Virhe:', '')
+    if (title.toLowerCase().includes('error:')) {
+      title = title.replace(/error:/i, '')
+    }
     const lines = title.split('\n')
     message = (
       <div className="text-danger fw-bold">

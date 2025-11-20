@@ -12,18 +12,27 @@ const UsersForm = ({ setConfirmTitle, setOnConfirm, setFormType, setUser, portra
 
     const handleDelete = (user) => {
         setConfirmTitle(`Vahvista: Haluatko varmasti poistaa käyttäjän ${user.email}?`)
-        setOnConfirm(() => () => {
+        setOnConfirm(() => async () => {
             try {
-                deleteUser({
-                    variables: {
-                        id: user.id
-                    },
-                    refetchQueries: ['getUsers']
+                const response = await deleteUser({
+                    variables: { id: user.id },
+                    refetchQueries: ['getUsers'],
+                    awaitRefetchQueries: true
                 })
+
+                if (response.error.errors?.length > 0) {
+                    throw new Error(response.error.errors.map(e => e.message).join('; '))
+                }
+
+                if (!response.data?.deleteUser) {
+                    throw new Error('Poisto epäonnistui: palvelin ei palauttanut poistettua käyttäjää.')
+                }
+
                 setUser(null)
-                setConfirmTitle("Käyttäjä poistettu.")
-            } catch (error) {
-                setConfirmTitle(`Virhe: ${error}`)
+                setConfirmTitle('Käyttäjä poistettu.')
+            } catch (err) {
+                const msg = err?.message || String(err)
+                setConfirmTitle(`Virhe: ${msg}`)
             }
         })
     }

@@ -68,6 +68,10 @@ const NewUserForm = ({ setConfirmTitle, setFormType, portrait }) => {
                 refetchQueries: [{ query: USERS }]
             })
 
+            if (response.error.errors?.length > 0) {
+                throw new Error(response.error.errors.map(e => e.message).join('; '))
+            }
+
             if (response.error) {
                 if (response.error.message.includes(11000)) {
                     setConfirmTitle("Virhe: Käyttäjätunnus on jo olemassa")

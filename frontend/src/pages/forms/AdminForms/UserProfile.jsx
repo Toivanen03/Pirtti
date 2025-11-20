@@ -82,6 +82,10 @@ const UserProfile = ({ setConfirmTitle, setFormType, user, portrait }) => {
                 }
             })
 
+            if (response.error.errors?.length > 0) {
+                throw new Error(response.error.errors.map(e => e.message).join('; '))
+            }
+
             if (response.error) {
                 setConfirmTitle('Virhe:' + response.error.message)
             } else if (response.data) {

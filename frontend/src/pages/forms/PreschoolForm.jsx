@@ -66,24 +66,26 @@ const PreSchoolForm = ({ setShowFormArea, formType, setFormType, setConfirmTitle
     }
 
     const handleSubmit = async () => {
-        const response = await createForm({
-            variables: {
-                formType,
-                input: formData
-            }
-        })
+        try {
+            const response = await createForm({
+                variables: {
+                    formType,
+                    input: formData
+                }
+            })
 
-        if (response.error) {
-            setConfirmTitle('Virhe:' + response.error.message)
-        }
-        
-        if (response.data) {
-            setConfirmTitle("Lomake lähetetty.")
-            setFormData(preSchoolFormValues)
-            setFormType(null)
-            setAllFilled(false)
-            setShowFormArea(false)
-        }
+            if (response.error.errors?.length > 0) {
+                throw new Error(response.error.errors.map(e => e.message).join('; '))
+            }
+            
+            if (response.data) {
+                setConfirmTitle("Lomake lähetetty.")
+                setFormData(preSchoolFormValues)
+                setFormType(null)
+                setAllFilled(false)
+                setShowFormArea(false)
+            }
+        } catch (err) { setConfirmTitle(`Virhe: ${err}`) }
     }
 
     return (

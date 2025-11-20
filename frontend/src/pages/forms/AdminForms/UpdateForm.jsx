@@ -117,6 +117,10 @@ const UpdateForm = ({ setConfirmTitle, setFormType, portrait }) => {
                 refetchQueries: [{ query: GET_CONTACTS }]
             })
 
+            if (response.error.errors?.length > 0) {
+                throw new Error(response.error.errors.map(e => e.message).join('; '))
+            }
+
             if (response.error) {
                 setConfirmTitle('Virhe:' + response.error.message)
             } else if (response.data) {
@@ -152,6 +156,10 @@ const UpdateForm = ({ setConfirmTitle, setFormType, portrait }) => {
                 },
                 refetchQueries: [{ query: GET_TOPICS }]
             })
+
+            if (response.error.errors?.length > 0) {
+                throw new Error(response.error.errors.map(e => e.message).join('; '))
+            }
 
             if (response.error) {
                 setConfirmTitle('Virhe:' + response.error.message)
