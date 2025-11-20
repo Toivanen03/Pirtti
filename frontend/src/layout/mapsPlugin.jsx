@@ -2,7 +2,7 @@ const MapsPlugin = ({ mobile }) => {
     return (
         <div>
             <iframe
-                className={mobile ? "maps" : "maps mt-5"}
+                className="maps mt-5"
                 width={mobile ? "320" : "576"}
                 height={mobile ? "320" : "576"}
                 id="gmap_canvas"

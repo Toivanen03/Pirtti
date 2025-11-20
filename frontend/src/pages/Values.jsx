@@ -66,42 +66,42 @@ const Values = ({ mobile, portrait }) => {
                     </div>
                 </div>
                 ) : (
-                    <div className="container-fluid px-0 mx-auto d-flex align-items-center justify-content-center content-text" style={{ width: '100vw' }}>
+                    <div className="container-fluid px-0 mx-auto content-text" style={{ width: '100vw' }}>
                         <div className="container">
-                        <h3 className="mt-4 text-center">Päiväkotimme toiminnan arvot ja toimintaperiaatteet</h3>
-                            <div className="row align-items-center justify-content-center">
-                                <div className="d-flex align-items-center justify-content-center ms-4">
+                            <h3 className="mt-4 mb-4 text-center">Päiväkotimme toiminnan arvot ja toimintaperiaatteet</h3>
+                            <div className="row align-items-center justify-content-center text-center">
+                                <div className="col-12 d-flex justify-content-center mb-3">
                                     <ImageCarousel home={false} />
                                 </div>
 
-                                <ul className="text-start ms-5 me-2">
-                                    <li><strong>Turvallisuus</strong> - lapsilla on fyysisesti ja psyykkisesti turvallinen kasvuympäristö</li>
-                                    <li><strong>Avoimuus ja rehellisyys</strong> - avoin ja rehellinen yhteistyö perheiden kanssa</li>
-                                    <li><strong>Luottamus</strong> - luottamuksellinen ilmapiiri lasten ja vanhempien kanssa</li>
-                                    <li><strong>Kunnioittaminen</strong> - lasten ja perheiden yksilöllisyyden kunnioittaminen</li>
-                                    <li><strong>Tasapuolisuus</strong> - lasten ja perheiden kohteleminen tasapuolisesti</li>
-                                </ul>
-                            <div>
-                        </div>
-                    </div>
+                                <div className="col-12 col-md-8 text-start mx-auto">
+                                    <ul className="ms-md-5 me-md-2">
+                                        <li><strong>Turvallisuus</strong> - lapsilla on fyysisesti ja psyykkisesti turvallinen kasvuympäristö</li>
+                                        <li><strong>Avoimuus ja rehellisyys</strong> - avoin ja rehellinen yhteistyö perheiden kanssa</li>
+                                        <li><strong>Luottamus</strong> - luottamuksellinen ilmapiiri lasten ja vanhempien kanssa</li>
+                                        <li><strong>Kunnioittaminen</strong> - lasten ja perheiden yksilöllisyyden kunnioittaminen</li>
+                                        <li><strong>Tasapuolisuus</strong> - lasten ja perheiden kohteleminen tasapuolisesti</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                    <div className="container d-flex flex-column justify-content-center align-items-center">
-                        <img
-                            src={Omenat}
-                            alt="Lapsia omenat käsissään"
-                            className="quotes-image mt-5 mb-5"
-                        />
+                        <div className="container d-flex flex-column justify-content-center align-items-center">
+                            <img
+                                src={Omenat}
+                                alt="Lapsia omenat käsissään"
+                                className="quotes-image mt-5 mb-5"
+                            />
 
-                        <div className="row align-items-center justify-content-center mb-5">
-                            <p className="content-text text-center">
-                                Toiminnassamme painotamme pienryhmätoimintaa, lapsikeskeisyyttä, turvallisuutta ja ympäristö-/luontokasvatusta. 
-                                Meiltä saat lapsellesi kodinomaisen ympäristön, jossa laadukasta varhaiskasvatusta toteuttaa kokenut ja työhönsä 
-                                sitoutunut henkilöstö. Teemme perheiden kanssa joustavaa yhteistyötä.
-                            </p>
+                            <div className="row align-items-center justify-content-center mb-5">
+                                <p className="content-text text-center">
+                                    Toiminnassamme painotamme pienryhmätoimintaa, lapsikeskeisyyttä, turvallisuutta ja ympäristö-/luontokasvatusta. 
+                                    Meiltä saat lapsellesi kodinomaisen ympäristön, jossa laadukasta varhaiskasvatusta toteuttaa kokenut ja työhönsä 
+                                    sitoutunut henkilöstö. Teemme perheiden kanssa joustavaa yhteistyötä.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             )}
         </>
     )

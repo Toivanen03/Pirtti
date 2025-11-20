@@ -6,7 +6,6 @@ import { useLocation, Link } from "react-router-dom"
 import useIsMobile from "../../hooks/useIsMobile"
 import { useState, useEffect, useRef } from "react"
 import NewTopics from "../NewTopics"
-import { getAnimation } from "../formatButtons"
 
 const MobileNavigation = ({ setConfirmTitle, setOnConfirm, formatCounter }) => {
     const [expanded, setExpanded] = useState(false)

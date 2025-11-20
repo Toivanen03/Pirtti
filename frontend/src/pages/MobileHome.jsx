@@ -11,7 +11,7 @@ const MobileHome = ({ width }) => {
 
     return (
         <>
-            <ImageCarousel />
+            <ImageCarousel home={true} />
             <div className="container mb-5 content-text" style={{ width: '100vw' }}>
                 <div className="row">
                     <div className="col-10 offset-1 p-0">

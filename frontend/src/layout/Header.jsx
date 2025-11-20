@@ -1,7 +1,7 @@
 import NavigationBar from "./NavigationBar"
 import MobileNavigation from "./Mobile/MobileNavigation"
 import { FaSignOutAlt } from 'react-icons/fa'
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { AuthContext } from "../contexts/AuthContext"
 import useIsMobile from "../hooks/useIsMobile"
 import { Row, Col } from "react-bootstrap"
@@ -56,7 +56,7 @@ const Header = ({ setConfirmTitle, setOnConfirm, portrait, scrolling }) => {
         </header>
       ) : (
         !scrolling &&
-        <header><MobileNavigation formatCounter={formatCounter} /></header>
+        <header><MobileNavigation formatCounter={formatCounter} scrolling={scrolling} /></header>
       )}
     </>
   )

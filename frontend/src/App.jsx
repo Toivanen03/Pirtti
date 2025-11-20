@@ -67,7 +67,7 @@ function App() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
       const isAtBottom =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight -100
+        window.innerHeight + window.scrollY >= document.body.offsetHeight -20
 
       if (isAtBottom) {
         setScrolling(false)

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-export const useIsPortrait = (minWidth = 768) => {
+export const useIsPortrait = (minWidth = 577) => {
     const getState = () => {
         const portrait = window.matchMedia("(orientation: portrait)").matches
         const wideEnough = window.innerWidth >= minWidth
