@@ -1,11 +1,22 @@
 import NavigationBar from "./NavigationBar"
 import MobileNavigation from "./Mobile/MobileNavigation"
 import { FaSignOutAlt } from 'react-icons/fa'
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { AuthContext } from "../contexts/AuthContext"
 import useIsMobile from "../hooks/useIsMobile"
 import { Row, Col } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+
+const pulse = document.createElement('style')
+
+pulse.innerHTML = `
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+`
+document.head.appendChild(pulse)
 
 const Header = ({ setConfirmTitle, setOnConfirm, portrait, scrolling }) => {
   const { logout, isLoggedIn, currentUser } = useContext(AuthContext)
@@ -32,7 +43,9 @@ const Header = ({ setConfirmTitle, setOnConfirm, portrait, scrolling }) => {
       height: '24px',
       fontSize: '18px',
       position: 'relative',
-      padding: '10px'
+      padding: '10px',
+      animation: 'pulse 1s infinite',
+      marginLeft: '6px'
     }}>{value}</span>
   ) : null
 

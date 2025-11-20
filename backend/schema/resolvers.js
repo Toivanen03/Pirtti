@@ -43,7 +43,7 @@ function decryptField(encryptedText) {
     return decrypted
 }
 
-const requireadmin = (user) => {
+const requireAdmin = (user) => {
   if (!user.admin) {
     throw new Error("Ei valtuuksia!")
   }
@@ -75,7 +75,7 @@ const resolvers = {
 
     Query: {
         users: async (_args, _root, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             const users = await User.find()
             return users.map(u => ({
@@ -85,7 +85,7 @@ const resolvers = {
         },
 
         getForm: async (_, { id, formType }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             try {
                 const form = formType === 'vkh'
@@ -126,7 +126,7 @@ const resolvers = {
         },
 
         getForms: async (_, args, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             const { formType, limit = 10, skip = 0, search, read } = args
 
@@ -270,7 +270,7 @@ const resolvers = {
 
     Mutation: {
         createUser: async (_root, { email, password, admin, notifications }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             try {
                 createUserSchema.parse({ email, password, admin, notifications })
@@ -309,19 +309,25 @@ const resolvers = {
         },
 
         deleteUser: async (_root, { id }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
-            const userToDelete = await User.findByIdAndDelete(id)
+            const userToDelete = await User.findById(id)
 
             if (!userToDelete) {
                 throw new Error("Käyttäjää ei löytynyt")
             }
 
+            if (userToDelete.email === 'pkpirttiry@surffi.fi') {
+                throw new Error("Pääkäyttäjää ei voi poistaa!")
+            }
+
+            await User.findByIdAndDelete(id)
+
             return userToDelete
         },
 
         updateNotifications: async (_root, { id, notifications }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             const user = await User.findById(id)
             if (!user) {
@@ -339,7 +345,7 @@ const resolvers = {
         },
 
         updateContacts: async (_root, args, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             for (const key in args) {
                 if (args[key] === null || args[key] === "") {
@@ -372,7 +378,7 @@ const resolvers = {
         },
 
         createTopic: async (_root, { otsikko, ajankohta, teksti }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             const newTopic = new Topic({
                 otsikko,
@@ -386,7 +392,7 @@ const resolvers = {
         },
 
         deleteTopic: async (_root, { id }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             const topicToDelete = Topic.findByIdAndDelete(id)
             if (!topicToDelete) throw new Error("VIRHE: ID-virhe. Dokumentti on ehkä jo poistettu.")
@@ -395,7 +401,7 @@ const resolvers = {
         },
 
         updateQuoteBlockTitle: async (_, { quotes_lohko, quotes_otsikko }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
             const update = {}
             update[`quotes_lohkot.lohko_${quotes_lohko}.quotes_otsikko`] = quotes_otsikko
             const updated = await Quotes.findOneAndUpdate({}, { $set: update }, { new: true, upsert: true })
@@ -403,7 +409,7 @@ const resolvers = {
         },
 
         addQuote: async (_, { quotes_lohko, quote }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             const quoteObj = {
                 _id: new mongoose.Types.ObjectId(),
@@ -420,7 +426,7 @@ const resolvers = {
         },
 
         deleteQuote: async (_, { id }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             const mainDoc = await Quotes.findOne({
                 $or: [
@@ -457,7 +463,7 @@ const resolvers = {
         },
 
         updateDescription: async (_, { quotes_kuvaus }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
             const updated = await Quotes.findOneAndUpdate({}, { $set: { quotes_kuvaus } }, { new: true, upsert: true })
             return updated
         },
@@ -480,7 +486,7 @@ const resolvers = {
         },
 
         updatePassword: async (_root, { id, newPassword }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             try {
                 createUserSchema.parse({ email: context.currentUser.email, password: newPassword, admin: context.currentUser.admin })
@@ -558,7 +564,7 @@ const resolvers = {
         },
 
         markFormRead: async (_, { id, formType }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             const Model = formType === "vkh" ? DayCareForm : PreSchoolForm
 
@@ -583,7 +589,7 @@ const resolvers = {
         },
 
         deleteApplication: async (_, { id, formType }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             const Model = formType === "vkh" ? DayCareForm : PreSchoolForm
 
@@ -601,7 +607,7 @@ const resolvers = {
         },
 
         uploadInternalControl: async (_, { file }, context) => {
-            requireadmin(context.currentUser)
+            requireAdmin(context.currentUser)
 
             const { createReadStream, filename } = await file
 
