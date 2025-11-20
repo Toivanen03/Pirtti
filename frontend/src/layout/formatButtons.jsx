@@ -1,7 +1,7 @@
 import './styles/shiny-button.scss'
+import useWindowWidth from '../hooks/useWindowWidth'
 
 export const getButtonStyle = (endPoint, property, location, activeOtherLink, mobile) => {
-
     const buttonProperties = {
         active: {
             style: '1px solid lightblue',
@@ -32,7 +32,8 @@ export const getButtonStyle = (endPoint, property, location, activeOtherLink, mo
     return buttonProperties[property === 'style' ? 'passive' : 'passive'][property]
 }
 
-export const handleEndPoint = (endPoint, mobile, portrait) => {
+export const handleEndPoint = (endPoint, mobile, portrait, width) => {
+
     const linkButtonColors = {
         koti: "#66cccc",
         arvot: "#ff99cc",
@@ -47,7 +48,7 @@ export const handleEndPoint = (endPoint, mobile, portrait) => {
     
     return {
         backgroundColor: linkButtonColors[endPoint],
-        width: mobile ? '16vw' : portrait ? '10vw' : '11vw',
+        width: width < 1253 ? '10vw' : mobile ? '16vw' : portrait ? '10vw' : '11vw',
         border,
         padding: '2px',
         marginTop: mobile ? '0px' : '10px',

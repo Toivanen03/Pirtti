@@ -59,10 +59,12 @@ const SingleTopicModal = ({ mobile, selectedTopic, setSelectedTopic, formatDate,
                     }
 
                     <Row>
-                        <Col className={`${mobile ? 'col-3' : 'col-2'} ${getDateClass(selectedTopic?.ajankohta, 'single')}`}>
-                            {selectedTopic?.ajankohta && formatDate(selectedTopic.ajankohta)}
-                        </Col>
-                        <Col className={mobile ? 'col-9' : 'col-10'} style={{ whiteSpace: 'pre-line' }}>
+                        {selectedTopic?.ajankohta &&
+                            <Col className={`${mobile ? 'col-3' : 'col-2'} ${getDateClass(selectedTopic?.ajankohta, 'single')}`}>
+                                {selectedTopic?.ajankohta && formatDate(selectedTopic.ajankohta)}
+                            </Col>
+                        }
+                        <Col className={mobile ? selectedTopic?.ajankohta ? 'col-9' : 'col-12' : !selectedTopic?.ajankohta ? 'col-12' : 'col-10'} style={{ whiteSpace: 'pre-line' }}>
                             {formatText(selectedTopic?.teksti)}
                         </Col>
                     </Row>

@@ -49,7 +49,7 @@ const Applications = ({ setConfirmTitle, setOnConfirm, mobile, portrait }) => {
         <>
             {!mobile ? (
                 <>
-                    <div className="container-fluid h-100 p-0 d-flex justify-content-center content content-text" style={{ width: '100vw' }}>
+                    <div className="container-fluid h-100 p-0 d-flex justify-content-center content content-text mt-5" style={{ width: '100vw' }}>
                         <div className="container applications-container text-center">
                             <div className="row">
                                 {formType === null && <h2 className="mt-4 mb-4">Hakemukset</h2>}
@@ -121,7 +121,7 @@ const Applications = ({ setConfirmTitle, setOnConfirm, mobile, portrait }) => {
                     </div>
                 </>
             ) : (
-                <Row className="applications-container mobile-form content-text">
+                <Row className="applications-container mobile-form content-text mt-3">
                     <Row className={(formType === null) && (width < 576) ? "text-start" : "text-center mt-3"}>
                         {formType === 'psh' && <h2>Palvelusetelihakemus</h2>}
                     </Row>

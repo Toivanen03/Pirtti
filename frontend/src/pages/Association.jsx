@@ -11,7 +11,7 @@ const Association = ({ mobile, portrait }) => {
     return (
         <>
             {!mobile ? (
-                <div className="container-fluid h-100 p-0 d-flex align-items-center justify-content-center content-text" style={{ width: '100vw' }}>
+                <div className="container-fluid h-100 p-0 d-flex align-items-center justify-content-center content-text mt-4" style={{ width: '100vw' }}>
                     <div className="container text-center">
                         <h2 className={portrait ? "mt-5 mb-5" : "mt-5 mb-5 offset-4"}>Yhdistys</h2>
 

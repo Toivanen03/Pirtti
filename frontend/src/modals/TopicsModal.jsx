@@ -36,8 +36,8 @@ const TopicsModal = ({ topics, showTopics, setShowTopics, mobile, setShowBanner,
         const diff = date - now
         const days = diff / (1000 * 60 * 60 * 24)
 
-        if ((days < 0 && days >= -5) && type !== 'headline') return 'text-danger fw-bold'
-        if ((days >= 0 && days < 7) && type !== 'headline') return 'text-warning fw-bold'
+        if ((days < 0 && days >= -5) && type !== 'headline') return 'text-danger'
+        if ((days >= 0 && days < 7) && type !== 'headline') return 'text-warning'
         if ((days >= 7) && type !== 'headline') return 'text-success'
 
         return ''
@@ -166,7 +166,7 @@ const TopicsModal = ({ topics, showTopics, setShowTopics, mobile, setShowBanner,
                         )}
 
                         {((unreadTopics.length > 0 && showOnlyUnread) || (topics.length > 0 && !showOnlyUnread)) ? (
-                            <Row className={mobile ? 'mb-2 text-start' : 'mb-3 text-start ms-2 me-3'}>
+                            <Row className={mobile ? 'mb-2 text-start' : 'mb-3 text-start me-3'}>
                                 <Col className='col-4'>
                                     {mobile ? <h6>Aihe</h6> : <h5>Aihe</h5>}
                                 </Col>
@@ -185,17 +185,17 @@ const TopicsModal = ({ topics, showTopics, setShowTopics, mobile, setShowBanner,
 
                         {!showOnlyUnread ? (
                             topics.map(topic =>
-                                <Row key={topic.id} className={mobile ? 'fs-5' : 'fs-5 ms-2 me-3 fw-bold'}>
+                                <Row key={topic.id} className={mobile ? 'fs-5' : 'fs-5 me-3'}>
                                     <Col className={`${getDateClass(topic?.ajankohta, 'headline')} ${mobile ? 'col-8 text-truncate' : 'col-4 text-truncate'}`}
                                         onClick={() => setSelectedTopic(topic)} 
                                         style={!selectedTopic ? { cursor: "pointer", color: "blue", textDecoration: "underline" }: {}}
                                     >
                                         {topic.otsikko}
                                     </Col>
-                                    {!mobile && <Col className="col-3 text-truncate">{formatText(topic.teksti)}</Col>}
+                                    {!mobile && <Col className="col-3 text-truncate small">{formatText(topic.teksti)}</Col>}
                                     <Col className={`${getDateClass(topic?.ajankohta)} col-4`}>{topic?.ajankohta ? formatDate(topic.ajankohta, 'long') : ""}</Col>
                                     {!mobile &&
-                                        <Col className='col-1'>
+                                        <Col className='col-1 small'>
                                             <>
                                                 {lastSeen < topic.createdAt ? (
                                                     <strong className='text-danger'>UUSI</strong>
@@ -211,16 +211,16 @@ const TopicsModal = ({ topics, showTopics, setShowTopics, mobile, setShowBanner,
                             <>
                                 {unreadTopics.length > 0 &&
                                     unreadTopics.map(topic =>
-                                        <Row key={topic.id} className={mobile ? 'fs-5' : 'fs-5 ms-2 me-3 fw-bold'}>
+                                        <Row key={topic.id} className={mobile ? 'fs-5' : 'fs-5 me-3'}>
                                             <Col className={`${getDateClass(topic?.ajankohta, 'headline')} ${mobile ? 'col-8 text-truncate' : 'col-4 text-truncate'}`}
                                                 onClick={() => setSelectedTopic(topic)} 
                                                 style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
                                             >
                                                 {topic.otsikko}
                                             </Col>
-                                            {!mobile && <Col className="col-3 text-truncate">{formatText(topic.teksti)}</Col>}
+                                            {!mobile && <Col className="col-3 text-truncate small">{formatText(topic.teksti)}</Col>}
                                             <Col className={`col-4 ${getDateClass(topic?.ajankohta)}`}>{topic?.ajankohta ? formatDate(topic.ajankohta, 'long') : ""}</Col>
-                                            {!mobile && <Col className="col-1">{formatDate(Number(topic.createdAt), 'created')}</Col>}
+                                            {!mobile && <Col className="col-1 small">{formatDate(Number(topic.createdAt), 'created')}</Col>}
                                         </Row>
                                     )
                                 }

@@ -7,7 +7,7 @@ const Values = ({ mobile, portrait }) => {
     return (
             <>
                 {!mobile ? (
-                        <div className={`${portrait ? "mt-5" : "mt-3"} container-fluid h-100 p-0 d-flex align-items-center justify-content-center content-text`} style={{ width: '100vw' }}>
+                        <div className={`mt-5 container-fluid h-100 p-0 d-flex align-items-center justify-content-center content-text`} style={{ width: '100vw' }}>
                             <div className="container text-center">
                                 <div className="row">
                                     <div className="col-8 d-flex flex-column">

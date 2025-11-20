@@ -33,7 +33,7 @@ const Quotes = ({ mobile }) => {
   return (
     <>
       {!mobile ? (
-        <Container fluid className="h-100 p-0 d-flex align-items-center justify-content-center content mb-5 content-text" style={{ width: '100vw' }}>
+        <Container fluid className="h-100 p-0 d-flex align-items-center justify-content-center content mt-5 mb-5 content-text" style={{ width: '100vw' }}>
           <Container className="text-center">
             <Row className='mb-3'>
               <h2 className="quotes-headline">Lasten suusta kuultua</h2>

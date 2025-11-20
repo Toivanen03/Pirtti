@@ -112,7 +112,7 @@ const Home = ({ consent, mobile, portrait }) => {
                                 </div>
                             </div>
 
-                            {!portrait && width > 768 && (
+                            {!portrait && width > 865 && (
                                 <div className="col-2 p-0 d-flex flex-column">
                                     {consent && <FbPlugin width={width} />}
                                 </div>

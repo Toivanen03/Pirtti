@@ -46,11 +46,11 @@ html, body, #root {
 }
 
 body {
-  padding-top: calc($header-height * 0.9);
+  padding-top: calc($header-height * 0.8);
   padding-bottom: calc($footer-height * 1.2);
   overflow-y: auto;
 
-  @media (max-width: 800px) {
+  @media (max-width: 960px) {
     padding-top: calc($header-height * 0.55);
   }
 }
@@ -115,7 +115,7 @@ body.disabled-scroll {
       font-size: 2.5rem;
       line-height: 1.2;
 
-      @media (max-width: 864px) {
+      @media (max-width: 960px) {
         color: $dark;
         font-size: 1.8rem;
       }
@@ -163,7 +163,7 @@ header {
       font-weight: bold;
       -webkit-text-stroke: 0.1px black;
 
-      @media (max-width: 864px) {
+      @media (max-width: 960px) {
         font-size: 1.8rem;
       }
     }
@@ -301,7 +301,7 @@ footer {
   background-image: $bg-col;
   border-top: 2px solid $dark;
 
-  @media (max-width: 864px) {
+  @media (max-width: 960px) {
     height: $footer-height * 1.1;
     padding: 26px;
   }
@@ -356,7 +356,7 @@ footer {
   margin-top: 20px;
   margin-bottom: 20px;
 
-  @media (max-width: 864px) {
+  @media (max-width: 960px) {
     font-size: 1.8rem;
   }
 }
@@ -367,7 +367,7 @@ footer {
   max-width: 20vw;
   border-radius: 30px;
 
-  @media (max-width: 864px) {
+  @media (max-width: 960px) {
     max-width: 80%;
   }
 }
@@ -377,7 +377,7 @@ footer {
   font-size: 1.1rem;
   line-height: 1.4;
 
-  @media (max-width: 864px) {
+  @media (max-width: 960px) {
     font-size: 0.95rem;
     line-height: 1.4;
   }
@@ -387,7 +387,7 @@ footer {
   font-family: 'CAVEAT-font', sans-serif;
   font-size: 2.5rem;
 
-  @media (max-width: 864px) {
+  @media (max-width: 960px) {
     font-size: 1.8rem;
   }
 }
@@ -455,7 +455,7 @@ footer {
     font-weight: bold;
     -webkit-text-stroke: 0.1px black;
 
-    @media (max-width: 864px) {
+    @media (max-width: 960px) {
       font-size: 1.8rem;
     }
   }

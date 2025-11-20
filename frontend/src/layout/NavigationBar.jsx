@@ -3,14 +3,16 @@ import Button from "react-bootstrap/Button"
 import { handleEndPoint, getAnimation, getButtonStyle } from "./formatButtons"
 import NewTopics from "./NewTopics"
 import { useState } from "react"
+import useWindowWidth from '../hooks/useWindowWidth'
 
 const NavigationBar = ({ mobile, setConfirmTitle, setOnConfirm, formatCounter, portrait }) => {
     const [show, setShow] = useState(false)
     const [unreadCount, setUnreadCount] = useState(0)
+    const width = useWindowWidth()
 
     const location = useLocation()
 
-    const buttonFontSize = portrait ? '20px' : '28px'
+    const buttonFontSize = width < 1252 ? '18px' : portrait ? '20px' : '28px'
 
     return (
         <>
@@ -18,7 +20,7 @@ const NavigationBar = ({ mobile, setConfirmTitle, setOnConfirm, formatCounter, p
                 <nav className="d-flex gap-5 flex-wrap justify-content-center">
                     <Link to="/" className="text-decoration-none header-link">
                         <Button
-                            style={{ ...handleEndPoint('koti', mobile, portrait), fontSize: buttonFontSize }}
+                            style={{ ...handleEndPoint('koti', mobile, portrait, width), fontSize: buttonFontSize }}
                             className={getButtonStyle('koti', 'class', location, show ? 'ajankohtaista' : null)}
                         >
                             <div className="border-mask">
@@ -31,7 +33,7 @@ const NavigationBar = ({ mobile, setConfirmTitle, setOnConfirm, formatCounter, p
 
                     <Link to="/arvot" className="text-decoration-none header-link">
                         <Button
-                            style={{ ...handleEndPoint('arvot', mobile, portrait), fontSize: buttonFontSize }}
+                            style={{ ...handleEndPoint('arvot', mobile, portrait, width), fontSize: buttonFontSize }}
                             className={getButtonStyle('arvot', 'class', location, show ? 'ajankohtaista' : null)}
                         >
                             <div className="border-mask">
@@ -44,7 +46,7 @@ const NavigationBar = ({ mobile, setConfirmTitle, setOnConfirm, formatCounter, p
 
                     <Link to="/yhdistys" className="text-decoration-none header-link">
                         <Button
-                            style={{ ...handleEndPoint('yhdistys', mobile, portrait), fontSize: buttonFontSize }}
+                            style={{ ...handleEndPoint('yhdistys', mobile, portrait, width), fontSize: buttonFontSize }}
                             className={getButtonStyle('yhdistys', 'class', location, show ? 'ajankohtaista' : null)}
                         >
                             <div className="border-mask">
@@ -57,7 +59,7 @@ const NavigationBar = ({ mobile, setConfirmTitle, setOnConfirm, formatCounter, p
 
                     <Link to="/yhteystiedot" className="text-decoration-none header-link">
                         <Button
-                            style={{ ...handleEndPoint('yhteystiedot', mobile, portrait), fontSize: buttonFontSize }}
+                            style={{ ...handleEndPoint('yhteystiedot', mobile, portrait, width), fontSize: buttonFontSize }}
                             className={getButtonStyle('yhteystiedot', 'class', location, show ? 'ajankohtaista' : null)}
                         >
                             <div className="border-mask">
@@ -70,7 +72,7 @@ const NavigationBar = ({ mobile, setConfirmTitle, setOnConfirm, formatCounter, p
 
                     <Link to="/hakemukset" className="text-decoration-none header-link">
                         <Button
-                            style={{ ...handleEndPoint('hakemukset', mobile, portrait), fontSize: buttonFontSize }}
+                            style={{ ...handleEndPoint('hakemukset', mobile, portrait, width), fontSize: buttonFontSize }}
                             className={getButtonStyle('hakemukset', 'class', location, show ? 'ajankohtaista' : null)}
                         >
                             <div className="border-mask">
@@ -83,7 +85,7 @@ const NavigationBar = ({ mobile, setConfirmTitle, setOnConfirm, formatCounter, p
 
                     <Link to="/lasten_suusta" className="text-decoration-none header-link">
                         <Button
-                            style={{ ...handleEndPoint('lasten_suusta', mobile, portrait), fontSize: buttonFontSize }}
+                            style={{ ...handleEndPoint('lasten_suusta', mobile, portrait, width), fontSize: buttonFontSize }}
                             className={getButtonStyle('lasten_suusta', 'class', location, show ? 'ajankohtaista' : null)}
                         >
                             <div className="border-mask">
@@ -100,7 +102,7 @@ const NavigationBar = ({ mobile, setConfirmTitle, setOnConfirm, formatCounter, p
                                 setShow(true)
                                 setUnreadCount(0)
                             }}
-                        style={{ ...handleEndPoint('ajankohtaista', mobile, portrait), fontSize: buttonFontSize }}
+                        style={{ ...handleEndPoint('ajankohtaista', mobile, portrait, width), fontSize: buttonFontSize }}
                         className={getButtonStyle('ajankohtaista', 'class', location, show ? 'ajankohtaista' : null)}
                     >
                             <div className="border-mask">
