@@ -276,7 +276,7 @@ const resolvers = {
                 createUserSchema.parse({ email, password, admin, notifications })
             } catch (err) {
                 if (err instanceof z.ZodError) {
-                    const messages = err.issues.map(issue => issue.message)
+                    const messages = result.error.issues.map(issue => issue.message)
                     throw new GraphQLError(messages.join(`\n`))
                 }
                 throw err
@@ -369,8 +369,8 @@ const resolvers = {
 
             } catch (err) {
                 if (err instanceof z.ZodError) {
-                    const messages = err.issues.map(issue => issue.message)
-                    throw new GraphQLError(messages.join("\n"))
+                    const messages = result.error.issues.map(issue => issue.message)
+                    throw new GraphQLError(messages.join(`\n`))
                 }
 
                 throw new GraphQLError(`Virhe: Yhteystietojen päivitys epäonnistui (${err.message || err})`)
@@ -492,8 +492,8 @@ const resolvers = {
                 createUserSchema.parse({ email: context.currentUser.email, password: newPassword, admin: context.currentUser.admin })
             } catch (err) {
                 if (err instanceof z.ZodError) {
-                    const messages = err.issues.map(issue => issue.message)
-                    throw new GraphQLError(messages.join("\n"))
+                    const messages = result.error.issues.map(issue => issue.message)
+                    throw new GraphQLError(messages.join(`\n`))
                 }
                 throw err
             }
