@@ -8,7 +8,7 @@ export const checkFirstUser = async () => {
             process.exit(0)
         }
 
-        const passwordHash = bcrypt.hash(process.env.FIRST_USER_PASSWORD, 10)
+        const passwordHash = await bcrypt.hash(process.env.FIRST_USER_PASSWORD, 10)
         await new User({
             email: 'pkpirtti@protonmail.com',
             passwordHash,
@@ -16,8 +16,7 @@ export const checkFirstUser = async () => {
             notifications: true
         }).save()
         console.log("Pääkäyttäjä luotu")
-        process.exit(0)
     } catch (err) {
-        process.exit(1)
+        console.error("Virhe: ", err)
     }
 }
