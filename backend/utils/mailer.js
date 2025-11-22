@@ -14,7 +14,7 @@ const MailSender = async (formType, receivers, application) => {
     const mail = process.env.MAIL
 
     const notificationTransporter = nodemailer.createTransport({
-        host: 'smtp.office365.com',
+        host: 'smtp-mail.outlook.com',
         port: 587,
         secure: false,
         auth: {
@@ -34,7 +34,7 @@ const MailSender = async (formType, receivers, application) => {
             .replace('{{CHILD_BIRTHDAY}}', formatDate(application.syntymaaika) || '')
 
             return notificationTransporter.sendMail({
-            from: `Pirtti <pkpirtti@protonmail.com>`,
+            from: `Pirtti <pkpirtti@outlook.com>`,
             to: receiver.email,
             subject,
             html: personalizedHtml
