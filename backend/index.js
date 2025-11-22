@@ -21,24 +21,19 @@ const app = express()
 const server = new ApolloServer({ typeDefs, resolvers })
 await server.start()
 
-app.options('/graphql', cors({
-  origin: allowedOrigins,
-  allowedHeaders: ['Content-Type', 'Authorization', 'apollo-require-preflight'],
-  methods: ['POST', 'OPTIONS'],
-  credentials: true
-}))
-
-app.use(cors({
-  origin: allowedOrigins,
-  methods: ['GET','POST','OPTIONS','PUT','PATCH','DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'apollo-require-preflight'],
-  credentials: true
-}))
-
-app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 1 }))
-
 app.use(
   '/graphql',
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true)
+      if (allowedOrigins.includes(origin)) return callback(null, true)
+      return callback(new Error('Not allowed by CORS'))
+    },
+    methods: ['GET','POST','OPTIONS'],
+    allowedHeaders: ['Content-Type','Authorization','apollo-require-preflight'],
+    credentials: true
+  }),
+  graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 1 }),
   express.json(),
   expressMiddleware(server, {
     context: async ({ req }) => {
