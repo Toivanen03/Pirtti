@@ -9,6 +9,7 @@ import resolvers from './schema/resolvers.js'
 import jwt from 'jsonwebtoken'
 import User from './models/User.js'
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs'
+import { checkFirstUser } from './utils/createFirstUser.js'
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: '.env.development' })
@@ -51,6 +52,7 @@ const MONGODB_URI = process.env.MONGODB_URI
 mongoose.connect(MONGODB_URI)
   .then(() => {
     console.log(`MongoDB connected`)
+    checkFirstUser()
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`Server running on http://0.0.0.0:${PORT}`)
     })
