@@ -15,7 +15,7 @@ const MailSender = async (formType, receivers, application) => {
 
     const notificationTransporter = nodemailer.createTransport({
         host: 'smtp-mail.outlook.com',
-        port: 587,
+        port: 465,
         secure: true,
         auth: {
             user: mail,
