@@ -1,29 +1,34 @@
 @use "sass:list";
 @use "sass:math";
 
-@font-face {
+@font-face {                                                        // Lasten suusta-osion väliotsikoiden ja navigaatiopainikkeiden fontti
   font-family: 'CAVEAT-font';
   src: url('../fonts/Caveat-VariableFont_wght.ttf') format('truetype');
 }
 
-@font-face {
+@font-face {                                                        // Headerin ja loaderin otsikkofontti, "Päiväkoti Pirtti"
   font-family: 'GH-font';
   src: url('../fonts/GloriaHallelujah-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Insta-font';
+  font-family: 'Insta-font';                                        // Footerin Instagram-linkin fontti
   src: url('../fonts/Billabong.otf') format('truetype');
 }
 
-@font-face {
+@font-face {                                                        // Footerin Facebook-linkin fontti
   font-family: 'Face-font';
   src: url('../fonts/KlavikaRegular-tf.otf') format('truetype');
 }
 
-@font-face {
+@font-face {                                                        // Sisällön perusfontti
   font-family: 'Content-font';
   src: url('../fonts/Exo2-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto-font';
+  src: url('../fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
 }
 
 // Värit

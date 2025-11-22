@@ -19,7 +19,7 @@ const server = new ApolloServer({ typeDefs, resolvers })
 await server.start()
 
 app.use(cors({
-  origin: '*',
+  origin: ["https://simotoivanen.fi", "https://www.simotoivanen.fi"],
   allowedHeaders: ['Content-Type', 'Authorization', 'apollo-require-preflight'],
 }))
 
