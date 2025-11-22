@@ -14,12 +14,15 @@ const MailSender = async (formType, receivers, application) => {
     const mail = process.env.MAIL
 
     const notificationTransporter = nodemailer.createTransport({
-        host: 'smtp-mail.outlook.com',
+        host: 'smtp.office365.com',
         port: 587,
         secure: false,
         auth: {
             user: mail,
             pass: process.env.EMAIL_PASS
+        },
+        tls: {
+            ciphers: "SSLv3"
         }
     })
 
