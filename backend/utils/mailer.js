@@ -14,8 +14,8 @@ const MailSender = async (formType, receivers, application) => {
     const mail = process.env.MAIL
 
     const notificationTransporter = nodemailer.createTransport({
-        host: 'smtp.protonmail.ch',
-        port: 465,
+        host: 'smtp-mail.outlook.com',
+        port: 587,
         secure: true,
         auth: {
             user: mail,
