@@ -15,13 +15,24 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: '.env.development' })
 }
 
+const allowedOrigins = process.env.CORS_ORIGINS.split(',')
+
 const app = express()
 const server = new ApolloServer({ typeDefs, resolvers })
 await server.start()
 
-app.use(cors({
-  origin: ["https://simotoivanen.fi", "https://www.simotoivanen.fi"],
+app.options('/graphql', cors({
+  origin: allowedOrigins,
   allowedHeaders: ['Content-Type', 'Authorization', 'apollo-require-preflight'],
+  methods: ['POST', 'OPTIONS'],
+  credentials: true
+}))
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET','POST','OPTIONS','PUT','PATCH','DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'apollo-require-preflight'],
+  credentials: true
 }))
 
 app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 1 }))

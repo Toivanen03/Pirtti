@@ -5,7 +5,7 @@ export const checkFirstUser = async () => {
     try {
         const existing = await User.findOne()
         if (existing) {
-            process.exit(0)
+            return
         }
 
         const passwordHash = await bcrypt.hash(process.env.FIRST_USER_PASSWORD, 10)

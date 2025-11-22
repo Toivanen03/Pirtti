@@ -227,16 +227,26 @@ const DayCareForm = ({ setShowFormArea, formType, setFormType, setConfirmTitle, 
                                 >
                                     <option value="" disabled>Valitse *</option>
                                     {(() => {
-                                    let max = 10
-                                    if (formData.tarve === "Enintään 15 pv/kk") {
-                                        max = 15
-                                    } else if (formData.tarve === "Kokopäivähoito") max = 23
-                                    return Array.from({ length: max }, (_, i) => (
-                                        <option key={i + 1} value={i + 1}>
-                                        {i + 1 + (i+1 === 1 ? ' päivä / kk' : ' päivää / kk')}
-                                        </option>
-                                    ))
-                                    })()}
+                                        let max = 10
+                                        let min = 1
+
+                                        if (formData.tarve === "Enintään 15 pv/kk") {
+                                            min = 11
+                                            max = 15
+                                        } else if (formData.tarve === "Kokopäivähoito") {
+                                            max = 23 
+                                            min = 16
+                                        }
+                                        return Array.from({ length: max - min + 1 }, (_, i) => {
+                                            const value = i + min
+                                            return (
+                                            <option key={value} value={value}>
+                                                {value} {value === 1 ? 'päivä / kk' : 'päivää / kk'}
+                                            </option>
+                                            )
+                                        })
+                                        })
+                                    ()}
                                 </Form.Select>
                             </Form.Group>
                         </Col>
