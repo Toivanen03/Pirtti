@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react"
 import { Form, Button, Row, Col } from "react-bootstrap"
 import { USERS, UPDATE_PASSWORD, UPDATE_NOTIFICATIONS } from '../../../queries/queries'
 import { useMutation } from '@apollo/client/react'
+import { runMutation } from "../../../utils/runMutation"
 
 const fields = {
     salasana: "",
@@ -74,28 +75,21 @@ const UserProfile = ({ setConfirmTitle, setFormType, user, portrait }) => {
             return
         }
 
-        try {
-            const response = await updatePassword({
-                variables: {
-                    id: user.id,
-                    newPassword: formData.salasana,
-                }
-            })
-
-            if (response.error.errors?.length > 0) {
-                throw new Error(response.error.errors.map(e => e.message).join('; '))
+        const response = await runMutation(updatePassword, {
+            variables: {
+                id: user.id,
+                newPassword: formData.salasana,
             }
+        })
 
-            if (response.error) {
-                setConfirmTitle('Virhe:' + response.error.message)
-            } else if (response.data) {
-                setConfirmTitle("Salasana vaihdettu.")
-                setAllFilled(false)
-                setFormType(null)
-            }
-        } catch (error) {
-            setConfirmTitle(`Virhe: ${error}`)
+        if (!response.ok) {
+            setConfirmTitle(`Virhe: ${response.error}`)
+            return
         }
+
+        setConfirmTitle("Salasana vaihdettu.")
+        setAllFilled(false)
+        setFormType(null)
     }
 
     return (

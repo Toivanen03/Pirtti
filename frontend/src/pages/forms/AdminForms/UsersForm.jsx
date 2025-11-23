@@ -3,6 +3,7 @@ import { AuthContext } from '../../../contexts/AuthContext'
 import { Form, Button, Row, Col } from "react-bootstrap"
 import { useMutation, useQuery } from '@apollo/client/react'
 import { USERS, DELETE_USER, UPDATE_NOTIFICATIONS } from '../../../queries/queries'
+import { runMutation } from '../../../utils/runMutation'
 
 const UsersForm = ({ setConfirmTitle, setOnConfirm, setFormType, setUser, portrait }) => {
     const { currentUser } = useContext(AuthContext)
@@ -13,27 +14,21 @@ const UsersForm = ({ setConfirmTitle, setOnConfirm, setFormType, setUser, portra
     const handleDelete = (user) => {
         setConfirmTitle(`Vahvista: Haluatko varmasti poistaa käyttäjän ${user.email}?`)
         setOnConfirm(() => async () => {
-            try {
-                const response = await deleteUser({
-                    variables: { id: user.id },
-                    refetchQueries: ['getUsers'],
-                    awaitRefetchQueries: true
-                })
 
-                if (response.error.errors?.length > 0) {
-                    throw new Error(response.error.errors.map(e => e.message).join('; '))
-                }
+        const response = await runMutation(deleteUser, {
+            variables: { id: user.id },
+            refetchQueries: ['getUsers'],
+            awaitRefetchQueries: true
+        })
 
-                if (!response.data?.deleteUser) {
-                    throw new Error('Poisto epäonnistui: palvelin ei palauttanut poistettua käyttäjää.')
-                }
+        if (!response.ok) {
+            setConfirmTitle(`Virhe: ${response.error}`)
+            return
+        }
 
-                setUser(null)
-                setConfirmTitle('Käyttäjä poistettu.')
-            } catch (err) {
-                const msg = err?.message || String(err)
-                setConfirmTitle(`Virhe: ${msg}`)
-            }
+        setUser(null)
+        setConfirmTitle('Käyttäjä poistettu.')
+
         })
     }
 

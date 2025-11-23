@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react"
 import { Form, Button, Row, Col } from "react-bootstrap"
 import { USERS, ADD_USER } from '../../../queries/queries'
 import { useMutation } from '@apollo/client/react'
+import { runMutation } from "../../../utils/runMutation"
 
 const userFields = {
     sahkoposti: "",
@@ -58,8 +59,7 @@ const NewUserForm = ({ setConfirmTitle, setFormType, portrait }) => {
             return
         }
 
-        try {
-            const response = await createUser({
+            const response = await runMutation(createUser, {
                 variables: {
                     email: formData.sahkoposti,
                     password: formData.salasana,
@@ -68,24 +68,14 @@ const NewUserForm = ({ setConfirmTitle, setFormType, portrait }) => {
                 refetchQueries: [{ query: USERS }]
             })
 
-            if (response.error.errors?.length > 0) {
-                throw new Error(response.error.errors.map(e => e.message).join('; '))
+            if (!response.ok) {
+                setConfirmTitle(`Virhe: ${response.error}`)
+                return
             }
-
-            if (response.error) {
-                if (response.error.message.includes(11000)) {
-                    setConfirmTitle("Virhe: Käyttäjätunnus on jo olemassa")
-                } else {
-                    setConfirmTitle('Virhe:' + response.error.message)
-                }
-            } else if (response.data) {
-                setConfirmTitle(`Käyttäjätunnus ${response.data.createUser.email} luotu.`)
-                setAllFilled(false)
-                setFormType(null)
-            }
-        } catch (error) {
-            setConfirmTitle(`Virhe: ${error}`)
-        }
+            
+            setConfirmTitle(`Käyttäjätunnus ${response.data.createUser.email} luotu.`)
+            setAllFilled(false)
+            setFormType(null)
     }
 
     return (

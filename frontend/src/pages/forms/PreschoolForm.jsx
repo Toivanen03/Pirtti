@@ -9,6 +9,7 @@ import ChildHealthData from "./formFields/ChildHealthData"
 import { CREATE_FORM } from "../../queries/queries"
 import { useMutation } from '@apollo/client/react'
 import ApplicationModal from "../../modals/ApplicationModal"
+import { runMutation } from "../../utils/runMutation"
 
 const PreSchoolForm = ({ setShowFormArea, formType, setFormType, setConfirmTitle, setOnConfirm, mobile, width, portrait }) => {
     const [otherLanguage, setOtherLanguage] = useState(false)
@@ -66,26 +67,23 @@ const PreSchoolForm = ({ setShowFormArea, formType, setFormType, setConfirmTitle
     }
 
     const handleSubmit = async () => {
-        try {
-            const response = await createForm({
-                variables: {
-                    formType,
-                    input: formData
-                }
-            })
+        const response = await runMutation(createForm, {
+            variables: {
+                formType,
+                input: formData
+            }
+        })
 
-            if (response.error.errors?.length > 0) {
-                throw new Error(response.error.errors.map(e => e.message).join('; '))
-            }
-            
-            if (response.data) {
-                setConfirmTitle("Lomake lähetetty.")
-                setFormData(preSchoolFormValues)
-                setFormType(null)
-                setAllFilled(false)
-                setShowFormArea(false)
-            }
-        } catch (err) { setConfirmTitle(`Virhe: ${err}`) }
+        if (!response.ok) {
+            setConfirmTitle(`Virhe: ${response.error}`)
+            return
+        }
+        
+        setConfirmTitle("Lomake lähetetty.")
+        setFormData(preSchoolFormValues)
+        setFormType(null)
+        setAllFilled(false)
+        setShowFormArea(false)
     }
 
     return (

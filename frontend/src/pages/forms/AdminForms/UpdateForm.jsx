@@ -6,6 +6,7 @@ import ContactUpdate from "./UpdateForms/ContactUpdate"
 import UpdateQuotes from "./UpdateForms/UpdateQuotes"
 import UpdateTopics from "./UpdateForms/UpdateCurrentTopics"
 import InternalControlPlan from "./UpdateForms/InternalControlPlan"
+import { runMutation } from "../../../utils/runMutation"
 
 const contactFields = {
     puhelin_1: "",
@@ -106,30 +107,23 @@ const UpdateForm = ({ setConfirmTitle, setFormType, portrait }) => {
             return
         }
 
-        try {
-            const response = await updateContacts({
-                variables: {
-                    puhelin_1: contactFormData.puhelin_1,
-                    puhelin_2: contactFormData.puhelin_2,
-                    puhelin_3: contactFormData.puhelin_3,
-                    sahkoposti: contactFormData.sahkoposti,
-                },
-                refetchQueries: [{ query: GET_CONTACTS }]
-            })
+        const response = await runMutation(updateContacts, {
+            variables: {
+                puhelin_1: contactFormData.puhelin_1,
+                puhelin_2: contactFormData.puhelin_2,
+                puhelin_3: contactFormData.puhelin_3,
+                sahkoposti: contactFormData.sahkoposti,
+            },
+            refetchQueries: [{ query: GET_CONTACTS }]
+        })
 
-            if (response.error.errors?.length > 0) {
-                throw new Error(response.error.errors.map(e => e.message).join('; '))
-            }
-
-            if (response.error) {
-                setConfirmTitle('Virhe:' + response.error.message)
-            } else if (response.data) {
-                setConfirmTitle(`Yhteystiedot päivitetty.`)
-                setContactFormData(contactFields)
-            }
-        } catch (error) {
-            setConfirmTitle(`Virhe: ${error}`)
+        if (!response.ok) {
+            setConfirmTitle(`Virhe: ${response.error}`)
+            return
         }
+
+        setConfirmTitle(`Yhteystiedot päivitetty.`)
+        setContactFormData(contactFields)
     }
 
     const handleTopicsSubmit = async (e) => {
@@ -147,29 +141,22 @@ const UpdateForm = ({ setConfirmTitle, setFormType, portrait }) => {
             return
         }
 
-        try {
-            const response = await createTopic({
-                variables: {
-                    otsikko: topicsFormData.otsikko,
-                    ajankohta: topicsFormData.ajankohta,
-                    teksti: topicsFormData.teksti,
-                },
-                refetchQueries: [{ query: GET_TOPICS }]
-            })
+        const response = await runMutation(createTopic, {
+            variables: {
+                otsikko: topicsFormData.otsikko,
+                ajankohta: topicsFormData.ajankohta,
+                teksti: topicsFormData.teksti,
+            },
+            refetchQueries: [{ query: GET_TOPICS }]
+        })
 
-            if (response.error.errors?.length > 0) {
-                throw new Error(response.error.errors.map(e => e.message).join('; '))
-            }
-
-            if (response.error) {
-                setConfirmTitle('Virhe:' + response.error.message)
-            } else if (response.data) {
-                setConfirmTitle(`Merkintä lisätty.`)
-                setTopicsFormData(topicsFields)
-            }
-        } catch (error) {
-            setConfirmTitle(`Virhe: ${error}`)
+        if (!response.ok) {
+            setConfirmTitle(`Virhe: ${response.error}`)
+            return
         }
+        
+        setConfirmTitle(`Merkintä lisätty.`)
+        setTopicsFormData(topicsFields)
     }
 
     const handleQuotesSubmit = async (e) => {
