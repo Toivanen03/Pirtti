@@ -10,8 +10,7 @@ import { createContactsSchema } from './contactsValidation.js'
 import ICPlan from '../models/ICPlan.js'
 import { createDayCareFormSchema, createPreSchoolFormSchema } from './formValidation.js'
 import Contacts from '../models/Contacts.js'
-import { GraphQLError } from 'graphql'
-import { z } from 'zod'
+import { handleErrors } from './errorHandler.js'
 import PreSchoolForm from '../models/preschoolForm.js'
 import DayCareForm from '../models/daycareForm.js'
 import GraphQLJSON from 'graphql-type-json'
@@ -74,7 +73,7 @@ const resolvers = {
     Upload: GraphQLUpload,
 
     Query: {
-        users: async (_args, _root, context) => {
+        users: handleErrors(async (_args, _root, context) => {
             requireAdmin(context.currentUser)
 
             const users = await User.find()
@@ -82,50 +81,44 @@ const resolvers = {
                 ...u.toObject(),
                 id: u._id.toString()
             }))
-        },
+        }),
 
-        getForm: async (_, { id, formType }, context) => {
+        getForm: handleErrors(async (_, { id, formType }, context) => {
             requireAdmin(context.currentUser)
 
-            try {
-                const form = formType === 'vkh'
-                    ? await DayCareForm.findById(id)
-                    : formType === 'ekh'
-                    ? await PreSchoolForm.findById(id)
-                    : null
+            const form = formType === 'vkh'
+                ? await DayCareForm.findById(id)
+                : formType === 'ekh'
+                ? await PreSchoolForm.findById(id)
+                : null
 
-                if (!form) {
-                    throw new GraphQLError('Lomaketta ei löytynyt')
-                }
-
-                const sensitiveKeys = Object.keys(form._doc).filter(
-                    key => !['sukunimi_lapsi', 'syntymaaika', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn', '_id', '__v', 'formType', 'read'].includes(key)
-                )
-
-                const decryptedForm = { ...form._doc }
-
-                for (const key of sensitiveKeys) {
-                    if (typeof decryptedForm[key] === 'string' && decryptedForm[key].includes(':')) {
-                        decryptedForm[key] = decryptField(decryptedForm[key])
-                    }
-                }
-
-                return {
-                    id: form._id,
-                    formType,
-                    read: form.read,
-                    sukunimi_lapsi: form.sukunimi_lapsi,
-                    syntymaaika: form.syntymaaika,
-                    ...decryptedForm
-                }
-
-            } catch (error) {
-                console.error(error)
-                throw new GraphQLError(`Virhe lomakkeen haussa: ${error.message}`)
+            if (!form) {
+                throw new GraphQLError('Lomaketta ei löytynyt')
             }
-        },
 
-        getForms: async (_, args, context) => {
+            const sensitiveKeys = Object.keys(form._doc).filter(
+                key => !['sukunimi_lapsi', 'syntymaaika', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn', '_id', '__v', 'formType', 'read'].includes(key)
+            )
+
+            const decryptedForm = { ...form._doc }
+
+            for (const key of sensitiveKeys) {
+                if (typeof decryptedForm[key] === 'string' && decryptedForm[key].includes(':')) {
+                    decryptedForm[key] = decryptField(decryptedForm[key])
+                }
+            }
+
+            return {
+                id: form._id,
+                formType,
+                read: form.read,
+                sukunimi_lapsi: form.sukunimi_lapsi,
+                syntymaaika: form.syntymaaika,
+                ...decryptedForm
+            }
+        }),
+
+        getForms: handleErrors(async (_, args, context) => {
             requireAdmin(context.currentUser)
 
             const { formType, limit = 10, skip = 0, search, read } = args
@@ -168,79 +161,69 @@ const resolvers = {
                 return q
             }
 
-            try {
-                const unreadVkhCount = await DayCareForm.countDocuments({ read: false })
-                const unreadEkhCount = await PreSchoolForm.countDocuments({ read: false })
+            const unreadVkhCount = await DayCareForm.countDocuments({ read: false })
+            const unreadEkhCount = await PreSchoolForm.countDocuments({ read: false })
 
-                const queryForCount = buildQuery(search, read)
-                const totalVkhCount = (!formType || formType === "vkh") 
-                    ? await DayCareForm.countDocuments(queryForCount)
-                    : 0
-                const totalEkhCount = (!formType || formType === "ekh")
-                    ? await PreSchoolForm.countDocuments(queryForCount)
-                    : 0
+            const queryForCount = buildQuery(search, read)
+            const totalVkhCount = (!formType || formType === "vkh") 
+                ? await DayCareForm.countDocuments(queryForCount)
+                : 0
+            const totalEkhCount = (!formType || formType === "ekh")
+                ? await PreSchoolForm.countDocuments(queryForCount)
+                : 0
 
-                const mapForms = (forms, type) =>
-                    forms.map(f => ({
-                        id: f._id,
-                        formType: type,
-                        read: f.read,
-                        sukunimi_lapsi: f.sukunimi_lapsi,
-                        syntymaaika: f.syntymaaika,
-                        createdAt: f.createdAt,
-                        updatedAt: f.updatedAt,
-                        handler: f.handler || null
-                    }))
+            const mapForms = (forms, type) =>
+                forms.map(f => ({
+                    id: f._id,
+                    formType: type,
+                    read: f.read,
+                    sukunimi_lapsi: f.sukunimi_lapsi,
+                    syntymaaika: f.syntymaaika,
+                    createdAt: f.createdAt,
+                    updatedAt: f.updatedAt,
+                    handler: f.handler || null
+                }))
 
-                const queryForFetch = buildQuery(search, read)
+            const queryForFetch = buildQuery(search, read)
 
-                const fetchVkh = !formType || formType === "vkh"
-                    ? await DayCareForm.find(queryForFetch)
-                        .sort({ createdAt: -1 })
-                        .skip(hasSearch ? 0 : skip)
-                        .limit(hasSearch ? 0 : limit)
-                    : []
+            const fetchVkh = !formType || formType === "vkh"
+                ? await DayCareForm.find(queryForFetch)
+                    .sort({ createdAt: -1 })
+                    .skip(hasSearch ? 0 : skip)
+                    .limit(hasSearch ? 0 : limit)
+                : []
 
-                const fetchEkh = !formType || formType === "ekh"
-                    ? await PreSchoolForm.find(queryForFetch)
-                        .sort({ createdAt: -1 })
-                        .skip(hasSearch ? 0 : skip)
-                        .limit(hasSearch ? 0 : limit)
-                    : []
+            const fetchEkh = !formType || formType === "ekh"
+                ? await PreSchoolForm.find(queryForFetch)
+                    .sort({ createdAt: -1 })
+                    .skip(hasSearch ? 0 : skip)
+                    .limit(hasSearch ? 0 : limit)
+                : []
 
-                return {
-                    vkh: {
-                        forms: mapForms(fetchVkh, "vkh"),
-                        unreadCount: unreadVkhCount,
-                        totalCount: totalVkhCount
-                    },
-                    ekh: {
-                        forms: mapForms(fetchEkh, "ekh"),
-                        unreadCount: unreadEkhCount,
-                        totalCount: totalEkhCount
-                    }
+            return {
+                vkh: {
+                    forms: mapForms(fetchVkh, "vkh"),
+                    unreadCount: unreadVkhCount,
+                    totalCount: totalVkhCount
+                },
+                ekh: {
+                    forms: mapForms(fetchEkh, "ekh"),
+                    unreadCount: unreadEkhCount,
+                    totalCount: totalEkhCount
                 }
-
-            } catch (err) {
-                console.error('getForms error', err)
-                throw new GraphQLError(`Virhe hakemusten haussa: ${err.message || err}`)
             }
-        },
+        }),
 
-        getContacts: async () => {
-            try {
-                const contacts = await Contacts.findOne()
-                return contacts
-            } catch (err) {
-                throw new GraphQLError(`Yhteystietojen haku epäonnistui: ${err.message || err}`)
-            }
-        },
+        getContacts: handleErrors(async () => {
+            const contacts = await Contacts.findOne()
+            return contacts
+        }),
 
-        getTopics: async () => {
+        getTopics: handleErrors(async () => {
             return await Topic.find().sort({ createdAt: -1 })
-        },
+        }),
 
-        quotes: async () => {
+        quotes: handleErrors(async () => {
             let data = await Quotes.findOne()
             if (!data) {
                 data = await Quotes.create({
@@ -253,9 +236,9 @@ const resolvers = {
                 })
             }
             return data
-        },
+        }),
 
-        internalControlDocument: async () => {
+        internalControlDocument: handleErrors(async () => {
             const doc = await ICPlan.findOne()
             if (!doc) return null
 
@@ -265,50 +248,34 @@ const resolvers = {
             }
 
             return file
-        }
+        })
     },
 
     Mutation: {
-        createUser: async (_root, { email, password, admin, notifications }, context) => {
+        createUser: handleErrors(async (_root, { email, password, admin, notifications }, context) => {
             requireAdmin(context.currentUser)
 
-            try {
-                createUserSchema.parse({ email, password, admin, notifications })
-            } catch (err) {
-                if (err instanceof z.ZodError) {
-                    const messages = result.error.issues.map(issue => issue.message)
-                    throw new GraphQLError(messages.join(`\n`))
-                }
-                throw err
+            createUserSchema.parse({ email, password, admin, notifications })
+
+            const passwordHash = await bcrypt.hash(password, 10)
+            const user = await new User({
+                email: email.toLowerCase().trim(),
+                passwordHash,
+                admin: true,
+                notifications: false
+            }).save()
+
+            return {
+            ...user.toObject(),
+                id: user._id.toString(),
+                token: jwt.sign(
+                    { email: user.email, id: user._id, admin: user.admin },
+                    process.env.JWT_SECRET
+                ),
             }
+        }),
 
-            try {
-                const passwordHash = await bcrypt.hash(password, 10)
-                const user = await new User({
-                    email: email.toLowerCase().trim(),
-                    passwordHash,
-                    admin: true,
-                    notifications: false
-                }).save()
-
-                return {
-                ...user.toObject(),
-                    id: user._id.toString(),
-                    token: jwt.sign(
-                        { email: user.email, id: user._id, admin: user.admin },
-                        process.env.JWT_SECRET
-                    ),
-                }
-            } catch (err) {
-                if (err.code === 11000) {
-                    throw new GraphQLError('Tunnus on jo olemassa.')
-                }
-
-                throw new GraphQLError('Käyttäjän luonti epäonnistui: ' + err.message)
-            }
-        },
-
-        deleteUser: async (_root, { id }, context) => {
+        deleteUser: handleErrors(async (_root, { id }, context) => {
             requireAdmin(context.currentUser)
 
             const userToDelete = await User.findById(id)
@@ -324,9 +291,9 @@ const resolvers = {
             await User.findByIdAndDelete(id)
 
             return userToDelete
-        },
+        }),
 
-        updateNotifications: async (_root, { id, notifications }, context) => {
+        updateNotifications: handleErrors(async (_root, { id, notifications }, context) => {
             requireAdmin(context.currentUser)
 
             const user = await User.findById(id)
@@ -342,9 +309,9 @@ const resolvers = {
 
             await user.save()
             return user
-        },
+        }),
 
-        updateContacts: async (_root, args, context) => {
+        updateContacts: handleErrors(async (_root, args, context) => {
             requireAdmin(context.currentUser)
 
             for (const key in args) {
@@ -353,31 +320,22 @@ const resolvers = {
                 }
             }
 
-            try {
-                const validated = createContactsSchema.parse(args)
+            const validated = createContactsSchema.parse(args)
 
-                const updated = await Contacts.findOneAndUpdate(
-                    {},
-                        validated,
-                    {
-                        new: true,
-                        upsert: true,
-                    }
-                )
-
-            return updated
-
-            } catch (err) {
-                if (err instanceof z.ZodError) {
-                    const messages = result.error.issues.map(issue => issue.message)
-                    throw new GraphQLError(messages.join(`\n`))
+            const updated = await Contacts.findOneAndUpdate(
+                {},
+                    validated,
+                {
+                    new: true,
+                    upsert: true,
                 }
+            )
 
-                throw new GraphQLError(`Virhe: Yhteystietojen päivitys epäonnistui (${err.message || err})`)
-            }
-        },
+        return updated
 
-        createTopic: async (_root, { otsikko, ajankohta, teksti }, context) => {
+        }),
+
+        createTopic: handleErrors(async (_root, { otsikko, ajankohta, teksti }, context) => {
             requireAdmin(context.currentUser)
 
             const newTopic = new Topic({
@@ -389,26 +347,26 @@ const resolvers = {
 
             await newTopic.save()
             return newTopic
-        },
+        }),
 
-        deleteTopic: async (_root, { id }, context) => {
+        deleteTopic: handleErrors(async (_root, { id }, context) => {
             requireAdmin(context.currentUser)
 
             const topicToDelete = Topic.findByIdAndDelete(id)
             if (!topicToDelete) throw new Error("VIRHE: ID-virhe. Dokumentti on ehkä jo poistettu.")
 
             return topicToDelete
-        },
+        }),
 
-        updateQuoteBlockTitle: async (_, { quotes_lohko, quotes_otsikko }, context) => {
+        updateQuoteBlockTitle: handleErrors(async (_, { quotes_lohko, quotes_otsikko }, context) => {
             requireAdmin(context.currentUser)
             const update = {}
             update[`quotes_lohkot.lohko_${quotes_lohko}.quotes_otsikko`] = quotes_otsikko
             const updated = await Quotes.findOneAndUpdate({}, { $set: update }, { new: true, upsert: true })
             return updated
-        },
+        }),
 
-        addQuote: async (_, { quotes_lohko, quote }, context) => {
+        addQuote: handleErrors(async (_, { quotes_lohko, quote }, context) => {
             requireAdmin(context.currentUser)
 
             const quoteObj = {
@@ -423,9 +381,9 @@ const resolvers = {
                 { new: true, upsert: true }
             )
             return updated
-        },
+        }),
 
-        deleteQuote: async (_, { id }, context) => {
+        deleteQuote: handleErrors(async (_, { id }, context) => {
             requireAdmin(context.currentUser)
 
             const mainDoc = await Quotes.findOne({
@@ -460,15 +418,15 @@ const resolvers = {
             )
 
             return deletedQuote
-        },
+        }),
 
-        updateDescription: async (_, { quotes_kuvaus }, context) => {
+        updateDescription: handleErrors(async (_, { quotes_kuvaus }, context) => {
             requireAdmin(context.currentUser)
             const updated = await Quotes.findOneAndUpdate({}, { $set: { quotes_kuvaus } }, { new: true, upsert: true })
             return updated
-        },
+        }),
 
-        login: async (_root, { email, password }) => {
+        login: handleErrors(async (_root, { email, password }) => {
             const user = await User.findOne({ email: email.toLowerCase().trim() })
             if (!user) throw new Error("Käyttäjää ei löytynyt")
 
@@ -483,20 +441,13 @@ const resolvers = {
             }
 
             return { value: jwt.sign(userToken, process.env.JWT_SECRET) }
-        },
+        }),
 
-        updatePassword: async (_root, { id, newPassword }, context) => {
+        updatePassword: handleErrors(async (_root, { id, newPassword }, context) => {
             requireAdmin(context.currentUser)
 
-            try {
-                createUserSchema.parse({ email: context.currentUser.email, password: newPassword, admin: context.currentUser.admin })
-            } catch (err) {
-                if (err instanceof z.ZodError) {
-                    const messages = result.error.issues.map(issue => issue.message)
-                    throw new GraphQLError(messages.join(`\n`))
-                }
-                throw err
-            }
+            createUserSchema.parse({ email: context.currentUser.email, password: newPassword, admin: context.currentUser.admin })
+
 
             const passwordHash = await bcrypt.hash(newPassword, 10)
 
@@ -509,16 +460,25 @@ const resolvers = {
             if (!user) throw new Error("Käyttäjää ei löytynyt")
 
             return user
-        },
+        }),
 
-        createForm: async (_, { formType, input }) => {
+        createForm: handleErrors(async (_, { formType, input }) => {
             const formattedInput = formatNames(input)
 
             const encryptForm = (result) => {
                 if (!result.success) {
-                    const messages = result.error.issues.map(issue => issue.message)
-                    throw new GraphQLError(messages.join(`\n`))
+                    let messages = []
+
+                if (Array.isArray(result.error?.issues)) {
+                    messages = result.error.issues.map(issue => issue.message)
+                } else if (typeof result.error === 'string') {
+                    messages = [result.error]
+                } else {
+                    messages = ['Unknown error']
                 }
+
+                throw new GraphQLError(messages.join('\n'))
+            }
 
                 const sensitiveKeys = Object.keys(formattedInput).filter(
                     key => !['sukunimi_lapsi', 'syntymaaika', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn'].includes(key)
@@ -537,11 +497,7 @@ const resolvers = {
 
             const receivers = await User.find({ notifications: true })
 
-            try {
-                await MailSender(formType, receivers, formattedInput)
-            } catch (mailError) {
-                console.error('Sähköposti-ilmoitus epäonnistui:', mailError)
-            }
+            await MailSender(formType, receivers, formattedInput)
 
             if (formType === 'vkh') {
                 const encryptedInput = encryptForm(createDayCareFormSchema.safeParse(formattedInput))
@@ -561,9 +517,9 @@ const resolvers = {
             } else {
                 throw new Error('Tuntematon lomaketyyppi: ' + formType)
             }
-        },
+        }),
 
-        markFormRead: async (_, { id, formType }, context) => {
+        markFormRead: handleErrors(async (_, { id, formType }, context) => {
             requireAdmin(context.currentUser)
 
             const Model = formType === "vkh" ? DayCareForm : PreSchoolForm
@@ -586,9 +542,9 @@ const resolvers = {
             }
 
             return form.toObject()
-        },
+        }),
 
-        deleteApplication: async (_, { id, formType }, context) => {
+        deleteApplication: handleErrors(async (_, { id, formType }, context) => {
             requireAdmin(context.currentUser)
 
             const Model = formType === "vkh" ? DayCareForm : PreSchoolForm
@@ -604,9 +560,9 @@ const resolvers = {
             }
 
             return deleted
-        },
+        }),
 
-        uploadInternalControl: async (_, { file }, context) => {
+        uploadInternalControl: handleErrors(async (_, { file }, context) => {
             requireAdmin(context.currentUser)
 
             const { createReadStream, filename } = await file
@@ -631,7 +587,7 @@ const resolvers = {
                 filename: saved.filename,
                 pdf: saved.pdf.toString("base64"),
             }
-        }
+        })
     }
 }
 

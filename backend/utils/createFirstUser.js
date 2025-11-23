@@ -10,7 +10,7 @@ export const checkFirstUser = async () => {
 
         const passwordHash = await bcrypt.hash(process.env.FIRST_USER_PASSWORD, 10)
         await new User({
-            email: 'pkpirtti@outlook.com',
+            email: process.env.USER_EMAIL,
             passwordHash,
             admin: true,
             notifications: true

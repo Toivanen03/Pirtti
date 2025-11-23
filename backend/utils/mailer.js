@@ -11,18 +11,13 @@ const formatDate = (dateStr) => {
 }
 
 const MailSender = async (formType, receivers, application) => {
-    const mail = process.env.MAIL
-
     const notificationTransporter = nodemailer.createTransport({
-        host: 'smtp.office365.com',
-        port: 587,
-        secure: false,
+        host: "smtp.mailgun.org",
+        port: 465,
+        secure: true,
         auth: {
-            user: mail,
+            user: process.env.SENDER_MAIL,
             pass: process.env.EMAIL_PASS
-        },
-        tls: {
-            ciphers: "SSLv3"
         }
     })
 
