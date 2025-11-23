@@ -16,6 +16,7 @@ import DayCareForm from '../models/daycareForm.js'
 import GraphQLJSON from 'graphql-type-json'
 import MailSender from '../utils/mailer.js'
 import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs'
+import { GraphQLError } from 'graphql'
 import { Buffer } from 'buffer'
 
 const ALGORITHM = 'aes-256-gcm'
@@ -497,7 +498,7 @@ const resolvers = {
 
             const receivers = await User.find({ notifications: true })
 
-            await MailSender(formType, receivers, formattedInput)
+            MailSender(formType, receivers, formattedInput)
 
             if (formType === 'vkh') {
                 const encryptedInput = encryptForm(createDayCareFormSchema.safeParse(formattedInput))
