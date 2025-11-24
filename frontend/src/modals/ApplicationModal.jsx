@@ -102,17 +102,17 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
                 <Form>
                     {/* RIVI 1 */}
                     <Row className="mt-2">
-                        <Form.Group className="col-4 mb-2">
+                        <Form.Group className={mobile ? "col-6 mb-2" : "col-4 mb-2"}>
                             <Form.Label htmlFor="etunimet"><small>Etunimet</small></Form.Label>
                             <Form.Control type="text" readOnly value={application.etunimet_lapsi} id="etunimet" />
                         </Form.Group>
 
-                        <Form.Group className="col-4 mb-2">
+                        <Form.Group className={mobile ? "col-6 mb-2" : "col-4 mb-2"}>
                             <Form.Label htmlFor="sukunimi"><small>Sukunimi</small></Form.Label>
                             <Form.Control type="text" readOnly value={application.sukunimi_lapsi} id="sukunimi" />
                         </Form.Group>
 
-                        <Form.Group className="col-4 mb-2">
+                        <Form.Group className={mobile ? "col-6 mb-2" : "col-4 mb-2"}>
                             <Form.Label htmlFor="syntymaaika"><small>Syntymäaika</small></Form.Label>
                             <Form.Control type="text" readOnly value={formatDate(application.syntymaaika)} id="syntymaaika" />
                         </Form.Group>
@@ -138,17 +138,17 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
 
                     {/* RIVI 3 */}
                     <Row className="mt-2 mb-2">
-                        <Form.Group className="col-4 mb-2">
+                        <Form.Group className={mobile ? "col-8 mb-2" : "col-4 mb-2"}>
                             <Form.Label htmlFor="osoite"><small>Kotiosoite</small></Form.Label>
                             <Form.Control type="text" readOnly value={application.katuosoite} id="osoite" />
                         </Form.Group>
 
-                        <Form.Group className="col-2 mb-2">
+                        <Form.Group className={mobile ? "col-4 mb-2" : "col-2 mb-2"}>
                             <Form.Label htmlFor="postinro"><small>Postinumero</small></Form.Label>
                             <Form.Control type="text" readOnly value={application.postinumero} id="postinro" />
                         </Form.Group>
 
-                        <Form.Group className="col-6 mb-2">
+                        <Form.Group className={mobile ? "col-12 mb-2" : "col-6 mb-2"}>
                             <Form.Label htmlFor="lemmikit"><small>Lemmikit</small></Form.Label>
                             <Form.Control type="text" style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }} readOnly value={application.lemmikit || 'Ei ole'} id="lemmikit" />
                         </Form.Group>
@@ -159,22 +159,22 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
                     {/* RIVI 4 */}
                     {!print ? (
                         <Row className="mt-2">
-                            <Form.Group className="col-3 mb-2">
+                            <Form.Group className={mobile ? "col-6 mb-2" : "col-3 mb-2"}>
                                 <Form.Label htmlFor="etunimet_1"><small>Etunimet</small></Form.Label>
                                 <Form.Control type="text" readOnly value={application.etunimet_aikuinen_1} id="etunimet_1" />
                             </Form.Group>
 
-                            <Form.Group className="col-3 mb-2">
+                            <Form.Group className={mobile ? "col-6 mb-2" : "col-3 mb-2"}>
                                 <Form.Label htmlFor="sukunimi_1"><small>Sukunimi</small></Form.Label>
                                 <Form.Control type="text" readOnly value={application.sukunimi_aikuinen_1} id="sukunimi_1" />
                             </Form.Group>
 
-                            <Form.Group className="col-2 mb-2">
+                            <Form.Group className={mobile ? "col-6 mb-2" : "col-2 mb-2"}>
                                 <Form.Label htmlFor="puhelin_1"><small>Puhelinnumero</small></Form.Label>
                                 <Form.Control type="text" readOnly value={application.puhelinnumero_aikuinen_1} id="puhelin_1" />
                             </Form.Group>
 
-                            <Form.Group className="col-4 mb-2">
+                            <Form.Group className={mobile ? "col-6 mb-2" : "col-4 mb-2"}>
                                 <Form.Label htmlFor="email_1"><small>Sähköpostiosoite</small></Form.Label>
                                 <Form.Control type="text" readOnly value={application.sahkoposti_aikuinen_1} id="email_1" />
                             </Form.Group>
@@ -210,7 +210,7 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
                     {/* RIVI 5 */}
                     {!print ? (
                         <Row className="mt-2">
-                            <Form.Group className="col-3 mb-2">
+                            <Form.Group className={mobile ? "col-5 mb-2" : "col-3 mb-2"}>
                                 <Form.Label htmlFor="tyo_1"><small>Työllisyystilanne</small></Form.Label>
                                 <Form.Control type="text" readOnly value={application.tyollisyys_aikuinen_1} id="tyo_1" />
                             </Form.Group>
@@ -218,7 +218,7 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
                             {(application.tyollisyys_aikuinen_1 === 'Opiskelija' ||
                                 application.tyollisyys_aikuinen_1 === 'Työssä') && (
                                 <>
-                                    <Form.Group className="col-4 mb-2">
+                                    <Form.Group className={mobile ? "col-7 mb-2" : "col-4 mb-2"}>
                                         <Form.Label htmlFor="tyo_tai_koulu_1">
                                             <small>{application.tyollisyys_aikuinen_1 === 'Opiskelija' ? 'Oppilaitos / koulu' : 'Työnantaja'}</small>
                                         </Form.Label>
@@ -276,22 +276,22 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
 
                                     {/* RIVI 6 */}
                                     <Row className="mt-2">
-                                        <Form.Group className="col-3 mb-2">
+                                        <Form.Group className={mobile ? "col-6 mb-2" : "col-3 mb-2"}>
                                             <Form.Label htmlFor="etunimet_2"><small>Etunimet</small></Form.Label>
                                             <Form.Control type="text" readOnly value={application.etunimet_aikuinen_2} id="etunimet_2" />
                                         </Form.Group>
 
-                                        <Form.Group className="col-3 mb-2">
+                                        <Form.Group className={mobile ? "col-6 mb-2" : "col-3 mb-2"}>
                                             <Form.Label htmlFor="sukunimi_2"><small>Sukunimi</small></Form.Label>
                                             <Form.Control type="text" readOnly value={application.sukunimi_aikuinen_2} id="sukunimi_2" />
                                         </Form.Group>
 
-                                        <Form.Group className="col-2 mb-2">
+                                        <Form.Group className={mobile ? "col-6 mb-2" : "col-2 mb-2"}>
                                             <Form.Label htmlFor="puhelin_2"><small>Puhelinnumero</small></Form.Label>
                                             <Form.Control type="text" readOnly value={application.puhelinnumero_aikuinen_2} id="puhelin_2" />
                                         </Form.Group>
 
-                                        <Form.Group className="col-4 mb-2">
+                                        <Form.Group className={mobile ? "col-6 mb-2" : "col-4 mb-2"}>
                                             <Form.Label htmlFor="email_2"><small>Sähköpostiosoite</small></Form.Label>
                                             <Form.Control type="text" readOnly value={application.sahkoposti_aikuinen_2} id="email_2" />
                                         </Form.Group>
@@ -299,7 +299,7 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
 
                                     {/* RIVI 7 */}
                                     <Row className="mt-2 mb-2">
-                                        <Form.Group className="col-3 mb-2">
+                                        <Form.Group className={mobile ? "col-5 mb-2" : "col-3 mb-2"}>
                                             <Form.Label htmlFor="tyo_2"><small>Työllisyystilanne</small></Form.Label>
                                             <Form.Control type="text" readOnly value={application.tyollisyys_aikuinen_2} id="tyo_2" />
                                         </Form.Group>
@@ -307,7 +307,7 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
                                         {(application.tyollisyys_aikuinen_2 === 'Opiskelija' ||
                                             application.tyollisyys_aikuinen_2 === 'Työssä') && (
                                             <>
-                                                <Form.Group className="col-4 mb-2">
+                                                <Form.Group className={mobile ? "col-7 mb-2" : "col-4 mb-2"}>
                                                     <Form.Label htmlFor="tyo_tai_koulu_2">
                                                         <small>{application.tyollisyys_aikuinen_2 === 'Opiskelija' ? 'Oppilaitos / koulu' : 'Työnantaja'}</small>
                                                     </Form.Label>
@@ -533,7 +533,7 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
                                 <strong>Lisätiedot</strong>
 
                                 {application.sairaalahoito ? (
-                                    <Form.Group className={!print ? "col-4 mt-2 mb-2" : "col-4 mt-4 mb-2"}>
+                                    <Form.Group className={mobile ? "col-12 mt-2 mb-2" : !print ? "col-4 mt-2 mb-2" : "col-4 mt-4 mb-2"}>
                                         <Form.Label htmlFor="sairaalatiedot"><small>Sairaalahoidon lisätiedot</small></Form.Label>
                                         <div
                                             id="sairaalatiedot"
@@ -554,7 +554,7 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
                                 )}
 
                                 {application.allergiat ? (
-                                    <Form.Group className="col-4 mt-2 mb-2">
+                                    <Form.Group className={mobile ? "col-12 mt-2 mb-2" : "col-4 mt-2 mb-2"}>
                                         <Form.Label htmlFor="allergiatiedot"><small>Allergiat, sairaudet, erityisruokavaliot</small></Form.Label>
                                         <div
                                             id="allergiatiedot"
@@ -575,7 +575,7 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
                                 )}
 
                                 {application.suostumus ? (
-                                    <Form.Group className={!print ? "col-4 mt-2 mb-2" : "col-4 mt-4 mb-2"}>
+                                    <Form.Group className={mobile ? "col-12 mt-2 mb-2" : !print ? "col-4 mt-2 mb-2" : "col-4 mt-4 mb-2"}>
                                         <Form.Label htmlFor="neuvola"><small>Neuvola</small></Form.Label>
                                         <div
                                             id="neuvola"
@@ -625,7 +625,7 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
 
                 {handleSubmit &&
                     <Row className='mt-5 mb-2 text-center'>
-                        <Col className='col-2 offset-4'>
+                        <Col className='col-3 offset-3'>
                             <Button variant='success' 
                                     style={!mobile ? portrait ? {width: '10vw'} : { width: '6vw' } : { width: '22vw' }}
                                     onClick={submitForm}
@@ -634,7 +634,7 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
                             </Button>
                         </Col>
 
-                        <Col className='col-2'>
+                        <Col className='col-3'>
                             <Button variant='secondary' 
                                     style={!mobile ? portrait ? {width: '10vw'} : { width: '6vw' } : { width: '22vw' }}
                                     onClick={handleClose}

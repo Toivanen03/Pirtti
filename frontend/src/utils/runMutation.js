@@ -1,8 +1,8 @@
 import { errorHandler } from "./errorhandler"
 
-export async function runMutation(mutationFn, variables) {
+export async function runMutation(mutationFn, options = {}) {
     try {
-        const res = await mutationFn({ variables })
+        const res = await mutationFn({ ...options })
 
         const errMsg = errorHandler(res)
         if (errMsg && res.errors) {

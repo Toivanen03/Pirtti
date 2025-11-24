@@ -13,8 +13,8 @@ const formatDate = (dateStr) => {
 const MailSender = async (formType, receivers, application) => {
     const notificationTransporter = nodemailer.createTransport({
         host: "smtp.mailgun.org",
-        port: 465,
-        secure: true,
+        port: 587,
+        secure: false,
         auth: {
             user: process.env.SENDER_MAIL,
             pass: process.env.EMAIL_PASS
