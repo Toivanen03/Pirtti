@@ -12,12 +12,12 @@ const formatDate = (dateStr) => {
 
 const MailSender = async (formType, receivers, application) => {
     const notificationTransporter = nodemailer.createTransport({
-        host: "smtp.mailgun.org",
-        port: 587,
-        secure: false,
+        host: "send.one.com",
+        port: 465,
+        secure: true,
         auth: {
-            user: process.env.SENDER_MAIL,
-            pass: process.env.EMAIL_PASS
+            user: process.env.SENDER_EMAIL,
+            pass: process.env.SENDER_EMAIL_PASS
         }
     })
 
@@ -26,20 +26,21 @@ const MailSender = async (formType, receivers, application) => {
         const template = fs.readFileSync(path.resolve('emailTemplate', 'newApplication.html'), 'utf-8')
         const sendResults = await Promise.allSettled(
         receivers.map(receiver => {
+            console.log(receiver)
             const personalizedHtml = template
             .replace('{{FORM_TYPE}}', formType === 'vkh' ? 'varhaiskasvatushakemus' : 'esikasvatushakemus')
             .replace('{{CHILD_LASTNAME}}', application.sukunimi_lapsi || '')
             .replace('{{CHILD_BIRTHDAY}}', formatDate(application.syntymaaika) || '')
 
             return notificationTransporter.sendMail({
-            from: `Pirtti <pkpirtti@outlook.com>`,
+            from: `Pirtti <posti@simotoivanen.fi>`,
             to: receiver.email,
             subject,
             html: personalizedHtml
             })
         }).filter(Boolean)
         )
-
+console.log(sendResults)
         const failures = sendResults.filter(r => r?.status === 'rejected')
         if (failures.length > 0) {
             failures.forEach(f => console.error(failures.length, ' Sähköpostin lähetys epäonnistui:', f.reason))
