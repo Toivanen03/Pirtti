@@ -1,4 +1,5 @@
 import useWindowWidth from "../hooks/useWindowWidth"
+import useWindowHeight from "../hooks/useWindowHeight"
 import ImageCarousel from "../layout/ImageCarousel"
 import Metsassa from "../assets/images/metsassa.jpg"
 import Tehtavat from "../assets/images/tehtavat.jpg"
@@ -11,6 +12,7 @@ import { useState } from "react"
 
 const Home = ({ consent, mobile, portrait }) => {
     const width = useWindowWidth()
+    const height = useWindowHeight()
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
 
@@ -114,7 +116,7 @@ const Home = ({ consent, mobile, portrait }) => {
 
                             {!portrait && width > 865 && (
                                 <div className="col-2 p-0 d-flex flex-column">
-                                    {consent && <FbPlugin width={width} />}
+                                    {consent && <FbPlugin width={width} height={height} />}
                                 </div>
                             )}
                         </div>

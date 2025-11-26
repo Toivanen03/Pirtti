@@ -32,12 +32,12 @@
 }
 
 // Värit
-$dark: rgb(50, 50, 50);
+$dark: rgb(90, 41, 0);
 $light: rgb(230, 230, 230);
-$bg-col: linear-gradient(to right, #bdf033, #88d11b);             // Header && footer taustaväri
+$bg-col: linear-gradient(235deg, #ff9e30, #d35f00);             // Header && footer taustaväri
 
 $header-height: 170px;
-$footer-height: 50px;
+$footer-height: 120px;
 
 // Reset
 * {
@@ -46,14 +46,12 @@ $footer-height: 50px;
   box-sizing: border-box;
 }
 
-html, body, #root {
-  overflow-x: hidden;
-}
-
 body {
   padding-top: calc($header-height * 0.8);
-  padding-bottom: calc($footer-height * 1.2);
   overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(130deg, rgba(255, 155, 118, 0.5), rgba(255, 158, 48, 0.5));
+  height: 100%;
 
   @media (max-width: 960px) {
     padding-top: calc($header-height * 0.55);
@@ -77,9 +75,15 @@ body.disabled-scroll {
   flex-direction: column;
   min-height: 100vh;
 
-      @media (min-width: 1247px) {
-      margin-bottom: 1vh;
+  .main-content {
+    flex: 1;
+
+    .content {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
+  }
 
   .cookie-banner {
     position: fixed;
@@ -124,18 +128,6 @@ body.disabled-scroll {
         color: $dark;
         font-size: 1.8rem;
       }
-    }
-  }
-
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-
-    .content {
-      height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
     }
   }
 }
@@ -299,12 +291,10 @@ header {
 
 // Footer
 footer {
-  position: fixed;
-  bottom: 0;
-  width: 101vw;
   height: $footer-height;
   background-image: $bg-col;
   border-top: 2px solid $dark;
+  z-index: 10;
 
   @media (max-width: 960px) {
     height: $footer-height * 1.1;
@@ -442,13 +432,13 @@ footer {
 
   $colors: (
     transparent,
-    #66cccc,
-    #ff99cc,
-    #b399ff,
-    #ff9933,
-    #99cc99,
-    #99ccff,
-    #ff6666
+    #ff6f3c,
+    #ff9a76,
+    #b5651d,
+    #ffb347,
+    #c85e3c,
+    #d99a6c,
+    #8b3d2e
   );
 
   h1 {
@@ -501,4 +491,8 @@ footer {
   justify-content: center;
   align-items: center;
   z-index: 9999;
+}
+
+.fb-page {
+  border-left: 2px solid $dark;
 }

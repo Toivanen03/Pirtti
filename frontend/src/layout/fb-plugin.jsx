@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-const FbPlugin = ({ width }) => {
+const FbPlugin = ({ width, height }) => {
 
   useEffect(() => {
     if (window.FB) window.FB.XFBML.parse()
@@ -9,10 +9,10 @@ const FbPlugin = ({ width }) => {
   return (
     <div
       key={width}
-      className="fb-page mt-4 me-3 p-0"
+      className="fb-page p-0"
       data-href="https://www.facebook.com/paivakotiyhdistyspirttiry"
       data-show-posts="true"
-      data-height={window.innerHeight + 100}
+      data-height={height}
       data-width={(width / 6).toFixed(0)}
     >
       <blockquote

@@ -12,7 +12,7 @@ const Values = ({ mobile, portrait }) => {
                                 <div className="row">
                                     <div className="col-8 d-flex flex-column">
                                         <div className="row mt-5 text-end">
-                                            <h3>Päiväkotimme toiminnan arvot ja toimintaperiaatteet</h3>
+                                            <h2>Päiväkotimme toiminnan arvot ja toimintaperiaatteet</h2>
                                         </div>
 
                                         <div className="container mt-5 d-flex justify-content-center">
@@ -41,11 +41,12 @@ const Values = ({ mobile, portrait }) => {
                         <img
                             src={kasvi}
                             alt="Animaatio kasvin kasvusta"
+                            className="tilt-right"
                             style={{
                                 width: !portrait ? '600px' : '400px',
                                 position: 'absolute',
-                                bottom: 0,
-                                left: -200,
+                                bottom: 20,
+                                left: -300,
                                 zIndex: '-999'
                             }}
                         />

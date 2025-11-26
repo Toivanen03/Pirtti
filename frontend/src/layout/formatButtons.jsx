@@ -1,5 +1,4 @@
 import './styles/shiny-button.scss'
-import useWindowWidth from '../hooks/useWindowWidth'
 
 export const getButtonStyle = (endPoint, property, location, activeOtherLink, mobile) => {
     const buttonProperties = {
@@ -35,13 +34,13 @@ export const getButtonStyle = (endPoint, property, location, activeOtherLink, mo
 export const handleEndPoint = (endPoint, mobile, portrait, width) => {
 
     const linkButtonColors = {
-        koti: "#66cccc",
-        arvot: "#ff99cc",
-        yhdistys: "#b399ff",
-        lasten_suusta: "#ff9933",
-        hakemukset: "#99cc99",
-        yhteystiedot: "#99ccff",
-        ajankohtaista: "#ff6666"
+        koti: "#ff6f3c",
+        arvot: "#ff9a76",
+        yhdistys: "#b5651d",
+        lasten_suusta: "#ffb347",
+        hakemukset: "#c85e3c",
+        yhteystiedot: "#d99a6c",
+        ajankohtaista: "#8b3d2e"
     }
 
     const border = getButtonStyle(endPoint, 'style')

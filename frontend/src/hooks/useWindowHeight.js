@@ -9,7 +9,7 @@ const useWindowHeight = () => {
     return () => window.removeEventListener('resizeHeight', handleResize)
   }, [])
 
-  return height
+  return height + 170     // Headerin korkeus
 }
 
 export default useWindowHeight

@@ -2,12 +2,32 @@ import { useEffect, useState } from 'react'
 import InstaLogo from '../assets/insta_with_white.png' // insta_transparent.png
 import FbLogo from '../assets/fb_with_white.png'       // fb_transparent.png
 import PPmodal from '../modals/PPmodal'
+import { FaArrowUp } from 'react-icons/fa'
 
-const Footer = ({ mobile, scrolling, portrait }) => {
+const Footer = ({ mobile, portrait }) => {
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
-  const instaLogoSize = !mobile ? '50px' : '40px'
+  const instaLogoSize = !mobile ? '60px' : '40px'
+
+  const ToTop = () => {
+    return (
+      <FaArrowUp onClick={scrollToTop} 
+        style={{ 
+          border: '1px solid black',
+          borderRadius: '50%',
+          padding: '10px',
+          fontSize: '60px',
+          position: 'fixed',
+          bottom: 40,
+          right: 40,
+          cursor: 'pointer',
+          zIndex: '999',
+          background: 'linear-gradient(180deg, #9b5300ff, #3a1a00ff)',
+          color: 'white'
+        }}/>
+    )
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,8 +50,8 @@ const Footer = ({ mobile, scrolling, portrait }) => {
     <>
       {!mobile ? ( 
         <footer className='d-flex align-items-center justify-content-center content-text'>
-          <div className='col-4 d-flex flex-column justify-content-start'>
-              <span className='ms-3'>© Päiväkotiyhdistys Pirtti ry {`${new Date().getFullYear()}`}</span>
+          <div className='col-5 d-flex flex-column justify-content-center align-items-center'>
+              <h5 className='ms-3'>© Päiväkotiyhdistys Pirtti ry {`${new Date().getFullYear()}`}</h5>
               <span className='ms-3' 
                     style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
                     onClick={() => setShowModal(true)}
@@ -40,13 +60,13 @@ const Footer = ({ mobile, scrolling, portrait }) => {
               </span>
           </div>
         
-          <div className='col-3 d-flex justify-content-start'>
+          <div className='col-1 d-flex justify-content-start'>
             {showScrollTop && (
-              <button className='btn btn-primary ms-5' onClick={scrollToTop}>Sivun alkuun ↑</button>
+              <ToTop />
             )}
           </div>
 
-          <div className="col d-flex flex-row offset-1">
+          <div className="col-6 d-flex flex-row">
             <a
               href="https://www.facebook.com/paivakotiyhdistyspirttiry/"
               target="_blank"
@@ -75,54 +95,50 @@ const Footer = ({ mobile, scrolling, portrait }) => {
           </div>
         </footer>
       ) : (
-        <>
-          {!scrolling &&
-            <footer className='d-flex align-items-center justify-content-center content-text'>
-              <div className='col-7 d-flex flex-column justify-content-start'>
-                  <small>© Päiväkotiyhdistys Pirtti ry</small>
-                  <small style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
-                        onClick={() => setShowModal(true)}
-                  >
-                    Tietosuojaseloste
-                  </small>
-              </div>
+        <footer className='d-flex align-items-center justify-content-center content-text'>
+          <div className='col-7 d-flex flex-column justify-content-start'>
+              <small>© Päiväkotiyhdistys Pirtti ry</small>
+              <small style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+                    onClick={() => setShowModal(true)}
+              >
+                Tietosuojaseloste
+              </small>
+          </div>
 
-              <div className='col-5 d-flex flex-column align-items-end'>
-                <div className="row">
-                  <div className="d-flex gap-4 flex-wrap justify-content-end">
-                    <a
-                      href="https://www.facebook.com/paivakotiyhdistyspirttiry/"
-                      target="_blank"
-                      className="text-decoration-none"
-                    >
-                      <div className="d-flex flex-column justify-content-center align-items-center">
-                        <img 
-                          src={FbLogo}
-                          style={{ width: instaLogoSize, height: instaLogoSize }}
-                        />
-                      </div>
-                    </a>
-
-                    <a
-                      href="https://www.instagram.com/paivakotipirtti/#"
-                      target="_blank"
-                      className="text-decoration-none"
-                    >
-                      <div className="d-flex flex-column justify-content-center align-items-center">
-                        <img 
-                          src={InstaLogo}
-                          style={{ width: instaLogoSize, height: instaLogoSize }}
-                        />
-                      </div>
-                    </a>
+          <div className='col-5 d-flex flex-column align-items-end'>
+            <div className="row">
+              <div className="d-flex gap-4 flex-wrap justify-content-end">
+                <a
+                  href="https://www.facebook.com/paivakotiyhdistyspirttiry/"
+                  target="_blank"
+                  className="text-decoration-none"
+                >
+                  <div className="d-flex flex-column justify-content-center align-items-center">
+                    <img 
+                      src={FbLogo}
+                      style={{ width: instaLogoSize, height: instaLogoSize }}
+                    />
                   </div>
+                </a>
 
-                  <div className="col-1" />
-                </div>
+                <a
+                  href="https://www.instagram.com/paivakotipirtti/#"
+                  target="_blank"
+                  className="text-decoration-none"
+                >
+                  <div className="d-flex flex-column justify-content-center align-items-center">
+                    <img 
+                      src={InstaLogo}
+                      style={{ width: instaLogoSize, height: instaLogoSize }}
+                    />
+                  </div>
+                </a>
               </div>
-            </footer>
-          }
-        </>
+
+              <div className="col-1" />
+            </div>
+          </div>
+        </footer>
       )}
       <PPmodal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} />
     </>

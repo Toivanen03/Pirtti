@@ -49,7 +49,7 @@ const Applications = ({ setConfirmTitle, setOnConfirm, mobile, portrait }) => {
         <>
             {!mobile ? (
                 <>
-                    <div className="container-fluid h-100 p-0 d-flex justify-content-center content content-text mt-5" style={{ width: '100vw' }}>
+                    <div className="container-fluid p-0 d-flex justify-content-center content-text mt-5" style={{ width: '100vw' }}>
                         <div className="container applications-container text-center">
                             <div className="row">
                                 {formType === null && <h2 className="mt-4 mb-4">Hakemukset</h2>}

@@ -66,12 +66,8 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
-      const isAtBottom =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight -20
 
-      if (isAtBottom) {
-        setScrolling(false)
-      } else if (currentScrollY > lastScrollY && currentScrollY > 80) {
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setScrolling(true)
       } else if (currentScrollY < lastScrollY) {
         setScrolling(false)

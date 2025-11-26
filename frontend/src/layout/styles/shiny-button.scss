@@ -1,40 +1,26 @@
 @use "sass:list";
 @use "sass:math";
+@use "sass:color";
 
 $colors: (
-    #66cccc,
-    #99ccff,
-    #b399ff,
-    #ff9933,
-    #ff6666,
-    #ff99cc,
-    #99cc99
+    rgb(248, 225, 17),
+    rgb(6, 221, 17),
+    rgb(255, 138, 28)
 );
 
-@keyframes color-cycle {
-    @for $i from 1 through list.length($colors) {
-        $count: list.length($colors);
-        $pct: math.div(($i - 1) * 100%, $count);
-        $color: list.nth($colors, $i);
-
-        #{$pct} {
-            --cycle-color: #{$color};
-        }
-    }
-
-    100% {
-        --cycle-color: #{list.nth($colors, 1)};
-    }
+@keyframes color-fade {
+  0%   { --cycle-opacity: 0; }
+  50%  { --cycle-opacity: 1; }
+  100% { --cycle-opacity: 0; }
 }
 
 @function gradient-dynamic() {
-    @return conic-gradient(
-        from 0deg,
-        transparent 0%,
-        #fff 10%,
-        var(--cycle-color) 20% 40%,
-        transparent 50%
-    );
+  @return conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #ffcd8a 10% 30%,
+    transparent 50%
+  );
 }
 
 .shiny-button,
@@ -54,7 +40,7 @@ $colors: (
         padding: 3px;
         mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) border-box;
         mask-composite: exclude;
-                    overflow: hidden;
+        overflow: hidden;
 
         .border-glow {
             background: gradient-dynamic();
@@ -65,10 +51,10 @@ $colors: (
             height: 500px;
             transform: translate(-50%, -50%);
             transform-origin: 0 0;
-            filter: blur(20px);
+            filter: blur(2px);
             animation: 
-                rotate 3s linear infinite,
-                color-cycle 9s linear infinite;
+                rotate 4s linear infinite,
+                color-fade 4s ease-out infinite;
         }
 
         @keyframes rotate {

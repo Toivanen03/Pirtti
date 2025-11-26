@@ -41,7 +41,7 @@ const Association = ({ mobile, portrait }) => {
                                 </p>
 
                                 <p onClick={() => setShowBossModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
-                                    Lisää tietoa päiväkodin johtajalta.
+                                    Lisää tietoa päiväkodin johtajalta
                                 </p>
                                 <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
                                     Yhdistyksen säännöt
@@ -102,7 +102,7 @@ const Association = ({ mobile, portrait }) => {
                                 />
 
                             <p onClick={() => setShowBossModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
-                                Lisää tietoa päiväkodin johtajalta.
+                                Lisää tietoa päiväkodin johtajalta
                             </p>
                             <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
                                 Yhdistyksen säännöt
