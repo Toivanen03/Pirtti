@@ -1,11 +1,12 @@
-import Liidut from "../assets/images/liidut.jpg"
 import Metsassa from "../assets/images/metsassa.jpg"
 import Hiekkaleikit from "../assets/carousel-images/hiekkaleikit.jpg"
 import Jalat from "../assets/carousel-images/jalat.jpg"
 import BossModal from "../modals/BossModal"
+import BylawsModal from "../modals/BylawsModal"
 import { useState } from "react"
 
 const Association = ({ mobile, portrait }) => {
+    const [showBossModal, setShowBossModal] = useState(false)
     const [showModal, setShowModal] = useState(false)
 
     return (
@@ -39,13 +40,16 @@ const Association = ({ mobile, portrait }) => {
                                     järjestettyä koko päiväkodin porukalle ohjelmaa sekä päivitettyä esimerkiksi leikkivälineitä. 
                                 </p>
 
-                                <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
+                                <p onClick={() => setShowBossModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
                                     Lisää tietoa päiväkodin johtajalta.
+                                </p>
+                                <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
+                                    Yhdistyksen säännöt
                                 </p>
                             </div>
                         </div>
 
-                        <div className="row mt-5 gap-5">
+                        <div className="row gap-5">
                             <div className={portrait ? "col-4 offset-1 me-5" : "col-4 offset-2"}>
                                 <img
                                     src={Metsassa}
@@ -97,14 +101,18 @@ const Association = ({ mobile, portrait }) => {
                                     style={{ maxWidth: "350px" }}
                                 />
 
-                            <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
+                            <p onClick={() => setShowBossModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
                                 Lisää tietoa päiväkodin johtajalta.
+                            </p>
+                            <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
+                                Yhdistyksen säännöt
                             </p>
                         </div>
                     </div>
                 </div>
             )}
-            <BossModal showModal={showModal} setShowModal={setShowModal} mobile={mobile} />
+            <BossModal showModal={showBossModal} setShowModal={setShowBossModal} mobile={mobile} />
+            <BylawsModal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} />
         </>
     )
 }

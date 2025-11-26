@@ -8,6 +8,8 @@ import Quotes from '../models/Quotes.js'
 import { createUserSchema } from './userValidation.js'
 import { createContactsSchema } from './contactsValidation.js'
 import ICPlan from '../models/ICPlan.js'
+import PrivacyPolicy from '../models/PrivacyPolicy.js'
+import Bylaws from '../models/Bylaws.js'
 import { createDayCareFormSchema, createPreSchoolFormSchema } from './formValidation.js'
 import Contacts from '../models/Contacts.js'
 import { handleErrors } from './errorHandler.js'
@@ -241,6 +243,30 @@ const resolvers = {
 
         internalControlDocument: handleErrors(async () => {
             const doc = await ICPlan.findOne()
+            if (!doc) return null
+
+            const file = {
+                pdf: doc.pdf.toString('base64'),
+                filename: doc.filename
+            }
+
+            return file
+        }),
+
+        privacyPolicyDocument: handleErrors(async () => {
+            const doc = await PrivacyPolicy.findOne()
+            if (!doc) return null
+
+            const file = {
+                pdf: doc.pdf.toString('base64'),
+                filename: doc.filename
+            }
+
+            return file
+        }),
+
+        bylawsDocument: handleErrors(async () => {
+            const doc = await Bylaws.findOne()
             if (!doc) return null
 
             const file = {
@@ -578,6 +604,60 @@ const resolvers = {
             await ICPlan.deleteMany({})
 
             const saved = await ICPlan.create({
+                filename,
+                pdf: pdfBuffer,
+                contentType: "application/pdf",
+                updatedAt: new Date()
+            })
+
+            return {
+                filename: saved.filename,
+                pdf: saved.pdf.toString("base64"),
+            }
+        }),
+
+        uploadPrivacyPolicy: handleErrors(async (_, { file }, context) => {
+            requireAdmin(context.currentUser)
+
+            const { createReadStream, filename } = await file
+
+            const stream = createReadStream()
+            const chunks = []
+            for await (const chunk of stream) {
+                chunks.push(chunk)
+            }
+            const pdfBuffer = Buffer.concat(chunks)
+
+            await PrivacyPolicy.deleteMany({})
+
+            const saved = await PrivacyPolicy.create({
+                filename,
+                pdf: pdfBuffer,
+                contentType: "application/pdf",
+                updatedAt: new Date()
+            })
+
+            return {
+                filename: saved.filename,
+                pdf: saved.pdf.toString("base64"),
+            }
+        }),
+
+        uploadBylaws: handleErrors(async (_, { file }, context) => {
+            requireAdmin(context.currentUser)
+
+            const { createReadStream, filename } = await file
+
+            const stream = createReadStream()
+            const chunks = []
+            for await (const chunk of stream) {
+                chunks.push(chunk)
+            }
+            const pdfBuffer = Buffer.concat(chunks)
+
+            await Bylaws.deleteMany({})
+
+            const saved = await Bylaws.create({
                 filename,
                 pdf: pdfBuffer,
                 contentType: "application/pdf",

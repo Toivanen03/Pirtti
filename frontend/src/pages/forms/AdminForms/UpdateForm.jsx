@@ -6,6 +6,8 @@ import ContactUpdate from "./UpdateForms/ContactUpdate"
 import UpdateQuotes from "./UpdateForms/UpdateQuotes"
 import UpdateTopics from "./UpdateForms/UpdateCurrentTopics"
 import InternalControlPlan from "./UpdateForms/InternalControlPlan"
+import UploadPrivacyPolicy from "./UpdateForms/PrivacyPolicy"
+import UploadBylaws from "./UpdateForms/UpdateBylaws"
 import { runMutation } from "../../../utils/runMutation"
 
 const contactFields = {
@@ -263,10 +265,38 @@ const UpdateForm = ({ setConfirmTitle, setFormType, portrait }) => {
                         portrait={portrait} 
                     />
                 </Row>
-                <Row className="mt-5">
-                    {portrait ? <h5 className="text-start ms-3">Omavalvontasuunnitelman lataus</h5> : <h4 className="text-start ms-3">Omavalvontasuunnitelman lataus</h4>}
-                    <InternalControlPlan setConfirmTitle={setConfirmTitle} portrait={portrait} />
+
+                <Row className="mt-5 text-center">
+                    {portrait ? <h3>Tiedostojen lataus</h3> : <h2>Tiedostojen lataus</h2>}
                 </Row>
+
+                <Row className="mt-4">
+                    <Col>
+                        {portrait ? <h5 className="text-center">Omavalvontasuunnitelman lataus</h5> : <h4 className="text-center">Omavalvontasuunnitelman lataus</h4>}
+                        <InternalControlPlan setConfirmTitle={setConfirmTitle} />
+                    </Col>
+
+                    <Col>
+                        {portrait ? <h5 className="text-center">Tietosuojaselosteen lataus</h5> : <h4 className="text-center">Tietosuojaselosteen lataus</h4>}
+                        <UploadPrivacyPolicy setConfirmTitle={setConfirmTitle} />
+                    </Col>
+
+                    {!portrait && 
+                        <Col>
+                            <h4 className="text-center">Yhdistyksen sääntöjen lataus</h4>
+                            <UploadBylaws setConfirmTitle={setConfirmTitle} />
+                        </Col>
+                    }
+                </Row>
+
+                {portrait &&
+                    <Row className="mt-5">
+                        <Col className="col-6 align-items-start">
+                            <h5>Yhdistyksen sääntöjen lataus</h5>
+                            <UploadBylaws setConfirmTitle={setConfirmTitle} />
+                        </Col>    
+                    </Row>
+                }
             </div>
         </>
     )

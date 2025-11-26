@@ -1,12 +1,12 @@
 import {Form, Row, Col, Button } from 'react-bootstrap'
 import { useRef, useState } from 'react'
-import { UPLOAD_INTERNAL_CONTROL } from '../../../../queries/queries'
+import { UPLOAD_BYLAWS } from '../../../../queries/queries'
 import { useMutation } from '@apollo/client/react'
 
-const InternalControlPlan = ({ setConfirmTitle }) => {
+const UploadBylaws = ({ setConfirmTitle }) => {
     const fileFormRef = useRef()
     const [file, setFile] = useState(null)
-    const [uploadInternalControl] = useMutation(UPLOAD_INTERNAL_CONTROL)
+    const [uploadBylaws] = useMutation(UPLOAD_BYLAWS)
 
     const handleFileChange = (e) => {
         if (e.target.value.toLowerCase().endsWith('.pdf')) {
@@ -23,9 +23,9 @@ const InternalControlPlan = ({ setConfirmTitle }) => {
         if (!file) return
 
         try {
-            const { data } = await uploadInternalControl({ variables: { file } })
+            const { data } = await uploadBylaws({ variables: { file } })
             if (data && !data.error) {
-                setConfirmTitle(`${data.uploadInternalControl.filename} tallennettu.`)
+                setConfirmTitle(`${data.uploadBylaws.filename} tallennettu.`)
                 setFile(null)
                 fileFormRef.current.reset()
             } 
@@ -62,4 +62,4 @@ const InternalControlPlan = ({ setConfirmTitle }) => {
     )
 }
 
-export default InternalControlPlan
+export default UploadBylaws

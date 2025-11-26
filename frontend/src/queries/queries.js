@@ -301,3 +301,39 @@ export const DELETE_TOPIC = gql`
     }
   }
 `
+
+export const UPLOAD_PRIVACY_POLICY = gql`
+  mutation uploadPrivacyPolicy($file: Upload!) {
+    uploadPrivacyPolicy(file: $file) {
+      filename
+      pdf
+    }
+  }
+`
+
+export const GET_PRIVACY_POLICY = gql`
+  query privacyPolicyDocument {
+    privacyPolicyDocument {
+      filename
+      pdf
+    }
+  }
+`
+
+export const UPLOAD_BYLAWS = gql`
+  mutation uploadBylaws($file: Upload!) {
+    uploadBylaws(file: $file) {
+      filename
+      pdf
+    }
+  }
+`
+
+export const GET_BYLAWS = gql`
+  query bylawsDocument {
+    bylawsDocument {
+      filename
+      pdf
+    }
+  }
+`

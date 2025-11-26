@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import InstaLogo from '../assets/insta_with_white.png' // insta_transparent.png
 import FbLogo from '../assets/fb_with_white.png'       // fb_transparent.png
+import PPmodal from '../modals/PPmodal'
 
 const Footer = ({ mobile, scrolling, portrait }) => {
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   const instaLogoSize = !mobile ? '50px' : '40px'
 
@@ -28,8 +30,14 @@ const Footer = ({ mobile, scrolling, portrait }) => {
     <>
       {!mobile ? ( 
         <footer className='d-flex align-items-center justify-content-center content-text'>
-          <div className='col-4 d-flex justify-content-start'>
+          <div className='col-4 d-flex flex-column justify-content-start'>
               <span className='ms-3'>© Päiväkotiyhdistys Pirtti ry {`${new Date().getFullYear()}`}</span>
+              <span className='ms-3' 
+                    style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+                    onClick={() => setShowModal(true)}
+              >
+                Tietosuojaseloste
+              </span>
           </div>
         
           <div className='col-3 d-flex justify-content-start'>
@@ -70,8 +78,13 @@ const Footer = ({ mobile, scrolling, portrait }) => {
         <>
           {!scrolling &&
             <footer className='d-flex align-items-center justify-content-center content-text'>
-              <div className='col-7 d-flex justify-content-start'>
-                  <span className='ms-3'>© Päiväkotiyhdistys Pirtti ry</span>
+              <div className='col-7 d-flex flex-column justify-content-start'>
+                  <small>© Päiväkotiyhdistys Pirtti ry</small>
+                  <small style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+                        onClick={() => setShowModal(true)}
+                  >
+                    Tietosuojaseloste
+                  </small>
               </div>
 
               <div className='col-5 d-flex flex-column align-items-end'>
@@ -111,6 +124,7 @@ const Footer = ({ mobile, scrolling, portrait }) => {
           }
         </>
       )}
+      <PPmodal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} />
     </>
   )
 }

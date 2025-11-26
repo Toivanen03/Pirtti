@@ -185,6 +185,8 @@ const typeDefs = gql`
     getTopics: [Topic]
     quotes: Quotes
     internalControlDocument: InternalControl
+    privacyPolicyDocument: PrivacyPolicy
+    bylawsDocument: Bylaws
   }
 
   input SearchInput {
@@ -240,6 +242,16 @@ const typeDefs = gql`
     pdf: String!
   }
 
+  type PrivacyPolicy {
+    filename: String!
+    pdf: String!
+  }
+
+  type Bylaws {
+    filename: String!
+    pdf: String!
+  }
+
   type Mutation {
     login(email: String!, password: String!): Token
     createUser(email: String!, password: String!, admin: Boolean!, notifications: Boolean): User
@@ -257,6 +269,8 @@ const typeDefs = gql`
     deleteQuote(id: ID!): Quote
     deleteTopic(id: ID!): Topic
     uploadInternalControl(file: Upload!): InternalControl!
+    uploadPrivacyPolicy(file: Upload!): PrivacyPolicy!
+    uploadBylaws(file: Upload!): Bylaws!
   }
 `
 

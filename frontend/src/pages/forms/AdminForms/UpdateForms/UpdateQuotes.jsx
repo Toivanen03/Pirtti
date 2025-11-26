@@ -16,7 +16,7 @@ const UpdateQuotes = ({ handleSubmit, handleChange, formData, setFormData, quote
     }, [formData.quotes_kuvaus])
 
     return (
-        <Col className="d-flex flex-column justify-content-center align-items-center mt-4">
+        <Col className="d-flex flex-column justify-content-center align-items-center mt-4 mb-5">
                 <Form onSubmit={handleSubmit} ref={quotesFormRef} style={{ width: "100%", margin: "0 auto" }}>
                     <div className='d-flex flex-column align-items-center'>
                         <Row style={{ width: "100%" }}>
