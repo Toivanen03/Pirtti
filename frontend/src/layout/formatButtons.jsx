@@ -3,16 +3,16 @@ import './styles/shiny-button.scss'
 export const getButtonStyle = (endPoint, property, location, activeOtherLink, mobile) => {
     const buttonProperties = {
         active: {
-            style: '1px solid lightblue',
+            style: '2px solid orange',
             class: 'active-button shadow h-button shiny-button'
         },
         passive: {
-            style: '1px solid pink',
+            style: '1px solid brown',
             class: mobile ? 'shadow h-button' : 'shadow h-button shiny-button-passive'
         }
     }
 
-    if (activeOtherLink) {
+    if (activeOtherLink === "ajankohtaista") {
         if (endPoint === activeOtherLink) {
             return buttonProperties[property === 'style' ? 'active' : 'active'][property]
         } else {
@@ -21,9 +21,9 @@ export const getButtonStyle = (endPoint, property, location, activeOtherLink, mo
     }
 
     if (location) {
-        if (location.pathname === '/' && endPoint === 'koti') {
+        if ((location.pathname === '/' || location.pathname === '/pirtti') && endPoint === 'koti') {
             return buttonProperties[property === 'style' ? 'active' : 'active'][property]
-        } else if (location.pathname?.split('/')[1] === endPoint) {
+        } else if ((location.pathname?.split('/')[1] === endPoint) || (location.pathname?.split('/pirtti/')[1] === endPoint)) {
             return buttonProperties[property === 'style' ? 'active' : 'active'][property]
         }
     }
@@ -31,8 +31,7 @@ export const getButtonStyle = (endPoint, property, location, activeOtherLink, mo
     return buttonProperties[property === 'style' ? 'passive' : 'passive'][property]
 }
 
-export const handleEndPoint = (endPoint, mobile, portrait, width) => {
-
+export const handleEndPoint = (endPoint, mobile, portrait, width, show) => {
     const linkButtonColors = {
         koti: "#ff6f3c",
         arvot: "#ff9a76",
@@ -43,8 +42,8 @@ export const handleEndPoint = (endPoint, mobile, portrait, width) => {
         ajankohtaista: "#8b3d2e"
     }
 
-    const border = getButtonStyle(endPoint, 'style')
-    
+    const border = getButtonStyle(endPoint, 'style', location, ((endPoint === 'ajankohtaista') && show) ? 'ajankohtaista' : null, mobile)
+
     return {
         backgroundColor: linkButtonColors[endPoint],
         width: width < 1253 ? '10vw' : mobile ? '16vw' : portrait ? '10vw' : '11vw',

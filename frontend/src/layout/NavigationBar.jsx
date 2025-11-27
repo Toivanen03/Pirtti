@@ -102,7 +102,7 @@ const NavigationBar = ({ mobile, setConfirmTitle, setOnConfirm, formatCounter, p
                                 setShow(true)
                                 setUnreadCount(0)
                             }}
-                        style={{ ...handleEndPoint('ajankohtaista', mobile, portrait, width), fontSize: buttonFontSize }}
+                        style={{ ...handleEndPoint('ajankohtaista', mobile, portrait, width, show), fontSize: buttonFontSize }}
                         className={getButtonStyle('ajankohtaista', 'class', location, show ? 'ajankohtaista' : null)}
                     >
                             <div className="border-mask">

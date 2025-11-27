@@ -90,7 +90,7 @@ const Values = ({ mobile, portrait }) => {
                             <img
                                 src={Omenat}
                                 alt="Lapsia omenat käsissään"
-                                className="quotes-image mt-5 mb-5"
+                                className="quotes-image mt-5 mb-5 border border-5 border-light"
                             />
 
                             <div className="row align-items-center justify-content-center mb-5">

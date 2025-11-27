@@ -9,7 +9,7 @@ const FbPlugin = ({ width, height }) => {
   return (
     <div
       key={width}
-      className="fb-page p-0"
+      className="fb-page me-3"
       data-href="https://www.facebook.com/paivakotiyhdistyspirttiry"
       data-show-posts="true"
       data-height={height}

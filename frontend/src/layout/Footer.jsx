@@ -20,7 +20,7 @@ const Footer = ({ mobile, portrait }) => {
           fontSize: '60px',
           position: 'fixed',
           bottom: 40,
-          right: 40,
+          right: mobile ? '40%' : 40,
           cursor: 'pointer',
           zIndex: '999',
           background: 'linear-gradient(180deg, #9b5300ff, #3a1a00ff)',
@@ -103,6 +103,12 @@ const Footer = ({ mobile, portrait }) => {
               >
                 Tietosuojaseloste
               </small>
+          </div>
+
+          <div className='col-1 d-flex justify-content-start'>
+            {showScrollTop && (
+              <ToTop />
+            )}
           </div>
 
           <div className='col-5 d-flex flex-column align-items-end'>

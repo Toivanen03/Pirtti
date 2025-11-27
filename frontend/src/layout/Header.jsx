@@ -3,7 +3,6 @@ import MobileNavigation from "./Mobile/MobileNavigation"
 import { FaSignOutAlt } from 'react-icons/fa'
 import { useContext } from "react"
 import { AuthContext } from "../contexts/AuthContext"
-import useIsMobile from "../hooks/useIsMobile"
 import { Row, Col } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 
@@ -18,9 +17,8 @@ pulse.innerHTML = `
 `
 document.head.appendChild(pulse)
 
-const Header = ({ setConfirmTitle, setOnConfirm, portrait, scrolling }) => {
+const Header = ({ setConfirmTitle, setOnConfirm, mobile, portrait, scrolling }) => {
   const { logout, isLoggedIn, currentUser } = useContext(AuthContext)
-  const mobile = useIsMobile()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -30,7 +28,7 @@ const Header = ({ setConfirmTitle, setOnConfirm, portrait, scrolling }) => {
     })
   }
 
-  const formatCounter = (value) => value > 0 ? (
+  const formatCounter = (value, info) => value > 0 ? (
     <span style={{
       display: 'inline-flex',
       justifyContent: 'center',
@@ -41,11 +39,11 @@ const Header = ({ setConfirmTitle, setOnConfirm, portrait, scrolling }) => {
       borderRadius: '50%',
       width: '24px',
       height: '24px',
-      fontSize: '18px',
-      position: 'relative',
-      padding: '10px',
-      animation: 'pulse 1s infinite',
-      marginLeft: '6px'
+      fontSize: info ? '14px' : '18px',
+      position: mobile && !info ? 'absolute' : 'relative',
+      padding: info ? 0 : '10px',
+      animation: info ? 'none' : 'pulse 1s infinite',
+      marginLeft: info ? 0 : '6px'
     }}>{value}</span>
   ) : null
 

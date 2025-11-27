@@ -86,7 +86,7 @@ function App() {
         {!loaded && <div className="loader-overlay"><Loader /></div>}
         <div className="app-wrapper">
           <main className="main-content">
-            <Header setConfirmTitle={setConfirmTitle} setOnConfirm={setOnConfirm} portrait={portrait} scrolling={scrolling} />
+            <Header setConfirmTitle={setConfirmTitle} setOnConfirm={setOnConfirm} mobile={mobile} portrait={portrait} scrolling={scrolling} />
             <Routes>
               {!mobile && <Route path="/admin" element={<RequireAdmin><Admin setConfirmTitle={setConfirmTitle} setOnConfirm={setOnConfirm} portrait={portrait} /></RequireAdmin>} />}
               <Route path="/" element={<Home mobile={mobile} consent={consent} portrait={portrait} />} />

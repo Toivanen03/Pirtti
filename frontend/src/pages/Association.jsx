@@ -85,7 +85,7 @@ const Association = ({ mobile, portrait }) => {
                             <img
                                 src={Hiekkaleikit}
                                 alt="Lapsia hiekkalaatikolla"
-                                className="quotes-image tilt-right mt-4 mb-5"
+                                className="quotes-image tilt-right mt-4 mb-5 border border-5 border-light p-0"
                                 style={{ maxWidth: '300px'}}
                             />
 
@@ -97,7 +97,7 @@ const Association = ({ mobile, portrait }) => {
                                                             <img
                                     src={Metsassa}
                                     alt="Lapsia metsäretkellä"
-                                    className="quotes-image tilt-left mt-4 mb-5"
+                                    className="quotes-image tilt-left mt-4 mb-5 border border-5 border-light p-0"
                                     style={{ maxWidth: "350px" }}
                                 />
 

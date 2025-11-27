@@ -45,7 +45,7 @@ const Quotes = ({ mobile }) => {
 
             <Row>
               <Col xs={4} className="d-flex flex-column mt-3">
-                <img src={vesileikkeja} alt="Vesileikkejä" className="quotes-image tilt-left" />
+                <img src={vesileikkeja} alt="Vesileikkejä" className="quotes-image tilt-left border border-5 border-light" />
               </Col>
 
               <Col xs={8} className="text-start">
@@ -105,7 +105,7 @@ const Quotes = ({ mobile }) => {
 
               <Col xs={4}>
                 <Row className="d-flex flex-row align-items-start justify-content-center">
-                  <img src={pollo} alt="Pöllö" className="quotes-image tilt-right" />
+                  <img src={pollo} alt="Pöllö" className="quotes-image tilt-right border border-5 border-light p-0" />
                 </Row>
               </Col>
             </Row>
@@ -135,7 +135,7 @@ const Quotes = ({ mobile }) => {
           </Row>
 
           <Row className="justify-content-center mt-5 mb-5">
-            <img src={keinumassa} alt="Lapsi keinumassa" className="quotes-image tilt-right" style={{ maxWidth: '70vw' }} />
+            <img src={keinumassa} alt="Lapsi keinumassa" className="quotes-image tilt-right border border-5 border-light p-0" style={{ maxWidth: '70vw' }} />
           </Row>
 
           <Row>
@@ -152,7 +152,7 @@ const Quotes = ({ mobile }) => {
           </Row>
 
           <Row className="justify-content-center mt-5 mb-5">
-            <img src={pollo} alt="Pöllö" className="quotes-image tilt-left" />
+            <img src={pollo} alt="Pöllö" className="quotes-image tilt-left border border-5 border-light p-0" />
           </Row>
 
           <Row>
@@ -169,7 +169,7 @@ const Quotes = ({ mobile }) => {
           </Row>
 
           <Row className="justify-content-center mt-5">
-            <img src={hiekkalaatikko} alt="Leluja hiekkalaatikolla" className="quotes-image tilt-right" style={{ maxWidth: '70vw' }} />
+            <img src={hiekkalaatikko} alt="Leluja hiekkalaatikolla" className="quotes-image tilt-right border border-5 border-light p-0" style={{ maxWidth: '70vw' }} />
           </Row>
         </Container>
       )}

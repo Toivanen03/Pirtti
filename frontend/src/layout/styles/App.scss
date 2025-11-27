@@ -167,15 +167,17 @@ header {
   }
 
   .header-content {
-    width: 100vw;
-    text-align: center;
+    @media (min-width: 961px) {
+      width: 100vw;
+      text-align: center;
 
-    h1 {
-      font-family: 'GH-font', sans-serif;
-      font-size: 4rem;
-      line-height: 1.2;
-      font-weight: bold;
-      -webkit-text-stroke: 0.1px black;
+      h1 {
+        font-family: 'GH-font', sans-serif;
+        font-size: 4rem;
+        line-height: 1.2;
+        font-weight: bold;
+        -webkit-text-stroke: 0.1px black;
+      }
     }
 
     .active-button {

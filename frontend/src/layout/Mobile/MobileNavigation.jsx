@@ -6,6 +6,7 @@ import { useLocation, Link } from "react-router-dom"
 import useIsMobile from "../../hooks/useIsMobile"
 import { useState, useEffect, useRef } from "react"
 import NewTopics from "../NewTopics"
+import { getAnimation } from "../formatButtons"
 
 const MobileNavigation = ({ setConfirmTitle, setOnConfirm, formatCounter }) => {
     const [expanded, setExpanded] = useState(false)
@@ -44,7 +45,7 @@ const MobileNavigation = ({ setConfirmTitle, setOnConfirm, formatCounter }) => {
             <Navbar
                 expand={false}
                 expanded={expanded}
-                className="mobile-navbar"
+                className="mobile-navbar header-content"
                 ref={navRef}
             >
                 <Container fluid>
@@ -58,7 +59,7 @@ const MobileNavigation = ({ setConfirmTitle, setOnConfirm, formatCounter }) => {
                             <FaBars size={'30px'} />
                             {!expanded && unreadCount > 0 && (
                                 <span className="counter-pulse">
-                                    {formatCounter(unreadCount)}
+                                    {formatCounter(unreadCount, 'mobNavi')}
                                 </span>
                             )}
                         </Navbar.Toggle>
@@ -79,17 +80,17 @@ const MobileNavigation = ({ setConfirmTitle, setOnConfirm, formatCounter }) => {
                                 >
                                     <Button
                                         style={{
-                                            ...handleEndPoint(item.key, mobile, location),
+                                            ...handleEndPoint(item.key, mobile, null, null),
                                             fontSize: buttonFontSize,
                                             width: "70%",
                                         }}
-                                        className={getButtonStyle(item.key, "class", location, show, mobile)}
+                                        className={getButtonStyle(item.key, 'class', location, show ? 'ajankohtaista' : null)}
                                     >
                                         <div className="border-mask">
                                             <div className="border-glow"></div>
                                         </div>
                                         {item.text}
-                                        {getButtonStyle(item.key, 'class', location, show ? 'ajankohtaista' : null, mobile).includes('active-button')}
+                                        {getButtonStyle(item.key, 'class', location, show ? 'ajankohtaista' : null, mobile).includes('active-button') && getAnimation()}
                                     </Button>
                                 </Nav.Link>
                             ))}
@@ -102,7 +103,7 @@ const MobileNavigation = ({ setConfirmTitle, setOnConfirm, formatCounter }) => {
                                         setUnreadCount(0)
                                     }}
                                     style={{
-                                        ...handleEndPoint("ajankohtaista", mobile),
+                                        ...handleEndPoint("ajankohtaista", mobile, null, null, show),
                                         fontSize: buttonFontSize,
                                         width: "70%",
                                     }}
