@@ -33,8 +33,11 @@
 
 // Värit
 $dark: rgb(90, 41, 0);
-$light: rgb(230, 230, 230);
+$light: linear-gradient(130deg, rgba(255, 155, 118, 0.301), rgba(255, 158, 48, 0.808));
 $bg-col: linear-gradient(235deg, #ff9e30, #d35f00);             // Header && footer taustaväri
+$bordercolor: #c85e3c;
+$header-font-color: rgb(255, 220, 174);
+$bb-color: linear-gradient(135deg, orange, brown);
 
 $header-height: 170px;
 $footer-height: 120px;
@@ -50,11 +53,19 @@ body {
   padding-top: calc($header-height * 0.8);
   overflow-y: auto;
   overflow-x: hidden;
-  background: linear-gradient(130deg, rgba(255, 155, 118, 0.5), rgba(255, 158, 48, 0.5));
+  background: $light;
   height: 100%;
 
   @media (max-width: 960px) {
     padding-top: calc($header-height * 0.55);
+  }
+
+  .admin-forms {
+    background: $light;
+
+    .btn-outline-info {
+      background-color: white;
+    }
   }
 }
 
@@ -75,13 +86,179 @@ body.disabled-scroll {
   flex-direction: column;
   min-height: 100vh;
 
+  .light-border {
+    border-color: $bordercolor !important;
+  }
+
+  @media (min-width: 961px) {
+    .light-border:hover {
+      transform: scale(1.5);
+      z-index: 9999;
+    }
+  }
+
   .main-content {
     flex: 1;
+
+    .values-list {
+      ul li {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeSlide 2.5s forwards;
+      }
+
+      ul li:nth-child(1) { animation-delay: 0.1s; }
+      ul li:nth-child(2) { animation-delay: 0.2s; }
+      ul li:nth-child(3) { animation-delay: 0.3s; }
+      ul li:nth-child(4) { animation-delay: 0.4s; }
+      ul li:nth-child(5) { animation-delay: 0.5s; }
+    }
+
+    .ass-link {
+      p {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeSlide 2.5s forwards;
+      }
+
+      p:nth-child(1) { animation-delay: 1s; }
+      p:nth-child(2) { animation-delay: 2s; }
+    }
+
+    @keyframes fadeSlide {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
     .content {
       height: 100%;
       overflow-x: hidden;
       overflow-y: auto;
+    }
+
+    .quotes {
+      .book {
+        width: 600px;
+        height: 540px;
+        perspective: 2000px;
+        position: relative;
+        left: 300px;
+      }
+
+      .page {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        transform-origin: left;
+        transform-style: preserve-3d;
+        transition: transform 1s ease;
+        border-radius: 5px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      }
+
+      .front, .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 5px;
+        box-sizing: border-box;
+        padding: 20px;
+      }
+
+      .front {
+        background: #fff;
+      }
+
+      .back {
+        background: #f0f0f0;
+        transform: rotateY(180deg);
+      }
+
+      .page.flipped {
+        transform: rotateY(-180deg);
+        z-index: 0;
+      }
+
+      .page:nth-child(1) { z-index: 4; }
+      .page:nth-child(2) { z-index: 3; }
+      .page:nth-child(3) { z-index: 2; }
+      .page:nth-child(4) { z-index: 1; }
+
+      .book-button {
+        margin-top: 40px;
+        position: relative;
+        width: 12vw;
+        height: 6vh;
+        font-size: 24px;
+        padding: 10px 30px;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 50px;
+        overflow: hidden;
+        letter-spacing: 2px;
+        background: $bb-color;
+        box-shadow: 0 0 10px rgba(255, 208, 0, 0.8), 0 0 60px rgba(133, 86, 0, 0.6);
+        transition: transform 0.2s ease;
+      }
+
+      .book-button:hover {
+        transform: scale(1.05);
+      }
+
+      .book-button::before,
+      .book-button::after {
+        content: "";
+        position: absolute;
+        left: -50%;
+        width: 200%;
+        height: 300%;
+        background: radial-gradient(circle, rgba(255,255,255,0.25) 20%, transparent 70%);
+        animation: wave 6s linear infinite;
+        border-radius: 40%;
+        z-index: 1;
+      }
+
+      .book-button::after {
+        animation-duration: 8s;
+        opacity: 0.6;
+      }
+
+      .shine {
+        position: absolute;
+        top: 0;
+        left: -75%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(120deg, rgba(255,255,255,0.3) 0%, transparent 60%);
+        transform: skewX(-25deg);
+        animation: shineMove 4s infinite;
+        z-index: 2;
+      }
+
+      @keyframes wave {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10%) rotate(180deg);
+        }
+        100% {
+          translate: translateY(0) rotate(360deg);
+        }
+      }
+
+      @keyframes shineMove {
+        0% {
+          left: -75%;
+        }
+        100% {
+          left: 125%;
+        }
+      }
     }
   }
 
@@ -157,8 +334,8 @@ header {
       font-family: 'GH-font', sans-serif;
       font-size: 2.5rem;
       line-height: 1.2;
-      font-weight: bold;
-      -webkit-text-stroke: 0.1px black;
+      font-weight: bolder;
+      color: $header-font-color;
 
       @media (max-width: 960px) {
         font-size: 1.8rem;
@@ -175,8 +352,8 @@ header {
         font-family: 'GH-font', sans-serif;
         font-size: 4rem;
         line-height: 1.2;
-        font-weight: bold;
-        -webkit-text-stroke: 0.1px black;
+        color: $header-font-color;
+        margin-top: 20px;
       }
     }
 
@@ -211,6 +388,7 @@ header {
 
       &:hover {
         opacity: 0.7;
+        transform: scale(1.2);
       }
     }
   }
@@ -257,19 +435,24 @@ header {
     }
 
     img {
-      width: 300px;
+      width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 20px;
+      border: 2px solid $bordercolor;
     }
   }
 }
 
-.applications-container {
-
+.applications-container {           // Hakemukset
+  .applications-buttons {
+    button:hover {
+      transform: scale(1.4);
+    }
+  }
   .mobile-form {
     margin: 10px;
-    background-color: $light;
+    background-color: lightgray;
     border-radius: 10px;
     text-align: center;
     justify-content: center;
@@ -279,7 +462,7 @@ header {
   
   .form-area {
     margin: 20px;
-    background-color: $light;
+    background-color: lightgray;
     border-radius: 10px;
     text-align: center;
     justify-content: center;
@@ -361,7 +544,7 @@ footer {
 .quotes-image {
   margin-top: 20px;
   margin-bottom: 20px;
-  max-width: 20vw;
+  max-width: 18vw;
   border-radius: 30px;
 
   @media (max-width: 960px) {
@@ -448,9 +631,7 @@ footer {
     font-family: 'GH-font', sans-serif;
     font-size: 4rem;
     line-height: 1.2;
-    color: $light;
-    font-weight: bold;
-    -webkit-text-stroke: 0.1px black;
+    color: $header-font-color;
 
     @media (max-width: 960px) {
       font-size: 1.8rem;
@@ -464,7 +645,6 @@ footer {
     border-radius: 50px;
     box-sizing: border-box;
     position: relative;
-
     mask: conic-gradient(#000 0 0) content-box exclude,conic-gradient(#000 0 0);
     filter: blur(2px);
   }

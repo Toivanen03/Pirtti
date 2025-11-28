@@ -1,4 +1,4 @@
-import { Row, Col, Container } from 'react-bootstrap'
+import { Row, Col, Container, Button } from 'react-bootstrap'
 import pollo from '../assets/images/pollo.jpg'
 import vesileikkeja from '../assets/images/vesileikkeja.jpg'
 import keinumassa from '../assets/images/keinumassa.jpg'
@@ -17,6 +17,9 @@ const Quotes = ({ mobile }) => {
   const [quotes_1, setQuotes_1] = useState([])
   const [quotes_2, setQuotes_2] = useState([])
   const [quotes_3, setQuotes_3] = useState([])
+  const [currentPage, setCurrentPage] = useState(0)
+
+  const pages = document.querySelectorAll('.page')
 
   useEffect(() => {
     if (!loading && data?.quotes) {
@@ -30,11 +33,21 @@ const Quotes = ({ mobile }) => {
     }
   }, [data, loading])
 
+  const flipPage = () => {
+    if (currentPage < pages.length) {
+      pages[currentPage].classList.add('flipped')
+      setCurrentPage(currentPage + 1)
+    } else {
+      pages.forEach(p => p.classList.remove('flipped'))
+      setCurrentPage(0)
+    }
+  }
+
   return (
     <>
       {!mobile ? (
         <Container fluid className="h-100 p-0 d-flex align-items-center justify-content-center content mt-5 mb-5 content-text" style={{ width: '100vw' }}>
-          <Container className="text-center">
+          <Container className="text-center quotes">
             <Row className='mb-3'>
               <h2 className="quotes-headline">Lasten suusta kuultua</h2>
             </Row>
@@ -43,21 +56,31 @@ const Quotes = ({ mobile }) => {
               <strong>{description}</strong>
             </Row>
 
-            <Row>
-              <Col xs={4} className="d-flex flex-column mt-3">
-                <img src={vesileikkeja} alt="Vesileikkejä" className="quotes-image tilt-left border border-5 border-light" />
-              </Col>
+            <Row className='d-flex align-items-center justify-content-center'>
+              <div className='book' id='book'>
+                <div className='page'>
+                  <div className="front">
+                    <h3 className="quotes-header mb-4 mt-4">{headline_1}</h3>
+                    <img src={vesileikkeja} alt="Vesileikkejä" className="quotes-image tilt-left border border-2 light-border" />
+                  </div>
+                  <div className="back"></div>
+                </div>
 
-              <Col xs={8} className="text-start">
-                <h3 className="quotes-header mb-4 mt-4">{headline_1}</h3>
-                <Row className="d-flex flex-row text-start">
-                  {quotes_1.map(quote =>
-                    <ul key={quote.id}>
-                      <li>{quote.text}</li>
-                    </ul>
-                  )}
-                </Row>
-              </Col>
+                {quotes_1.map(quote =>
+                  <div className="text-start page" key={quote.id}>
+                    <div className="d-flex flex-row text-start front">
+                        <p>{quote.text}</p>
+                      </div>
+                    <div className='back' />
+                  </div>
+                )}
+              </div>
+            </Row>
+            <Row className='d-flex align-items-center justify-content-center'>
+              <Button className='book-button' onClick={() => flipPage()}>
+                <span className='shine' />
+                Käännä sivua
+              </Button>
             </Row>
 
             <Row className="mt-5 p-0">
@@ -105,7 +128,7 @@ const Quotes = ({ mobile }) => {
 
               <Col xs={4}>
                 <Row className="d-flex flex-row align-items-start justify-content-center">
-                  <img src={pollo} alt="Pöllö" className="quotes-image tilt-right border border-5 border-light p-0" />
+                  <img src={pollo} alt="Pöllö" className="quotes-image tilt-right border border-2 light-border p-0" />
                 </Row>
               </Col>
             </Row>
@@ -135,7 +158,7 @@ const Quotes = ({ mobile }) => {
           </Row>
 
           <Row className="justify-content-center mt-5 mb-5">
-            <img src={keinumassa} alt="Lapsi keinumassa" className="quotes-image tilt-right border border-5 border-light p-0" style={{ maxWidth: '70vw' }} />
+            <img src={keinumassa} alt="Lapsi keinumassa" className="quotes-image tilt-right border border-2 light-border p-0" style={{ maxWidth: '70vw' }} />
           </Row>
 
           <Row>
@@ -152,7 +175,7 @@ const Quotes = ({ mobile }) => {
           </Row>
 
           <Row className="justify-content-center mt-5 mb-5">
-            <img src={pollo} alt="Pöllö" className="quotes-image tilt-left border border-5 border-light p-0" />
+            <img src={pollo} alt="Pöllö" className="quotes-image tilt-left border border-2 light-border p-0" />
           </Row>
 
           <Row>
@@ -169,7 +192,7 @@ const Quotes = ({ mobile }) => {
           </Row>
 
           <Row className="justify-content-center mt-5">
-            <img src={hiekkalaatikko} alt="Leluja hiekkalaatikolla" className="quotes-image tilt-right border border-5 border-light p-0" style={{ maxWidth: '70vw' }} />
+            <img src={hiekkalaatikko} alt="Leluja hiekkalaatikolla" className="quotes-image tilt-right border border-2 light-border p-0" style={{ maxWidth: '70vw' }} />
           </Row>
         </Container>
       )}

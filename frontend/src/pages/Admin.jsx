@@ -247,19 +247,25 @@ const Admin = ({ setConfirmTitle, setOnConfirm, portrait }) => {
         }}>{value}</span>
     ) : null
 
+    const addButtonStyle = () => {
+        return {
+            fontSize: '18px', padding: '5px', color: 'brown', fontWeight: 'bold'
+        }
+    }
+
     return (
-        <div className="container-fluid h-100 p-0 d-flex align-items-center justify-content-center mb-5" style={{ width: "100vw" }}>
-            <div className="container applications-container text-center p-2 mt-4">
+        <div className="container-fluid h-100 p-0 d-flex align-items-center justify-content-center mb-5 mt-5" style={{ width: "100vw" }}>
+            <div className="container applications-container text-center p-2 mt-3">
                 <Row className="d-flex justify-content-center gap-3">
-                    <Button style={{ ...handleEndPoint('koti'), fontSize: '16px', padding: '5px', color: 'black' }} onClick={() => setFormType(null)}>Hakemukset</Button>
-                    <Button style={{ ...handleEndPoint('arvot'), fontSize: '16px', padding: '5px', color: 'black' }} onClick={() => setFormType("users")}>Käyttäjien hallinta</Button>
-                    <Button style={{ ...handleEndPoint('yhteystiedot'), fontSize: '16px', padding: '5px', color: 'black' }} onClick={() => setFormType("newUser")}>Luo tunnukset</Button>
-                    <Button style={{ ...handleEndPoint('hakemukset'), fontSize: '16px', padding: '5px', color: 'black' }} onClick={() => { setUser(currentUser); setFormType("profile") }}>Oma profiili</Button>
-                    <Button style={{ ...handleEndPoint('lasten_suusta'), fontSize: '16px', padding: '5px', color: 'black' }} onClick={() => setFormType("update")}>Päivitä sivua</Button>
+                    <Button style={{ ...handleEndPoint('arvot'), ...addButtonStyle() }} onClick={() => setFormType(null)}>Hakemukset</Button>
+                    <Button style={{ ...handleEndPoint('yhdistys'), ...addButtonStyle() }} onClick={() => setFormType("users")}>Käyttäjien hallinta</Button>
+                    <Button style={{ ...handleEndPoint('yhteystiedot'), ...addButtonStyle() }} onClick={() => setFormType("newUser")}>Luo tunnukset</Button>
+                    <Button style={{ ...handleEndPoint('hakemukset'), ...addButtonStyle() }} onClick={() => { setUser(currentUser); setFormType("profile") }}>Oma profiili</Button>
+                    <Button style={{ ...handleEndPoint('lasten_suusta'), ...addButtonStyle() }} onClick={() => setFormType("update")}>Päivitä sivua</Button>
                 </Row>
 
                 {formType ? (
-                    <div className="container mt-5 p-4 form-area">
+                    <div className="container p-4 mt-5 form-area admin-forms">
                         {formType === "password" && <ChangePasswordForm setConfirmTitle={setConfirmTitle} setFormType={setFormType} user={user} portrait={portrait} />}
                         {formType === "profile" && <UserProfile setConfirmTitle={setConfirmTitle} setFormType={setFormType} user={currentUser} portrait={portrait} />}
                         {formType === "newUser" && <NewUserForm setConfirmTitle={setConfirmTitle} setFormType={setFormType} portrait={portrait} />}
@@ -267,7 +273,7 @@ const Admin = ({ setConfirmTitle, setOnConfirm, portrait }) => {
                         {formType === "update" && <UpdateForm setConfirmTitle={setConfirmTitle} setFormType={setFormType} portrait={portrait} />}
                     </div>
                 ) : (
-                    <div className="container mt-5 mb-5 p-4 form-area">
+                    <div className="container mt-5 mb-5 p-4 form-area admin-forms">
                         <div style={{ width: portrait ? "100%" : "90%", margin: "0 auto" }}>
                             <Row className="mb-2 align-items-center text-center">
                                 <Col className={ width <= 768 ? "col-2 d-flex justify-content-start" : "col-3 d-flex justify-content-center"}>

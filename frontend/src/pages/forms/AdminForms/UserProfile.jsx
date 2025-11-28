@@ -96,7 +96,7 @@ const UserProfile = ({ setConfirmTitle, setFormType, user, portrait }) => {
         <>
             <div className="d-flex align-items-center justify-content-between position-relative">
                 <h4 className="m-0 position-absolute top-50 start-50 translate-middle">
-                    Käyttäjätunnuksen <span style={{color: 'blue'}}>{user.email}</span> asetukset
+                    Kirjautuneen käyttäjän <span style={{color: 'blue'}}>{user.email}</span> asetukset
                 </h4>
                 <Button 
                     className="ms-auto"

@@ -68,7 +68,7 @@ const Home = ({ consent, mobile, portrait }) => {
                                         <img
                                             src={Metsassa}
                                             alt="Lapset metsässä"
-                                            className="img-fluid rounded-4 border border-5 border-light tilt-left"
+                                            className="img-fluid rounded-4 border border-2 light-border tilt-left"
                                             style={width > 768 ? { maxWidth: "400px" } : { maxWidth: "350px" }}
                                         />
                                     </section>
@@ -80,7 +80,7 @@ const Home = ({ consent, mobile, portrait }) => {
                                             <img
                                                 src={Tehtavat}
                                                 alt="Lapset oppimassa"
-                                                className="img-fluid rounded-4 border border-5 border-light"
+                                                className="img-fluid rounded-4 border border-2 light-border"
                                                 style={{ maxWidth: "300px" }}
                                             />
                                         </section>
@@ -105,7 +105,7 @@ const Home = ({ consent, mobile, portrait }) => {
                                                 <img
                                                     src={Puu}
                                                     alt="Lapsia puun alla"
-                                                    className="img-fluid rounded-4 border border-5 border-light tilt-right"
+                                                    className="img-fluid rounded-4 border border-2 light-border tilt-right"
                                                     style={{ maxWidth: "250px" }}
                                                 />
                                             </section>

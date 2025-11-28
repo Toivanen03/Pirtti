@@ -46,7 +46,7 @@ const MobileHome = ({ width }) => {
                             <img
                                 src={Metsassa}
                                 alt="Lapset metsässä"
-                                className="img-fluid rounded-4 border border-5 border-light mb-3"
+                                className="img-fluid rounded-4 border border-2 light-border mb-3"
                                 style={{ maxWidth: "300px" }}
                             />
                         </section>
@@ -69,7 +69,7 @@ const MobileHome = ({ width }) => {
                             <img
                                 src={Puu}
                                 alt="Lapsia puun alla"
-                                className="img-fluid rounded-4 border border-5 border-light"
+                                className="img-fluid rounded-4 border border-2 light-border"
                                 style={{ maxWidth: "300px" }}
                             />
                         </section>

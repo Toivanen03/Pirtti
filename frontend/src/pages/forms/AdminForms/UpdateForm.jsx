@@ -250,7 +250,7 @@ const UpdateForm = ({ setConfirmTitle, setFormType, portrait }) => {
                         {portrait ? <h5>"Lasten suusta" -osion päivitys</h5> : <h4>"Lasten suusta" -osion päivitys</h4>}
                     </Col>
                     <Col className="col-7 text-start">
-                        <span className="text-info">Kaikkia alla olevia kenttiä <i>ei tarvitse täyttää</i>. Voit muokata sivun kuvaustekstiä muuttamatta muita tietoja, tai vaihtaa yksittäisen lohkon otsikkoa. 
+                        <span>Kaikkia alla olevia kenttiä <i>ei tarvitse täyttää</i>. Voit muokata sivun kuvaustekstiä muuttamatta muita tietoja, tai vaihtaa yksittäisen lohkon otsikkoa. 
                             Vaihtaessasi lohkon otsikkoa <i>tai</i> lisätessäsi uutta lainausta, valitse ensin lohko, johon muutos kohdistuu. Lohko 1 on sivulla ylimpänä.</span>
                     </Col>
                 </Row>

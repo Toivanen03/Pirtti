@@ -14,7 +14,7 @@ const ImageCarousel = ({ home }) => {
         <Carousel fade controls={false} indicators={false} pause={false} className={home ? "home-carousel" : "non-home-carousel"}>
             {images.map((image, i) => (
                 <Carousel.Item key={i} className="carousel-item-hero">
-                    <img src={image} alt={`Kuva ${i + 1}`} className={home ? "carousel-image" : "carousel-image border border-5 border-light"} />
+                    <img src={image} alt={`Kuva ${i + 1}`} className={home ? "carousel-image" : "carousel-image"} />
                 </Carousel.Item>
             ))}
         </Carousel>

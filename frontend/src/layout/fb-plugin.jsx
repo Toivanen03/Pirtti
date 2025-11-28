@@ -12,7 +12,7 @@ const FbPlugin = ({ width, height }) => {
       className="fb-page me-3"
       data-href="https://www.facebook.com/paivakotiyhdistyspirttiry"
       data-show-posts="true"
-      data-height={height}
+      data-height={height + 20}
       data-width={(width / 6).toFixed(0)}
     >
       <blockquote

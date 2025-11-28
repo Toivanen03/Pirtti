@@ -3,11 +3,43 @@ import Hiekkaleikit from "../assets/carousel-images/hiekkaleikit.jpg"
 import Jalat from "../assets/carousel-images/jalat.jpg"
 import BossModal from "../modals/BossModal"
 import BylawsModal from "../modals/BylawsModal"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const Association = ({ mobile, portrait }) => {
     const [showBossModal, setShowBossModal] = useState(false)
     const [showModal, setShowModal] = useState(false)
+    const [text1] = useState("Päiväkotiyhdistyksen hallinnosta ja taloudesta vastaa johtokunta, johon kuuluu puheenjohtajan lisäksi kuusi varsinaista jäsentä ja neljä varajäsentä. Johtokunnan jäsenet ovat päiväkodeissamme hoidossa olevien lasten vanhempia. Johtokunta kokoontuu tarpeen mukaan ja kokouksissa sihteerinä ja asioiden esittelijänä toimii päiväkodin johtaja.")
+    const [text2] = useState("Yhdistyksen kannattajajäseneksi pääsee maksamalla vapaaehtoisen jäsenmaksun. Varoilla saamme järjestettyä koko päiväkodin porukalle ohjelmaa sekä päivitettyä esimerkiksi leikkivälineitä.")
+    const [firstText, setFirstText] = useState("")
+    const [secondText, setSecondText] = useState("")
+    const [read] = useState(sessionStorage.getItem("associationRead"))
+
+    useEffect(() => {
+        let i = 0
+        const interval1 = setInterval(() => {
+            setFirstText(text1.slice(0, i + 1))
+            i++
+
+            if (i >= text1.length) {
+                clearInterval(interval1)
+
+                let j = 0
+
+                const interval2 = setInterval(() => {
+                    setSecondText(text2.slice(0, j + 1))
+                    j++
+
+                    if (j >= text2.length) {
+                        clearInterval(interval2)
+                    }
+                }, 15)
+            }
+        }, 15)
+        return () => {
+            clearInterval(interval1)
+            sessionStorage.setItem("associationRead", "true")
+        }
+    }, [])
 
     return (
         <>
@@ -22,30 +54,28 @@ const Association = ({ mobile, portrait }) => {
                                     <img
                                         src={Hiekkaleikit}
                                         alt="Lapsia hiekkalaatikolla"
-                                        className="img-fluid rounded-4 border border-5 border-light"
+                                        className="img-fluid rounded-4 border border-2 light-border"
                                     />
                                 </div>
                             }
 
                             <div className={portrait ? "col-12 d-flex flex-column justify-content-center text-start mb-5" : "col-7 d-flex flex-column justify-content-center text-start mb-5"}>
-                                <p className="content-text">
-                                    Päiväkotiyhdistyksen hallinnosta ja taloudesta vastaa johtokunta, johon kuuluu puheenjohtajan lisäksi kuusi 
-                                    varsinaista jäsentä ja neljä varajäsentä. Johtokunnan jäsenet ovat päiväkodeissamme hoidossa olevien lasten 
-                                    vanhempia. Johtokunta kokoontuu tarpeen mukaan ja kokouksissa sihteerinä ja asioiden esittelijänä toimii päiväkodin 
-                                    johtaja. 
+                                <p className="content-text" style={{ minHeight: '100px' }}>
+                                    {read ? text1 : firstText}
                                 </p>
 
-                                <p>
-                                    Yhdistyksen kannattajajäseneksi pääsee maksamalla vapaaehtoisen jäsenmaksun. Varoilla saamme 
-                                    järjestettyä koko päiväkodin porukalle ohjelmaa sekä päivitettyä esimerkiksi leikkivälineitä. 
+                                <p style={{ minHeight: '80px' }}>
+                                    {read ? text2 : secondText}
                                 </p>
 
-                                <p onClick={() => setShowBossModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
-                                    Lisää tietoa päiväkodin johtajalta
-                                </p>
-                                <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
-                                    Yhdistyksen säännöt
-                                </p>
+                                <div className={read ? "" : "ass-link"}>
+                                    <p onClick={() => setShowBossModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
+                                        Lisää tietoa päiväkodin johtajalta
+                                    </p>
+                                    <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
+                                        Yhdistyksen säännöt
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
@@ -54,7 +84,7 @@ const Association = ({ mobile, portrait }) => {
                                 <img
                                     src={Metsassa}
                                     alt="Lapsia metsäretkellä"
-                                    className="img-fluid rounded-4 border border-5 border-light tilt-right"
+                                    className="img-fluid rounded-4 border border-2 light-border tilt-right"
                                     style={{ maxWidth: "350px" }}
                                 />   
                             </div>
@@ -63,7 +93,7 @@ const Association = ({ mobile, portrait }) => {
                                 <img
                                     src={Jalat}
                                     alt="Lapsia lepäämässä"
-                                    className="img-fluid rounded-4 border border-5 border-light tilt-left"
+                                    className="img-fluid rounded-4 border border-2 light-border tilt-left"
                                     style={{ maxWidth: "350px" }}
                                 />
                             </div>
@@ -75,38 +105,36 @@ const Association = ({ mobile, portrait }) => {
                     <div className="container text-center">
                         <h2 className="mt-4 mb-4">Yhdistys</h2>
                         <div className="row mb-5 d-flex flex-column align-items-center justify-content-center">
-                            <p className="content-text">
-                                Päiväkotiyhdistyksen hallinnosta ja taloudesta vastaa johtokunta, johon kuuluu puheenjohtajan lisäksi kuusi 
-                                varsinaista jäsentä ja neljä varajäsentä. Johtokunnan jäsenet ovat päiväkodeissamme hoidossa olevien lasten 
-                                vanhempia. Johtokunta kokoontuu tarpeen mukaan ja kokouksissa sihteerinä ja asioiden esittelijänä toimii päiväkodin 
-                                johtaja. 
+                            <p className="content-text" style={{minHeight: '200px'}}>
+                                {read ? text1 : firstText}
                             </p>
 
                             <img
                                 src={Hiekkaleikit}
                                 alt="Lapsia hiekkalaatikolla"
-                                className="quotes-image tilt-right mt-4 mb-5 border border-5 border-light p-0"
+                                className="quotes-image tilt-right mt-4 mb-5 border border-2 light-border p-0"
                                 style={{ maxWidth: '300px'}}
                             />
 
-                            <p>
-                                Yhdistyksen kannattajajäseneksi pääsee maksamalla vapaaehtoisen jäsenmaksun. Varoilla saamme 
-                                järjestettyä koko päiväkodin porukalle ohjelmaa sekä päivitettyä esimerkiksi leikkivälineitä. 
+                            <p style={{ minHeight: '110px'}}>
+                                {read ? text2 : secondText}
                             </p>
 
-                                                            <img
+                                <img
                                     src={Metsassa}
                                     alt="Lapsia metsäretkellä"
-                                    className="quotes-image tilt-left mt-4 mb-5 border border-5 border-light p-0"
+                                    className="quotes-image tilt-left mt-4 mb-5 border border-2 light-border p-0"
                                     style={{ maxWidth: "350px" }}
                                 />
 
-                            <p onClick={() => setShowBossModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
-                                Lisää tietoa päiväkodin johtajalta
-                            </p>
-                            <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
-                                Yhdistyksen säännöt
-                            </p>
+                            <div className="ass-link">
+                                <p onClick={() => setShowBossModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
+                                    Lisää tietoa päiväkodin johtajalta
+                                </p>
+                                <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
+                                    Yhdistyksen säännöt
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

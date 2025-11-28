@@ -44,7 +44,7 @@ const Contacts = ({ mobile, portrait }) => {
         <div className="container-fluid row p-0 d-flex align-items-center justify-content-center content-text mt-4" style={{ width: '100vw' }}>
             <div className="row content">
                 <div className={width > 864 ? "col-7" : "col-12"}>
-                    <section className={mobile ? "col-12 ms-3 align-self-start mt-5" : "col-12 offset-2 align-self-start mt-5"}>
+                    <section className={mobile ? "col-12 ms-3 align-self-start" : "col-12 offset-2 align-self-start mt-5"}>
                         <h2 className={!mobile ? "mb-5" : "mb-4"}>Yhteystiedot</h2>
                         <div className="row">
                             <div className="col-1">

@@ -15,7 +15,7 @@ const Values = ({ mobile, portrait }) => {
                                             <h2>Päiväkotimme toiminnan arvot ja toimintaperiaatteet</h2>
                                         </div>
 
-                                        <div className="container mt-5 d-flex justify-content-center">
+                                        <div className="container mt-5 d-flex justify-content-center values-list">
                                             <ul className="text-start">
                                                 <li><strong>Turvallisuus</strong> - lapsilla on fyysisesti ja psyykkisesti turvallinen kasvuympäristö</li>
                                                 <li><strong>Avoimuus ja rehellisyys</strong> - avoin ja rehellinen yhteistyö perheiden kanssa</li>
@@ -30,7 +30,7 @@ const Values = ({ mobile, portrait }) => {
                                         <img
                                             src={Viinimarjat}
                                             alt="Punaisia viinimarjoja pensaassa"
-                                            className="img-fluid rounded-4 border border-5 border-light tilt-right"
+                                            className="img-fluid rounded-4 border border-2 light-border tilt-right"
                                             style={{ maxWidth: "200px" }}
                                         />
                                     </div>
@@ -70,27 +70,26 @@ const Values = ({ mobile, portrait }) => {
                     <div className="container-fluid px-0 mx-auto content-text" style={{ width: '100vw' }}>
                         <div className="container">
                             <h3 className="mt-4 mb-4 text-center">Päiväkotimme toiminnan arvot ja toimintaperiaatteet</h3>
-                            <div className="row align-items-center justify-content-center text-center">
-                                <div className="col-12 d-flex justify-content-center mb-3">
-                                    <ImageCarousel home={false} />
-                                </div>
+                            
+                            <div className="d-flex justify-content-center mb-3">
+                                <ImageCarousel home={false} />
+                            </div>
 
-                                <div className="col-12 col-md-8 text-start mx-auto">
-                                    <ul className="ms-md-5 me-md-2">
-                                        <li><strong>Turvallisuus</strong> - lapsilla on fyysisesti ja psyykkisesti turvallinen kasvuympäristö</li>
-                                        <li><strong>Avoimuus ja rehellisyys</strong> - avoin ja rehellinen yhteistyö perheiden kanssa</li>
-                                        <li><strong>Luottamus</strong> - luottamuksellinen ilmapiiri lasten ja vanhempien kanssa</li>
-                                        <li><strong>Kunnioittaminen</strong> - lasten ja perheiden yksilöllisyyden kunnioittaminen</li>
-                                        <li><strong>Tasapuolisuus</strong> - lasten ja perheiden kohteleminen tasapuolisesti</li>
-                                    </ul>
-                                </div>
+                            <div className="col col-md-8 text-start mx-auto">
+                                <ul className="ms-md-5 me-md-2">
+                                    <li><strong>Turvallisuus</strong> - lapsilla on fyysisesti ja psyykkisesti turvallinen kasvuympäristö</li>
+                                    <li><strong>Avoimuus ja rehellisyys</strong> - avoin ja rehellinen yhteistyö perheiden kanssa</li>
+                                    <li><strong>Luottamus</strong> - luottamuksellinen ilmapiiri lasten ja vanhempien kanssa</li>
+                                    <li><strong>Kunnioittaminen</strong> - lasten ja perheiden yksilöllisyyden kunnioittaminen</li>
+                                    <li><strong>Tasapuolisuus</strong> - lasten ja perheiden kohteleminen tasapuolisesti</li>
+                                </ul>
                             </div>
 
                         <div className="container d-flex flex-column justify-content-center align-items-center">
                             <img
                                 src={Omenat}
                                 alt="Lapsia omenat käsissään"
-                                className="quotes-image mt-5 mb-5 border border-5 border-light"
+                                className="quotes-image mt-5 mb-5 border border-2 light-border"
                             />
 
                             <div className="row align-items-center justify-content-center mb-5">

@@ -8,8 +8,6 @@ const Footer = ({ mobile, portrait }) => {
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
-  const instaLogoSize = !mobile ? '60px' : '40px'
-
   const ToTop = () => {
     return (
       <FaArrowUp onClick={scrollToTop} 
@@ -31,7 +29,7 @@ const Footer = ({ mobile, portrait }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 400) {
+      if (window.scrollY > 300) {
         setShowScrollTop(true)
       } else {
         setShowScrollTop(false)
@@ -43,6 +41,14 @@ const Footer = ({ mobile, portrait }) => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const getLogoStyle = () => {
+    const instaLogoSize = !mobile ? '70px' : '50px'
+
+    return mobile ? {
+       width: instaLogoSize, height: instaLogoSize, border: '1px solid brown', borderRadius: '14px'
+    } : { width: instaLogoSize, height: instaLogoSize, border: '1px solid brown', borderRadius: '20px' }
   }
 
   return (
@@ -74,7 +80,7 @@ const Footer = ({ mobile, portrait }) => {
             >
               <img 
                 src={FbLogo}
-                style={{ width: instaLogoSize, height: instaLogoSize }}
+                style={{...getLogoStyle()}}
                 className='me-2'
               />
               {!portrait && <span className="facebook mt-1">Pirtin facebook</span>}
@@ -87,7 +93,7 @@ const Footer = ({ mobile, portrait }) => {
             >
               <img 
                 src={InstaLogo}
-                style={{ width: instaLogoSize, height: instaLogoSize }}
+                style={{...getLogoStyle()}}
                 className='me-2'
               />
               {!portrait && <span className="instagram mt-2">Pirtin Instagram</span>}
@@ -96,7 +102,7 @@ const Footer = ({ mobile, portrait }) => {
         </footer>
       ) : (
         <footer className='d-flex align-items-center justify-content-center content-text'>
-          <div className='col-7 d-flex flex-column justify-content-start'>
+          <div className='col-5 d-flex flex-column justify-content-start'>
               <small>© Päiväkotiyhdistys Pirtti ry</small>
               <small style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
                     onClick={() => setShowModal(true)}
@@ -111,9 +117,9 @@ const Footer = ({ mobile, portrait }) => {
             )}
           </div>
 
-          <div className='col-5 d-flex flex-column align-items-end'>
+          <div className='col-5 offset-2 d-flex flex-column align-items-end'>
             <div className="row">
-              <div className="d-flex gap-4 flex-wrap justify-content-end">
+              <div className="d-flex gap-2 flex-wrap justify-content-end">
                 <a
                   href="https://www.facebook.com/paivakotiyhdistyspirttiry/"
                   target="_blank"
@@ -122,7 +128,7 @@ const Footer = ({ mobile, portrait }) => {
                   <div className="d-flex flex-column justify-content-center align-items-center">
                     <img 
                       src={FbLogo}
-                      style={{ width: instaLogoSize, height: instaLogoSize }}
+                      style={{...getLogoStyle()}}
                     />
                   </div>
                 </a>
@@ -135,7 +141,7 @@ const Footer = ({ mobile, portrait }) => {
                   <div className="d-flex flex-column justify-content-center align-items-center">
                     <img 
                       src={InstaLogo}
-                      style={{ width: instaLogoSize, height: instaLogoSize }}
+                      style={{...getLogoStyle()}}
                     />
                   </div>
                 </a>

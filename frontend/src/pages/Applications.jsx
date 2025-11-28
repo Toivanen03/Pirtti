@@ -57,7 +57,7 @@ const Applications = ({ setConfirmTitle, setOnConfirm, mobile, portrait }) => {
                             </div>
                             {!showFormArea && 
                                 <>
-                                    <div className="row d-flex justify-content-center gap-5">
+                                    <div className="row d-flex justify-content-center gap-5 applications-buttons">
                                         <Button variant="warning" style={buttonStyle} onClick={() => handleFormVisibility('vkh')}>
                                             <strong className="text-white">Varhaiskasvatushakemus</strong>
                                         </Button>

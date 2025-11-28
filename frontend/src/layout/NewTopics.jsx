@@ -3,6 +3,8 @@ import { Button, Row, Col } from "react-bootstrap"
 import TopicsModal from "../modals/TopicsModal"
 import { GET_TOPICS } from '../queries/queries'
 import { useQuery } from '@apollo/client/react'
+import { AuthContext } from "../contexts/AuthContext"
+import { useContext } from "react"
 
 export const NEW_TOPICS_KEY = "topicsRead"
 
@@ -11,6 +13,7 @@ const NewTopics = ({ mobile, show, setShow, setConfirmTitle, setOnConfirm, setUn
     const [showBanner, setShowBanner] = useState(false)
     const [showTopics, setShowTopics] = useState(false)
     const buttonStyle = { width: mobile ? '30vw' : portrait ? '10vw' : '6vw'}
+    const { currentUser } = useContext(AuthContext)
 
     useEffect(() => {
         if (!loading && data) {
@@ -19,9 +22,9 @@ const NewTopics = ({ mobile, show, setShow, setConfirmTitle, setOnConfirm, setUn
             const lastRead = stored?.date || 0
 
             const hasUnread = topics.some(topic => topic.createdAt > lastRead)
-            setShowBanner(hasUnread)
+            if (!currentUser?.id) setShowBanner(hasUnread)
         }
-    }, [loading, data])
+    }, [loading, data, currentUser])
 
     useEffect(() => {
         if (show) setShowTopics(true)

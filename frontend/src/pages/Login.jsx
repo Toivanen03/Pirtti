@@ -35,8 +35,8 @@ const Login = ({ setConfirmTitle }) => {
     }
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center p-5 text-center" style={{width: '100vw'}}>
-            <div className="flex-column p-5" style={{width: '50vw', border: '1px solid black', borderRadius: '20px'}}>
+        <div className="d-flex flex-column justify-content-center align-items-center p-5 text-center applications-container" style={{width: '100vw'}}>
+            <div className="flex-column p-5 form-area" style={{width: '50vw', border: '1px solid black', borderRadius: '20px'}}>
                 <div>
                     <h4 className="mb-5">Kirjautuminen hallintapaneeliin</h4>
                 </div>
