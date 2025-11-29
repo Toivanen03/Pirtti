@@ -9,9 +9,10 @@ import Syksy from "../assets/carousel-images/Syksy.jpg"
 
 const images = [Kaiteella, Lammella, Taidetta, Hiekkaleikit, Jalat, Omenat, Syksy]
 
-const ImageCarousel = ({ home }) => {
+const ImageCarousel = ({ home, book, count }) => {
+
     return (
-        <Carousel fade controls={false} indicators={false} pause={false} className={home ? "home-carousel" : "non-home-carousel"}>
+        <Carousel fade controls={false} activeIndex={book ? count : false} indicators={false} pause={false} className={home ? "home-carousel" : "non-home-carousel"}>
             {images.map((image, i) => (
                 <Carousel.Item key={i} className="carousel-item-hero">
                     <img src={image} alt={`Kuva ${i + 1}`} className={home ? "carousel-image" : "carousel-image"} />

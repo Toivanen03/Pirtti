@@ -121,7 +121,7 @@ const Applications = ({ setConfirmTitle, setOnConfirm, mobile, portrait }) => {
                     </div>
                 </>
             ) : (
-                <Row className="applications-container mobile-form content-text mt-3">
+                <Row className="applications-container mobile-form content-text mt-3 g-0">
                     <Row className={(formType === null) && (width < 576) ? "text-start" : "text-center mt-3"}>
                         {formType === 'psh' && <h2>Palvelusetelihakemus</h2>}
                     </Row>

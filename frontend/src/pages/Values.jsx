@@ -67,7 +67,7 @@ const Values = ({ mobile, portrait }) => {
                     </div>
                 </div>
                 ) : (
-                    <div className="container-fluid px-0 mx-auto content-text" style={{ width: '100vw' }}>
+                    <div className="container-fluid px-0 mx-auto content-text">
                         <div className="container">
                             <h3 className="mt-4 mb-4 text-center">Päiväkotimme toiminnan arvot ja toimintaperiaatteet</h3>
                             
