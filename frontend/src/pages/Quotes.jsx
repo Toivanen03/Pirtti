@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import ImageCarousel from '../layout/ImageCarousel'
 
-const Quotes = ({ mobile }) => {
+const Quotes = ({ mobile, portrait }) => {
   const { data, loading } = useQuery(GET_QUOTES)
   const [description, setDescription] = useState("")
   const [headline_1, setHeadline_1] = useState("")
@@ -84,184 +84,234 @@ const Quotes = ({ mobile }) => {
   return (
     <>
       {!mobile ? (
-        <Container fluid className="h-100 p-0 d-flex align-items-center justify-content-center content mt-5 mb-5 content-text">
-          <Container className="text-center quotes">
-            <Row className='mb-3'>
-              <h2 className="quotes-headline">{header}</h2>
-            </Row>
-
-            <Row className="text-center mb-5">
-              <strong>{description}</strong>
-            </Row>
-
-{/* KIRJA 1 */}
-            <Row className='d-flex align-items-center justify-content-end'>
-              <Col className='col-6'>
-                <div className='book' id='book1'>
-                  <div className={`page ${currentPage_1 > 0 ? "flipped" : ""}`}>
-                    <div className="front front-1">
-                      <h3 className="quotes-header">{headline_1}</h3>
-                      <img src={vesileikkeja} alt="Vesileikkejä" className="quotes-image tilt-left border border-2 light-border" />
-                    </div>
-                    <div className="back back-1"></div>
-                  </div>
-
-                  {quotes_1.map((quote, index) =>
-                    <div className={`page ${currentPage_1 > index + 1 ? "flipped" : ""}`} key={index}>
-                      <div className="front front-1 container d-flex flex-column h-100 justify-content-between">
-                        <div className='d-flex justify-content-center mt-5'>
-                          <h5>{quote.text}</h5>
-                        </div>
-                        <div className='d-flex justify-content-center mb-4'>
-                          <ImageCarousel home={false} book={true} count={currentPage_1} />
-                        </div>
-                      </div>
-                      <div className='back back-1' />
-                    </div>
-                  )}
-                </div>
-              </Col>
-
-              <Col className='d-flex align-self-end justify-content-start col-2'>
-                <Button className='book-button mb-5' onClick={() => flipPage(1)}>
-                  <span className='shine' />
-                  Käännä sivua
-                </Button>
-              </Col>
-            </Row>
-
-{/* KIRJA 2 */}
-            <Row className='d-flex align-items-center justify-content-end mt-5'>
-              <Col className='col-6'>
-                <div className='book' id='book2'>
-                  <div className={`page ${currentPage_2 > 0 ? "flipped" : ""}`}>
-                    <div className="front front-2">
-                      <h3 className="quotes-header mb-3">{headline_2}</h3>
-                      <img src={hiekkalaatikko} alt="Leluja hiekkalaatikolla" className="quotes-image tilt-left border border-2 light-border"/>
-                    </div>
-                    <div className="back back-2"></div>
-                  </div>
-
-                  {quotes_2.map((quote, index) =>
-                    <div className={`page ${currentPage_2 > index + 1 ? "flipped" : ""}`} key={index}>
-                      <div className="front front-2 container d-flex flex-column h-100 justify-content-between">
-                        <div className='d-flex justify-content-center mt-5'>
-                          <h5>{quote.text}</h5>
-                        </div>
-                        <div className='d-flex justify-content-center mb-4'>
-                          <ImageCarousel home={false} book={true} count={currentPage_2} />
-                        </div>
-                      </div>
-                      <div className='back back-2' />
-                    </div>
-                  )}
-                </div>
-              </Col>
-
-              <Col className='d-flex align-self-end justify-content-start col-2'>
-                <Button className='book-button mb-5' onClick={() => flipPage(2)}>
-                  <span className='shine' />
-                  Käännä sivua
-                </Button>
-              </Col>
-            </Row>
-
-{/* KIRJA 3 */}
-            <Row className='d-flex align-items-center justify-content-end mt-5'>
-              <Col className='col-6'>
-                <div className='book' id='book3'>
-                  <div className={`page ${currentPage_3 > 0 ? "flipped" : ""}`}>
-                    <div className="front front-3">
-                      <h3 className="quotes-header mb-3">{headline_3}</h3>
-                      <img src={pollo} alt="Lasten askartelema pöllö" className="quotes-image tilt-left border border-2 light-border"/>
-                    </div>
-                    <div className="back back-3"></div>
-                  </div>
-
-                  {quotes_3.map((quote, index) =>
-                    <div className={`page ${currentPage_3 > index + 1 ? "flipped" : ""}`} key={index}>
-                      <div className="front front-3 container d-flex flex-column h-100 justify-content-between">
-                        <div className='d-flex justify-content-center mt-5'>
-                          <h5>{quote.text}</h5>
-                        </div>
-                        <div className='d-flex justify-content-center mb-4'>
-                          <ImageCarousel home={false} book={true} count={currentPage_3} />
-                        </div>
-                      </div>
-                      <div className='back back-3' />
-                    </div>
-                  )}
-                </div>
-              </Col>
-
-              <Col className='d-flex align-self-end justify-content-start col-2'>
-                <Button className='book-button mb-5' onClick={() => flipPage(3)}>
-                  <span className='shine' />
-                  Käännä sivua
-                </Button>
-              </Col>
-            </Row>
-          </Container>
-        </Container>
-      ) : (
-        <Container fluid className="p-2 mb-5 content-text" style={{maxWidth: '80%'}}>
-          <Row>
-            <h2 className="quotes-headline text-center">Lasten suusta kuultua</h2>
+        <Container fluid className="text-center quotes mt-5 mb-5">
+          <Row className='mb-3'>
+            <h2 className="quotes-headline">{header}</h2>
           </Row>
 
-          <Row className="text-center mb-3">
+          <Row className="text-center mb-5">
             <strong>{description}</strong>
           </Row>
 
-          <Row className='mt-5'>
-            <Col xs={12} className="p-0 offset-1 d-flex flex-column text-center">
-              <h2 className="quotes-header p-2 text-start mb-3">{headline_1}</h2>
-              <Col xs={10} className="d-flex flex-column text-start">
-                {quotes_1.map(quote =>
-                  <ul key={quote.id}>
-                    <li>{quote.text}</li>
-                  </ul>
+{/* KIRJA 1 */}
+          <Row className='d-flex align-items-center justify-content-center'>
+            <Col className={portrait ? 'col-5' : 'col-3 offset-4'}>
+              <div className='book' id='book1'>
+                <div className={`page ${currentPage_1 > 0 ? "flipped" : ""}`}>
+                  <div className="front front-1">
+                    <h3 className="quotes-header">{headline_1}</h3>
+                    <img src={vesileikkeja} alt="Vesileikkejä" className="quotes-image tilt-left border border-2 light-border" />
+                  </div>
+                  <div className="back back-1"></div>
+                </div>
+
+                {quotes_1.map((quote, index) =>
+                  <div className={`page ${currentPage_1 > index + 1 ? "flipped" : ""}`} key={index}>
+                    <div className="front front-1 container d-flex flex-column h-100 justify-content-between">
+                      <div className='d-flex justify-content-center mt-5'>
+                        <h5>{quote.text}</h5>
+                      </div>
+                      <div className='d-flex justify-content-center mb-4'>
+                        <ImageCarousel home={false} bookNumber={1} />
+                      </div>
+                    </div>
+                    <div className='back back-1' />
+                  </div>
                 )}
-              </Col>
+              </div>
+            </Col>
+
+            <Col className={portrait ? 'd-flex align-self-end justify-content-start col-2' : 'd-flex align-self-end justify-content-start col-1'}>
+              <Button className='book-button bb1 mb-5' onClick={() => flipPage(1)}>
+                <span className='shine' />
+                <span>Käännä sivua</span>
+              </Button>
             </Col>
           </Row>
 
-          <Row className="justify-content-center mt-5 mb-5">
-            <img src={keinumassa} alt="Lapsi keinumassa" className="quotes-image tilt-right border border-2 light-border p-0" style={{ maxWidth: '70vw' }} />
-          </Row>
+{/* KIRJA 2 */}
+          <Row className='d-flex align-items-center justify-content-center mt-5'>
+            <Col className={portrait ? 'col-5' : 'col-3 offset-4'}>
+              <div className='book' id='book2'>
+                <div className={`page ${currentPage_2 > 0 ? "flipped" : ""}`}>
+                  <div className="front front-2">
+                    <h3 className="quotes-header mb-3">{headline_2}</h3>
+                    <img src={hiekkalaatikko} alt="Leluja hiekkalaatikolla" className="quotes-image tilt-left border border-2 light-border"/>
+                  </div>
+                  <div className="back back-2"></div>
+                </div>
 
-          <Row>
-            <Col xs={12} className="p-0 offset-1 d-flex flex-column text-center">
-              <h2 className="quotes-header p-2 text-start mb-3">{headline_2}</h2>
-              <Col xs={10} className="d-flex flex-column text-start">
-                {quotes_2.map(quote =>
-                  <ul key={quote.id}>
-                    <li>{quote.text}</li>
-                  </ul>
+                {quotes_2.map((quote, index) =>
+                  <div className={`page ${currentPage_2 > index + 1 ? "flipped" : ""}`} key={index}>
+                    <div className="front front-2 container d-flex flex-column h-100 justify-content-between">
+                      <div className='d-flex justify-content-center mt-5'>
+                        <h5>{quote.text}</h5>
+                      </div>
+                      <div className='d-flex justify-content-center mb-4'>
+                        <ImageCarousel home={false} bookNumber={2} />
+                      </div>
+                    </div>
+                    <div className='back back-2' />
+                  </div>
                 )}
-              </Col>
+              </div>
+            </Col>
+
+            <Col className={portrait ? 'd-flex align-self-end justify-content-start col-2' : 'd-flex align-self-end justify-content-start col-1'}>
+              <Button className='book-button bb2 mb-5' onClick={() => flipPage(2)}>
+                <span className='shine' />
+                Käännä sivua
+              </Button>
             </Col>
           </Row>
 
-          <Row className="justify-content-center mt-5 mb-5">
-            <img src={pollo} alt="Pöllö" className="quotes-image tilt-left border border-2 light-border p-0" />
-          </Row>
+{/* KIRJA 3 */}
+          <Row className='d-flex align-items-center justify-content-center mt-5'>
+            <Col className={portrait ? 'col-5' : 'col-3 offset-4'}>
+              <div className='book' id='book3'>
+                <div className={`page ${currentPage_3 > 0 ? "flipped" : ""}`}>
+                  <div className="front front-3">
+                    <h3 className="quotes-header mb-3">{headline_3}</h3>
+                    <img src={pollo} alt="Lasten askartelema pöllö" className="quotes-image tilt-left border border-2 light-border"/>
+                  </div>
+                  <div className="back back-3"></div>
+                </div>
 
-          <Row>
-            <Col xs={12} className="p-0 offset-1 d-flex flex-column text-center">
-              <h2 className="quotes-header p-2 text-start mb-3">{headline_3}</h2>
-              <Col xs={10} className="d-flex flex-column text-start">
-                {quotes_3.map(quote =>
-                  <ul key={quote.id}>
-                    <li>{quote.text}</li>
-                  </ul>
+                {quotes_3.map((quote, index) =>
+                  <div className={`page ${currentPage_3 > index + 1 ? "flipped" : ""}`} key={index}>
+                    <div className="front front-3 container d-flex flex-column h-100 justify-content-between">
+                      <div className='d-flex justify-content-center mt-5'>
+                        <h5>{quote.text}</h5>
+                      </div>
+                      <div className='d-flex justify-content-center mb-4'>
+                        <ImageCarousel home={false} bookNumber={3} />
+                      </div>
+                    </div>
+                    <div className='back back-3' />
+                  </div>
                 )}
-              </Col>
+              </div>
+            </Col>
+
+            <Col className={portrait ? 'd-flex align-self-end justify-content-start col-2' : 'd-flex align-self-end justify-content-start col-1'}>
+              <Button className='book-button bb3 mb-5' onClick={() => flipPage(3)}>
+                <span className='shine' />
+                Käännä sivua
+              </Button>
             </Col>
           </Row>
+        </Container>
+      ) : (
+        <Container fluid className="text-center quotes mt-2 mb-5">
+          <Row className='mb-3'>
+            <h2 className="quotes-headline">{header}</h2>
+          </Row>
 
-          <Row className="justify-content-center mt-5">
-            <img src={hiekkalaatikko} alt="Leluja hiekkalaatikolla" className="quotes-image tilt-right border border-2 light-border p-0" style={{ maxWidth: '70vw' }} />
+          <Row className="text-center mb-5">
+            <strong>{description}</strong>
+          </Row>
+
+{/* KIRJA 1 */}
+          <Row className='d-flex justify-content-center align-items-center offset-2'>
+            <div className='book' id='book1'>
+              <div className={`page ${currentPage_1 > 0 ? "flipped" : ""}`}>
+                <div className="front front-1">
+                  <h3 className="quotes-header">{headline_1}</h3>
+                  <img src={vesileikkeja} alt="Vesileikkejä" className="quotes-image tilt-left border border-2 light-border" />
+                </div>
+                <div className="back back-1"></div>
+              </div>
+
+              {quotes_1.map((quote, index) =>
+                <div className={`page ${currentPage_1 > index + 1 ? "flipped" : ""}`} key={index}>
+                  <div className="front front-1 container d-flex flex-column h-100 justify-content-between">
+                    <div className='d-flex justify-content-center'>
+                      <h5 className='quotes-header'>{quote.text}</h5>
+                    </div>
+                    <div className='d-flex justify-content-center mb-4'>
+                      <ImageCarousel home={false} bookNumber={1} />
+                    </div>
+                  </div>
+                  <div className='back back-1' />
+                </div>
+              )}
+            </div>
+          </Row>
+
+          <Row className='d-flex align-items-center justify-content-center mt-5'>
+            <Button className='book-button bb1 mb-5' onClick={() => flipPage(1)}>
+              <span className='shine' />
+              <span>Käännä sivua</span>
+            </Button>
+          </Row>
+
+
+{/* KIRJA 2 */}
+          <Row className='d-flex justify-content-center align-items-center offset-2 mt-5'>
+            <div className='book' id='book2'>
+              <div className={`page ${currentPage_2 > 0 ? "flipped" : ""}`}>
+                <div className="front front-2">
+                  <h3 className="quotes-header">{headline_2}</h3>
+                  <img src={hiekkalaatikko} alt="Leluja hiekkalaatikolla" className="quotes-image tilt-left border border-2 light-border" />
+                </div>
+                <div className="back back-2"></div>
+              </div>
+
+              {quotes_2.map((quote, index) =>
+                <div className={`page ${currentPage_2 > index + 1 ? "flipped" : ""}`} key={index}>
+                  <div className="front front-2 container d-flex flex-column h-100 justify-content-between">
+                    <div className='d-flex justify-content-center'>
+                      <h5 className='quotes-header'>{quote.text}</h5>
+                    </div>
+                    <div className='d-flex justify-content-center mb-4'>
+                      <ImageCarousel home={false} bookNumber={2} />
+                    </div>
+                  </div>
+                  <div className='back back-2' />
+                </div>
+              )}
+            </div>
+          </Row>
+
+          <Row className='d-flex align-items-center justify-content-center mt-5'>
+            <Button className='book-button bb2 mb-5' onClick={() => flipPage(2)}>
+              <span className='shine' />
+              <span>Käännä sivua</span>
+            </Button>
+          </Row>
+
+{/* KIRJA 3 */}
+          <Row className='d-flex justify-content-center align-items-center offset-2 mt-5'>
+            <div className='book' id='book3'>
+              <div className={`page ${currentPage_3 > 0 ? "flipped" : ""}`}>
+                <div className="front front-3">
+                  <h3 className="quotes-header">{headline_3}</h3>
+                  <img src={pollo} alt="Lapsen askartelema pöllö" className="quotes-image tilt-left border border-2 light-border" />
+                </div>
+                <div className="back back-3"></div>
+              </div>
+
+              {quotes_3.map((quote, index) =>
+                <div className={`page ${currentPage_3 > index + 1 ? "flipped" : ""}`} key={index}>
+                  <div className="front front-3 container d-flex flex-column h-100 justify-content-between">
+                    <div className='d-flex justify-content-center'>
+                      <h5 className='quotes-header'>{quote.text}</h5>
+                    </div>
+                    <div className='d-flex justify-content-center mb-4'>
+                      <ImageCarousel home={false} bookNumber={3} />
+                    </div>
+                  </div>
+                  <div className='back back-3' />
+                </div>
+              )}
+            </div>
+          </Row>
+
+          <Row className='d-flex align-items-center justify-content-center mt-5'>
+            <Button className='book-button bb3 mb-5' onClick={() => flipPage(3)}>
+              <span className='shine' />
+              <span>Käännä sivua</span>
+            </Button>
           </Row>
         </Container>
       )}

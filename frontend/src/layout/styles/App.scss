@@ -37,7 +37,9 @@ $light: linear-gradient(130deg, rgba(255, 155, 118, 0.301), rgba(255, 158, 48, 0
 $bg-col: linear-gradient(235deg, #ff9e30, #d35f00);             // Header && footer taustaväri
 $bordercolor: #c85e3c;
 $header-font-color: rgb(255, 220, 174);
-$bb-color: linear-gradient(135deg, orange, brown);
+$bb1-color: linear-gradient(135deg, rgb(235, 147, 46), rgb(129, 52, 0));
+$bb2-color: linear-gradient(135deg, rgb(255, 208, 0), rgb(185, 53, 0));
+$bb3-color: linear-gradient(135deg, lightgreen, darkgreen);
 
 $header-height: 170px;
 $footer-height: 120px;
@@ -151,6 +153,8 @@ body.disabled-scroll {
     }
 
     .quotes {
+      overflow: hidden;
+
       .quotes-headline {
         font-family: 'GH-font', sans-serif;
         font-size: 2.5rem;
@@ -169,12 +173,17 @@ body.disabled-scroll {
         perspective: 2000px;
         position: relative;
 
+        @media (max-width: 960px) {
+          width: 80%;
+          height: 300px;
+        }
+
         .quotes-header {
           font-family: 'CAVEAT-font', sans-serif;
           font-size: 2.5rem;
 
           @media (max-width: 960px) {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
           }
         }
       }
@@ -189,6 +198,23 @@ body.disabled-scroll {
         border: 1px solid black;
         border-radius: 20px;
         box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+
+        @media (max-width: 960px) {
+          border-radius: 10px;
+        }
+
+        .quotes-image {
+          @media (max-width: 960px) {
+            max-width: 90%;
+            border-radius: 10px;
+          }
+        }
+
+        .carousel-item {
+          @media (max-width: 961px) {
+            max-height: 16vh;
+          }
+        }
       }
 
       .front, .back {
@@ -199,6 +225,11 @@ body.disabled-scroll {
         border-radius: 20px;
         box-sizing: border-box;
         padding: 40px;
+
+        @media (max-width: 960px) {
+          padding: 20px;
+          border-radius: 10px;
+        }
       }
 
       .front-1 {
@@ -239,21 +270,39 @@ body.disabled-scroll {
       .page:nth-child(4) { z-index: 1; }
 
       .book-button {
-        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: relative;
-        width: 10vw;
-        height: 6vh;
-        font-size: 20px;
-        padding: 8px 20px;
+        font-size: 24px;
+        font-weight: 500;
         color: #fff;
         border: none;
-        cursor: pointer;
-        border-radius: 50px;
+        border-radius: 50%;
+        padding: 30px 0;
         overflow: hidden;
-        letter-spacing: 2px;
-        background: $bb-color;
-        box-shadow: 0 0 10px rgba(255, 208, 0, 0.8), 0 0 60px rgba(133, 86, 0, 0.6);
+        letter-spacing: 1px;
+        box-shadow: 0 0 10px rgb(255, 153, 0), 0 0 60px rgba(107, 57, 0, 0.534);
         transition: transform 0.2s ease;
+
+        @media (max-width: 961px) {
+          padding: 10px;
+          border-radius: 30px;
+          font-size: 18px;
+          width: 50%;
+        }
+      }
+
+      .book-button.bb1 {
+        background: $bb1-color;
+      }
+
+      .book-button.bb2 {
+        background: $bb2-color;
+      }
+
+      .book-button.bb3 {
+        background: $bb3-color;
       }
 
       .book-button:hover {

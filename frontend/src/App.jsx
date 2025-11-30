@@ -95,7 +95,7 @@ function App() {
               <Route path='/yhdistys' element={<Association mobile={mobile} portrait={portrait} />} />
               <Route path="/yhteystiedot" element={<Contacts mobile={mobile} portrait={portrait} />} />
               <Route path="/hakemukset" element={<Applications setConfirmTitle={setConfirmTitle} setOnConfirm={setOnConfirm} mobile={mobile} portrait={portrait} />} />
-              <Route path="/lasten_suusta" element={<Quotes mobile={mobile} />} />
+              <Route path="/lasten_suusta" element={<Quotes mobile={mobile} portrait={portrait} />} />
               <Route path="*" element={<NotFound mobile={mobile} />} />
             </Routes>
           </main>
