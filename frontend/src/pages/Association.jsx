@@ -32,9 +32,9 @@ const Association = ({ mobile, portrait }) => {
                     if (j >= text2.length) {
                         clearInterval(interval2)
                     }
-                }, 15)
+                }, 10)
             }
-        }, 15)
+        }, 10)
         return () => {
             clearInterval(interval1)
             sessionStorage.setItem("associationRead", "true")
@@ -105,7 +105,7 @@ const Association = ({ mobile, portrait }) => {
                     <div className="container text-center">
                         <h2 className="mt-4 mb-4">Yhdistys</h2>
                         <div className="row mb-5 d-flex flex-column align-items-center justify-content-center">
-                            <p className="content-text" style={{minHeight: '200px'}}>
+                            <p className="content-text text-start" style={{minHeight: '200px'}}>
                                 {read ? text1 : firstText}
                             </p>
 
@@ -116,7 +116,7 @@ const Association = ({ mobile, portrait }) => {
                                 style={{ maxWidth: '300px'}}
                             />
 
-                            <p style={{ minHeight: '110px'}}>
+                            <p className="text-start" style={{ minHeight: '110px'}}>
                                 {read ? text2 : secondText}
                             </p>
 

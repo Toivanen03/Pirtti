@@ -157,13 +157,24 @@ body.disabled-scroll {
 
       .quotes-headline {
         font-family: 'GH-font', sans-serif;
-        font-size: 2.5rem;
+        font-size: 3rem;
         line-height: 1.2;
         margin-top: 20px;
         margin-bottom: 20px;
 
         @media (max-width: 960px) {
+          width: 100vw;
           font-size: 1.8rem;
+        }
+      }
+
+      .quotes-description {
+        font-size: 24px;
+        text-shadow: 0 0 5px rgba(0, 25, 48, 0.911), 0 0 10px #0032bb;
+
+        @media (max-width: 960px) {
+          width: 100vw;
+          font-size: 16px;
         }
       }
 
@@ -180,7 +191,7 @@ body.disabled-scroll {
 
         .quotes-header {
           font-family: 'CAVEAT-font', sans-serif;
-          font-size: 2.5rem;
+          font-size: 2.4rem;
 
           @media (max-width: 960px) {
             font-size: 1.6rem;
@@ -270,26 +281,44 @@ body.disabled-scroll {
       .page:nth-child(4) { z-index: 1; }
 
       .book-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        transform: translateX(70%);
         position: relative;
         font-size: 24px;
         font-weight: 500;
         color: #fff;
         border: none;
         border-radius: 50%;
-        padding: 30px 0;
+        padding: 30px 10px;
+        width: 8vw;
         overflow: hidden;
         letter-spacing: 1px;
         box-shadow: 0 0 10px rgb(255, 153, 0), 0 0 60px rgba(107, 57, 0, 0.534);
-        transition: transform 0.2s ease;
+        transition: 'transform 0.5s ease';
 
-        @media (max-width: 961px) {
+        @media (min-width: 961px) and (orientation: portrait) {
+          width: 12vw;
+        }
+
+        @media (min-width: 961px) {
+          animation: button-pulse 2s infinite;
+          will-change: transform;
+        }
+
+        @media (max-width: 960px) {
           padding: 10px;
           border-radius: 30px;
           font-size: 18px;
           width: 50%;
+          transform: translateX(0%);
+        }
+      }
+
+      @keyframes button-pulse {
+        0%, 100% {
+          transform: scale(0.9);
+        }
+        50% {
+          transform: scale(1);
         }
       }
 
