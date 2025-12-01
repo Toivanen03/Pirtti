@@ -1,10 +1,10 @@
 import NavigationBar from "./NavigationBar"
 import MobileNavigation from "./Mobile/MobileNavigation"
 import { FaSignOutAlt } from 'react-icons/fa'
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../contexts/AuthContext"
 import { Row, Col } from "react-bootstrap"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 const pulse = document.createElement('style')
 
@@ -19,7 +19,14 @@ document.head.appendChild(pulse)
 
 const Header = ({ setConfirmTitle, setOnConfirm, mobile, portrait, scrolling }) => {
   const { logout, isLoggedIn, currentUser } = useContext(AuthContext)
+  const [showHeader, setShowHeader] = useState(true)
   const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect (() => {
+    if (location.pathname === '/lasten_suusta' && scrolling) setShowHeader(false)
+    else setShowHeader(true)
+  }, [location, scrolling])
 
   const handleLogout = () => {
     setConfirmTitle("Haluatko varmasti kirjautua ulos?")
@@ -49,7 +56,7 @@ const Header = ({ setConfirmTitle, setOnConfirm, mobile, portrait, scrolling }) 
 
   return (
     <>
-      {!mobile ? (
+      {!mobile && showHeader ? (
         <header>
           <div className="header-content">
               <Row className="justify-content-center d-flex align-items-center">

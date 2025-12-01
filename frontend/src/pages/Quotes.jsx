@@ -110,45 +110,19 @@ const Quotes = ({ mobile, portrait }) => {
     <>
       {!mobile ? (
         <Container fluid className="text-center quotes mb-5 p-0">
-          <div
-            style={{
-              width: '100vw',
-              height: '40vh',
-              backgroundImage: `url(${ruska})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              position: 'relative',
-              borderBottom: '2px solid rgb(90, 41, 0)'
-            }}
-          >
-            <h2 className='quotes-headline'
-              style={{
-                position: 'absolute',
-                top: '20%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                color: 'white',
-              }}
-            >
+          <div className='quotes-banner'>
+            <h2 className='quotes-headline'>
               {header}
             </h2>
-            <strong className="text-center quotes-description"
-              style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  color: 'white',
-                }}
-              >
+            <strong className="text-center quotes-description">
               {description}
             </strong>
           </div>
 
 {/* KIRJA 1 */}
-          <Row className='d-flex align-items-center justify-content-center mt-5 tilt-left mb-5'>
+          <Row className='d-flex align-items-center justify-content-center mt-5 tilt-left'>
             <Col
-              className={portrait ? 'col-5' : 'col-auto'}
+              className={portrait ? 'col-5 mb-5' : 'col-auto mb-5'}
               style={{
                 transition: 'transform 0.5s ease',
                 transform: !portrait && currentPage_1 > 0 ? 'translateX(33%)' : 'translateX(0%)',
@@ -200,7 +174,7 @@ const Quotes = ({ mobile, portrait }) => {
 {/* KIRJA 2 */}
           <Row className='d-flex align-items-center justify-content-center mt-4 tilt-right mb-5'>
             <Col
-              className={portrait ? 'col-5' : 'col-auto'}
+              className={portrait ? 'col-5 mb-5' : 'col-auto mb-5'}
               style={{
                 transition: 'transform 0.5s ease',
                 transform: !portrait && currentPage_2 > 0 ? 'translateX(33%)' : 'translateX(0%)',
@@ -303,26 +277,8 @@ const Quotes = ({ mobile, portrait }) => {
         </Container>
       ) : (
         <Container fluid className="text-center quotes mb-5 p-0">
-          <div
-            style={{
-              width: '100vw',
-              height: '30vh',
-              backgroundImage: `url(${ruska})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              position: 'relative',
-              borderBottom: '2px solid rgb(90, 41, 0)'
-            }}
-          >
-            <h2 className='quotes-headline'
-              style={{
-                position: 'absolute',
-                top: '10%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                color: 'white',
-              }}
-            >
+          <div className='quotes-banner'>
+            <h2 className='quotes-headline'>
               {header}
             </h2>
             <strong className="text-center quotes-description"

@@ -23,10 +23,10 @@ const Applications = ({ setConfirmTitle, setOnConfirm, mobile, portrait }) => {
     }, [state])
 
     const buttonStyle = {
-        width: (mobile && width > 576 && !portrait) ? '30vw' : mobile ? "55vw" : "20vw",
-        height: (mobile && width > 576 && !portrait) ? '10vh' : mobile ? "6vh" : "4vh",
+        minWidth: (mobile && width > 576 && !portrait) ? '30vw' : mobile ? "55vw" : "20vw",
+        maxWidth: (mobile && width > 576 && !portrait) ? '40vw' : mobile ? "60vw" : "20vw",
         border: '1px solid green',
-        padding: '0px',
+        padding: '10px',
         margin: mobile ? '10px' : '0px'
     }
 
@@ -49,15 +49,15 @@ const Applications = ({ setConfirmTitle, setOnConfirm, mobile, portrait }) => {
         <>
             {!mobile ? (
                 <>
-                    <div className="container-fluid p-0 d-flex justify-content-center content-text mt-5" style={{ width: '100vw' }}>
-                        <div className="container applications-container text-center">
-                            <div className="row">
+                    <div className={`container-fluid applications-container ${!showFormArea ? 'app-blur' : 'mb-5'} p-0 d-flex justify-content-center content-text`} style={{ width: '100vw' }}>
+                        <div className="container text-center">
+                            <div className={showFormArea ? "row mb-5" : "row mt-5 mb-5"}>
                                 {formType === null && <h2 className="mt-4 mb-4">Hakemukset</h2>}
-                                {formType === 'psh' && <h2 className="mt-4 mb-2">Palvelusetelihakemus</h2>}
+                                {formType === 'psh' && <h2 className="mt-5">Palvelusetelihakemus</h2>}
                             </div>
                             {!showFormArea && 
                                 <>
-                                    <div className="row d-flex justify-content-center gap-5 applications-buttons">
+                                    <div className="row d-flex justify-content-center gap-5 applications-buttons mb-5">
                                         <Button variant="warning" style={buttonStyle} onClick={() => handleFormVisibility('vkh')}>
                                             <strong className="text-white">Varhaiskasvatushakemus</strong>
                                         </Button>
@@ -71,22 +71,20 @@ const Applications = ({ setConfirmTitle, setOnConfirm, mobile, portrait }) => {
                                         </Button>
                                     </div>
 
-                                    <div className="row mt-4">
-                                        <div className="col-8 offset-2">
-                                            <strong>Voit täyttää esi- tai varhaiskasvatuksen hakemuksen yllä olevista painikkeista ja lähettää sen meille,
-                                                tai tutustua yksityisen päiväkodin varhaiskaskasvatuksen palveluseteliin Mikkelin kaupungin sivuilta.
-                                            </strong>
-                                        </div>
+                                    <div className="row mt-4 d-flex align-items-center justify-content-center voucher-info">
+                                        <strong>Voit täyttää esi- tai varhaiskasvatuksen hakemuksen yllä olevista painikkeista ja lähettää sen meille,
+                                            tai tutustua yksityisen päiväkodin varhaiskaskasvatuksen palveluseteliin Mikkelin kaupungin sivuilta.
+                                        </strong>
                                     </div>
                                 </>
                             }
 
                             {showFormArea && (
                                 <div
-                                    className="container-fluid h-100 p-0 d-flex align-items-center justify-content-center content"
+                                    className="container-fluid h-100 p-0 d-flex align-items-start justify-content-center content"
                                     style={formType !== 'psh' ? { width: '100%' } : { width: '576px', height: '400px' }}
                                 >
-                                <div className="container text-center mt-5 form-area p-5 form-shadow"
+                                <div className="container text-center form-area p-5 form-shadow"
                                     style={formType === 'psh' ? { height: '300px' } : {}}
                                 >
                                     {formType === 'psh' && <ServiceVoucher setShowFormArea={setShowFormArea} setFormType={setFormType} mobile={mobile} state={state} />}
@@ -110,7 +108,7 @@ const Applications = ({ setConfirmTitle, setOnConfirm, mobile, portrait }) => {
                             alt="Elämä on kasvun aikaa"
                             style={{
                                 position: 'fixed',
-                                top: '50%',
+                                top: '45%',
                                 left: '50%',
                                 transform: 'translate(-50%, -15%)',
                                 width: 500,

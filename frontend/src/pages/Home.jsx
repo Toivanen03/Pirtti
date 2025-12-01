@@ -29,8 +29,10 @@ const Home = ({ consent, mobile, portrait }) => {
                                     ? "col-10 d-flex flex-column p-0"
                                     : portrait
                                     ? "col-11 d-flex flex-column p-0"
-                                    : consent
+                                    : consent && width > 1600
                                     ? "col-10 d-flex flex-column p-0"
+                                    : consent && width <= 1600
+                                    ? "col-9 d-flex flex-column p-0"
                                     : "col-12 d-flex flex-column p-0"
                                 }
                                 >
@@ -115,7 +117,7 @@ const Home = ({ consent, mobile, portrait }) => {
                             </div>
 
                             {!portrait && width > 865 && (
-                                <div className="col-2 p-0 d-flex flex-column">
+                                <div className={width <= 1600 ? "col-3 p-0 d-flex flex-column" : "col-2 p-0 d-flex flex-column"}>
                                     {consent && <FbPlugin width={width} height={height} />}
                                 </div>
                             )}

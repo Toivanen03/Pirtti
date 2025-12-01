@@ -19,6 +19,7 @@ import useIsMobile from './hooks/useIsMobile'
 import { useIsPortrait } from './hooks/useIsPortrait'
 import { COOKIE_KEY } from './layout/Consent'
 import Loader from './Loader'
+import ScrollToTop from './utils/ScrollToTop'
 
 function App() {
   const [confirmTitle, setConfirmTitle] = useState(null)
@@ -86,6 +87,7 @@ function App() {
         {!loaded && <div className="loader-overlay"><Loader /></div>}
         <div className="app-wrapper">
           <main className="main-content">
+            <ScrollToTop />
             <Header setConfirmTitle={setConfirmTitle} setOnConfirm={setOnConfirm} mobile={mobile} portrait={portrait} scrolling={scrolling} />
             <Routes>
               {!mobile && <Route path="/admin" element={<RequireAdmin><Admin setConfirmTitle={setConfirmTitle} setOnConfirm={setOnConfirm} portrait={portrait} /></RequireAdmin>} />}

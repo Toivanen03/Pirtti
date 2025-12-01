@@ -26,7 +26,7 @@
   src: url('../fonts/Exo2-VariableFont_wght.ttf') format('truetype');
 }
 
-@font-face {
+@font-face {                                                        // Maps-pluginia varten tuotu
   font-family: 'Roboto-font';
   src: url('../fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
 }
@@ -155,22 +155,56 @@ body.disabled-scroll {
     .quotes {
       overflow: hidden;
 
+      .quotes-banner {
+        width: 100vw;
+        height: 50vh;
+        background-image: url('../../assets/ruska.png');
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        border-bottom: 2px solid rgb(90, 41, 0);
+
+        @media (min-width: 1600px) {
+          height: 45vh;
+        }
+
+        @media (max-width: 960px) {
+          height: 30vh;
+        }
+      }
+
       .quotes-headline {
         font-family: 'GH-font', sans-serif;
         font-size: 3rem;
         line-height: 1.2;
-        margin-top: 20px;
+        margin-top: 12vh;
         margin-bottom: 20px;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
 
         @media (max-width: 960px) {
           width: 100vw;
           font-size: 1.8rem;
+          top: 10%;
+          margin-top: 2vh;
         }
       }
 
       .quotes-description {
         font-size: 24px;
         text-shadow: 0 0 5px rgba(0, 25, 48, 0.911), 0 0 10px #0032bb;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+
+        @media (min-width: 1600px) {
+          bottom: 20%;
+        }
 
         @media (max-width: 960px) {
           width: 100vw;
@@ -181,8 +215,16 @@ body.disabled-scroll {
       .book {
         width: 600px;
         height: 540px;
+        aspect-ratio: 600 / 540;
         perspective: 2000px;
         position: relative;
+
+        @media (max-width: 1400px) {
+          .book {
+            width: clamp(230px, 30vw, 400px);
+            height: auto;
+          }
+        }
 
         @media (max-width: 960px) {
           width: 80%;
@@ -191,7 +233,7 @@ body.disabled-scroll {
 
         .quotes-header {
           font-family: 'CAVEAT-font', sans-serif;
-          font-size: 2.4rem;
+          font-size: clamp(1.2rem, 2.4vw, 2.4rem);
 
           @media (max-width: 960px) {
             font-size: 1.6rem;
@@ -572,6 +614,25 @@ header {
     }
   }
 }
+
+  .app-blur {
+    position: relative;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    background: radial-gradient(circle, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 100%);
+    min-height: 100vh;
+
+    .voucher-info {
+      font-family: 'CAVEAT-font';
+      font-size: 40px;
+      -webkit-text-stroke: 0.5px black;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    }
+  }
 
 .applications-container {           // Hakemukset
   .applications-buttons {
