@@ -13,7 +13,7 @@ import { checkFirstUser } from './utils/createFirstUser.js'
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: '.env.development' })
-}
+} else { dotenv.config({path: '.env' })}
 
 const allowedOrigins = process.env.CORS_ORIGINS.split(',')
 
