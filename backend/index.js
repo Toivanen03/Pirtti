@@ -11,9 +11,11 @@ import User from './models/User.js'
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs'
 import { checkFirstUser } from './utils/createFirstUser.js'
 
-if (process.env.NODE_ENV !== 'production') {
+/*if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: '.env.development' })
-} else { dotenv.config({path: '.env' })}
+}*/
+
+dotenv.config()
 
 const allowedOrigins = process.env.CORS_ORIGINS.split(',')
 
