@@ -12,7 +12,7 @@ const formatDate = (dateStr) => {
 
 const MailSender = async (formType, receivers, application) => {
     const notificationTransporter = nodemailer.createTransport({
-        host: "send.one.com",
+        host: "mail.pkpirttiry.fi",
         port: 465,
         secure: true,
         auth: {
@@ -33,7 +33,7 @@ const MailSender = async (formType, receivers, application) => {
             .replace('{{CHILD_BIRTHDAY}}', formatDate(application.syntymaaika) || '')
 
             return notificationTransporter.sendMail({
-            from: `Pirtti <posti@simotoivanen.fi>`,
+            from: `Pirtti <postittaja@pkpirttiry.fi>`,
             to: receiver.email,
             subject,
             html: personalizedHtml
