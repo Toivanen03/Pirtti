@@ -1,10 +1,7 @@
 import { Form, Modal, Button } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
-import { GET_INTERNAL_CONTROL_PDF } from '../queries/queries'
-import { useQuery } from '@apollo/client/react'
 
-const ICModal = ({ showModal, setShowModal, mobile, portrait }) => {
-    const { data, loading } = useQuery(GET_INTERNAL_CONTROL_PDF)
+const ICModal = ({ showModal, setShowModal, mobile, portrait, data, loading }) => {
     const [fileName, setFileName] = useState("")
     const [pdfData, setPdfData] = useState("")
     const [pdf, setPdf] = useState("")
@@ -41,7 +38,7 @@ const ICModal = ({ showModal, setShowModal, mobile, portrait }) => {
                     <Form>
                         <h4>{fileName || "Ei tiedostoa"}</h4>
                         <iframe
-                            src={pdf}
+                            src={pdf || null}
                             style={{ width: '100%', height: '70vh' }}
                             title="Omavalvontasuunnitelma"
                         />

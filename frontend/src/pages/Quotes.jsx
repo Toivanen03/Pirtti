@@ -146,7 +146,7 @@ const Quotes = ({ mobile, portrait }) => {
                   }}
                 >
                   <span className='shine' />
-                  <span>{currentPage_1 < book_1.length ? 'Käännä sivua' : 'Aloita alusta'}</span>
+                  <span>{currentPage_1 + 1 === book_1.length ? 'Aloita alusta' : 'Käännä sivua'}</span>
                 </Button>
 
               </div>
@@ -195,7 +195,7 @@ const Quotes = ({ mobile, portrait }) => {
                   }}
                 >
                   <span className='shine' />
-                  <span>{currentPage_2 < book_2.length ? 'Käännä sivua' : 'Aloita alusta'}</span>
+                  <span>{currentPage_2 + 1 === book_2.length ? 'Aloita alusta' : 'Käännä sivua'}</span>
                 </Button>
 
               </div>
@@ -244,7 +244,7 @@ const Quotes = ({ mobile, portrait }) => {
                   }}
                 >
                   <span className='shine' />
-                  <span>{currentPage_3 < book_3.length ? 'Käännä sivua' : 'Aloita alusta'}</span>
+                  <span>{currentPage_3 + 1 === book_3.length ? 'Aloita alusta' : 'Käännä sivua'}</span>
                 </Button>
 
               </div>
@@ -298,7 +298,7 @@ const Quotes = ({ mobile, portrait }) => {
           <Row className='d-flex align-items-center justify-content-center mt-5'>
             <Button className='book-button bb1 mb-5' onClick={() => flipPage(1)}>
               <span className='shine' />
-              <span>{currentPage_1 < book_1.length ? 'Käännä sivua' : 'Aloita alusta'}</span>
+              <span>{currentPage_1 + 1 === book_1.length ? 'Aloita alusta' : 'Käännä sivua'}</span>
             </Button>
           </Row>
 
@@ -331,7 +331,7 @@ const Quotes = ({ mobile, portrait }) => {
           <Row className='d-flex align-items-center justify-content-center mt-5'>
             <Button className='book-button bb2 mb-5' onClick={() => flipPage(2)}>
               <span className='shine' />
-              <span>{currentPage_2 < book_2.length ? 'Käännä sivua' : 'Aloita alusta'}</span>
+              <span>{currentPage_2 + 1 === book_2.length ? 'Aloita alusta' : 'Käännä sivua'}</span>
             </Button>
           </Row>
 
@@ -363,7 +363,7 @@ const Quotes = ({ mobile, portrait }) => {
           <Row className='d-flex align-items-center justify-content-center mt-5'>
             <Button className='book-button bb3 mb-5' onClick={() => flipPage(3)}>
               <span className='shine' />
-              <span>{currentPage_3 < book_3.length ? 'Käännä sivua' : 'Aloita alusta'}</span>
+              <span>{currentPage_3 + 1 === book_3.length ? 'Aloita alusta' : 'Käännä sivua'}</span>
             </Button>
           </Row>
         </Container>

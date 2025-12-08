@@ -4,9 +4,12 @@ import Jalat from "../assets/carousel-images/jalat.jpg"
 import BossModal from "../modals/BossModal"
 import BylawsModal from "../modals/BylawsModal"
 import { useState, useEffect } from "react"
+import { useQuery } from "@apollo/client/react"
+import { GET_BYLAWS } from "../queries/queries"
 
 const Association = ({ mobile, portrait }) => {
     const [showBossModal, setShowBossModal] = useState(false)
+    const { data, loading } = useQuery(GET_BYLAWS)
     const [showModal, setShowModal] = useState(false)
     const [text1] = useState("Päiväkotiyhdistyksen hallinnosta ja taloudesta vastaa johtokunta, johon kuuluu puheenjohtajan lisäksi kuusi varsinaista jäsentä ja neljä varajäsentä. Johtokunnan jäsenet ovat päiväkodeissamme hoidossa olevien lasten vanhempia. Johtokunta kokoontuu tarpeen mukaan ja kokouksissa sihteerinä ja asioiden esittelijänä toimii päiväkodin johtaja.")
     const [text2] = useState("Yhdistyksen kannattajajäseneksi pääsee maksamalla vapaaehtoisen jäsenmaksun. Varoilla saamme järjestettyä koko päiväkodin porukalle ohjelmaa sekä päivitettyä esimerkiksi leikkivälineitä.")
@@ -72,9 +75,11 @@ const Association = ({ mobile, portrait }) => {
                                     <p onClick={() => setShowBossModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
                                         Lisää tietoa päiväkodin johtajalta
                                     </p>
-                                    <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
-                                        Yhdistyksen säännöt
-                                    </p>
+                                    {data?.bylawsDocument && 
+                                        <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
+                                            Yhdistyksen säännöt
+                                        </p>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -131,16 +136,18 @@ const Association = ({ mobile, portrait }) => {
                                 <p onClick={() => setShowBossModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
                                     Lisää tietoa päiväkodin johtajalta
                                 </p>
-                                <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
-                                    Yhdistyksen säännöt
-                                </p>
+                                {data?.bylawsDocument && 
+                                    <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>    
+                                        Yhdistyksen säännöt
+                                    </p>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             )}
             <BossModal showModal={showBossModal} setShowModal={setShowBossModal} mobile={mobile} />
-            <BylawsModal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} />
+            <BylawsModal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} data={data} loading={loading} />
         </>
     )
 }

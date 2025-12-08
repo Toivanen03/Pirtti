@@ -5,7 +5,7 @@ import Puu from "../assets/images/puu.jpg"
 import ICModal from "../modals/ICModal"
 import { useState } from "react"
 
-const MobileHome = ({ width }) => {
+const MobileHome = ({ width, data, loading }) => {
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
 
@@ -57,12 +57,14 @@ const MobileHome = ({ width }) => {
                                 toteutuisivat lainsäädännön ja palveluntuottajan omalle toiminnalleen asettamat laatuvaatimukset. 
                                 Omavalvontasuunnitelma löytyy myös alakerran ilmoitustaululta. 
                             </p>
-                            <p 
-                                onClick={() => setShowModal(true)} 
-                                style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
-                            >
-                                Pirtin omavalvontasuunnitelma.
-                            </p>
+                            {data?.internalControlDocument &&
+                                <p 
+                                    onClick={() => setShowModal(true)} 
+                                    style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+                                >
+                                    Pirtin omavalvontasuunnitelma.
+                                </p>
+                            }
                         </section>
 
                         <section className="col-12 text-center mt-4">
@@ -77,7 +79,7 @@ const MobileHome = ({ width }) => {
                 </div>
             </div>
 
-            <ICModal showModal={showModal} setShowModal={setShowModal} mobile={true} width={width} />
+            <ICModal showModal={showModal} setShowModal={setShowModal} mobile={true} width={width} data={data} loading={loading} />
         </>
     )
 }

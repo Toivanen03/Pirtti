@@ -9,12 +9,15 @@ import FbPlugin from "../layout/fb-plugin"
 import MobileHome from "./MobileHome"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { useQuery } from "@apollo/client/react"
+import { GET_INTERNAL_CONTROL_PDF } from "../queries/queries"
 
 const Home = ({ consent, mobile, portrait }) => {
     const width = useWindowWidth()
     const height = useWindowHeight()
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
+    const { data, loading } = useQuery(GET_INTERNAL_CONTROL_PDF)
 
     return (
         <>
@@ -95,9 +98,11 @@ const Home = ({ consent, mobile, portrait }) => {
                                                 toteutuisivat lainsäädännön ja palveluntuottajan omalle toiminnalleen asettamat laatuvaatimukset. 
                                                 Omavalvontasuunnitelma löytyy myös alakerran ilmoitustaululta. 
                                             </p>
-                                            <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>
-                                                Pirtin omavalvontasuunnitelma.
-                                            </p>
+                                            {data?.internalControlDocument &&
+                                                <p onClick={() => setShowModal(true)} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>
+                                                    Pirtin omavalvontasuunnitelma.
+                                                </p>
+                                            }
                                         </section>
                                     </div>
 
@@ -125,9 +130,9 @@ const Home = ({ consent, mobile, portrait }) => {
                     </div>
                 </>
             ) : (
-                <MobileHome width={width} />
+                <MobileHome width={width} data={data} loading={loading} />
             )}
-            <ICModal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} />
+            <ICModal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} data={data} loading={loading} />
         </>
     )
 }
