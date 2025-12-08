@@ -1,22 +1,9 @@
 import { Form, Modal, Row, Col, Button } from 'react-bootstrap'
-import { GET_QUOTES, DELETE_QUOTE } from '../queries/queries'
-import { useMutation, useQuery } from '@apollo/client/react'
-import { useEffect, useState } from 'react'
+import { DELETE_QUOTE } from '../queries/queries'
+import { useMutation } from '@apollo/client/react'
 
-const QuotesModal = ({ showModal, setShowModal, setConfirmTitle }) => {
-    const { data, loading, refetch } = useQuery(GET_QUOTES)
+const QuotesModal = ({ showModal, setShowModal, setConfirmTitle, headlines, data, refetch }) => {
     const [deleteQuery] = useMutation(DELETE_QUOTE)
-    const [headline_1, setHeadline_1] = useState("")
-    const [headline_2, setHeadline_2] = useState("")
-    const [headline_3, setHeadline_3] = useState("")
-
-    useEffect(() => {
-        if (!loading && data?.quotes) {
-            setHeadline_1(data.quotes.quotes_lohkot.lohko_1?.quotes_otsikko)
-            setHeadline_2(data.quotes.quotes_lohkot.lohko_2?.quotes_otsikko)
-            setHeadline_3(data.quotes.quotes_lohkot.lohko_3?.quotes_otsikko)
-        }
-    }, [data, loading])
 
     const handleClose = async () => {
         setShowModal(false)
@@ -55,7 +42,7 @@ const QuotesModal = ({ showModal, setShowModal, setConfirmTitle }) => {
                     <Row className='p-2'>
                         <Col className='col-9'>
                             <Form.Group className='mb-4'>
-                                <Form.Label><strong><small>{headline_1}</small></strong></Form.Label>
+                                <Form.Label><strong><small>{headlines[1]}</small></strong></Form.Label>
                                     <ul>
                                         {data?.quotes?.quotes_lohkot?.lohko_1?.quotes.map((quote) => (
                                             <li key={quote.id}>
@@ -74,7 +61,7 @@ const QuotesModal = ({ showModal, setShowModal, setConfirmTitle }) => {
                             </Form.Group>
 
                             <Form.Group className='mb-4'>
-                                <Form.Label><strong><small>{headline_2}</small></strong></Form.Label>
+                                <Form.Label><strong><small>{headlines[2]}</small></strong></Form.Label>
                                 <ul>
                                     {data?.quotes?.quotes_lohkot?.lohko_2?.quotes.map((quote) => (
                                         <li key={quote.id}>
@@ -93,7 +80,7 @@ const QuotesModal = ({ showModal, setShowModal, setConfirmTitle }) => {
                             </Form.Group>
 
                             <Form.Group className='mb-4'>
-                                <Form.Label><strong><small>{headline_3}</small></strong></Form.Label>
+                                <Form.Label><strong><small>{headlines[3]}</small></strong></Form.Label>
                                 <ul>
                                     {data?.quotes?.quotes_lohkot?.lohko_3?.quotes.map((quote) => (
                                         <li key={quote.id}>

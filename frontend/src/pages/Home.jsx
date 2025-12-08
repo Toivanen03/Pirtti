@@ -60,7 +60,7 @@ const Home = ({ consent, mobile, portrait }) => {
                                             Päiväkodissamme on yhteensä 43 varhaiskasvatus- ja esiopetuspaikkaa.
                                             Päiväkodin aukioloaika on <strong>ma-pe 6.30-17.00.</strong>
                                         </p>
-                                        <i>Hoitoaikavaihtoehdot kokopäivähoidossa: max 15 pv/kk tai max 10 pv/kk.</i>
+                                        <i>Hoitoaikavaihtoehdot: kokopäivähoidossa tai max 15 pv/kk.</i>
                                         <p className="mt-3">
                                             Päiväkodissamme on käytössä <span onClick={() => navigate('/hakemukset', {state: 'fromFrontPage'})} style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}>yksityisen päiväkotihoidon palveluseteli</span>, jota perhe hakee Mikkelin kaupungilta päivähoitopaikan saatuaan.
                                         </p>

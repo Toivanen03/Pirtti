@@ -45,7 +45,7 @@ export const parentsRelationBasic = [ "Naimisissa", "Avoliitossa", "Eronnut" ]
 
 export const parentsRelation = [ "Vanhemmat asuvat yhdessä lapsen kanssa", "Lapsi asuu ensimmäisen huoltajan kanssa", "Lapsi asuu toisen huoltajan kanssa" ]
 
-export const daycareOptions = [ "Kokopäivähoito", "Enintään 15 pv/kk", "Enintään 10 pv/kk" ]
+export const daycareOptions = [ "Kokopäivähoito", "Enintään 15 pv/kk" ]
 
 export const preschoolDaycare = [ "Pelkkä esiopetus, ei varhaiskasvatuksen tarvetta", "Esiopetus & varhaiskasvatus enintään 5h/pv" ]
 

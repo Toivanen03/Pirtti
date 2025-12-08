@@ -225,13 +225,10 @@ const DayCareForm = ({ setShowFormArea, formType, setFormType, setConfirmTitle, 
                                 >
                                     <option value="" disabled>Valitse *</option>
                                     {(() => {
-                                        let max = 10
+                                        let max = 15
                                         let min = 1
 
-                                        if (formData.tarve === "Enintään 15 pv/kk") {
-                                            min = 11
-                                            max = 15
-                                        } else if (formData.tarve === "Kokopäivähoito") {
+                                        if (formData.tarve === "Kokopäivähoito") {
                                             max = 23 
                                             min = 16
                                         }

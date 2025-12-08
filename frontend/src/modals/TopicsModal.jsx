@@ -145,7 +145,7 @@ const TopicsModal = ({ topics, showTopics, setShowTopics, mobile, setShowBanner,
                             disabled={selectedTopic}
                             className='shadow'
                         >
-                            {!showOnlyUnread ? 'Lukemattomat' : 'Kaikki viestit'}
+                            {!showOnlyUnread ? 'Lukemattomat' : 'Kaikki tiedotteet'}
                         </Button>
                     </Col>
                 </Modal.Header>
@@ -155,14 +155,14 @@ const TopicsModal = ({ topics, showTopics, setShowTopics, mobile, setShowBanner,
                         {mobile ? (
                             <Row className='d-flex align-items-center mb-4'>
                                 <Col>
-                                    <h5>{showOnlyUnread ? 'Uudet viestit' : 'Kaikki viestit'}</h5>
+                                    <h5>{showOnlyUnread ? 'Uudet tiedotteet' : 'Kaikki tiedotteet'}</h5>
                                 </Col>
                                 <Col>
                                     <ColorLegend />
                                 </Col>
                             </Row>
                         ) : (
-                            <Row><h3 className='mb-4'>{showOnlyUnread ? 'Uudet viestit' : 'Kaikki viestit'}</h3></Row>
+                            <Row><h3 className='mb-4'>{showOnlyUnread ? 'Uudet tiedotteet' : 'Kaikki tiedotteet'}</h3></Row>
                         )}
 
                         {((unreadTopics.length > 0 && showOnlyUnread) || (topics.length > 0 && !showOnlyUnread)) ? (
@@ -180,7 +180,7 @@ const TopicsModal = ({ topics, showTopics, setShowTopics, mobile, setShowBanner,
                                 }
                             </Row>
                         ) : (
-                            <Row>{showOnlyUnread ? <strong>Ei lukemattomia viestejä</strong> : <strong>Ei viestejä</strong>}</Row>
+                            <Row>{showOnlyUnread ? <strong>Ei lukemattomia tiedotteita</strong> : <strong>Ei tiedotteita</strong>}</Row>
                         )}
 
                         {!showOnlyUnread ? (

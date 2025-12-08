@@ -16,26 +16,17 @@ import Maenlasku from "../assets/carousel-images/maenlasku.jpg"
 
 const images = [Kaiteella, Maenlasku, Lammella, Liidut, Taidetta, Satuhetki, Hiekkaleikit, Vesileikit, Jalat, Taidetta2, Omenat, Syksy]
 
-const ImageCarousel = ({ home, bookNumber }) => {
-    const [bookIndexes, setBookIndexes] = useState({})
+const ImageCarousel = ({ home, bookNumber, pageNumber }) => {
+    const [randomIndex, setRandomIndex] = useState(0)
 
     useEffect(() => {
-        if (!bookNumber) return
+        if (!home && pageNumber === undefined) return
 
-        setBookIndexes(prev => {
-            if (prev[bookNumber] !== undefined) return prev
-
-            const randomIndex = Math.floor(Math.random() * images.length)
-
-            return {
-                ...prev,
-                [bookNumber]: randomIndex
-            }
-        })
-    }, [bookNumber])
+        setRandomIndex(Math.floor(Math.random() * images.length))
+    }, [bookNumber, pageNumber])
 
     return (
-        <Carousel fade controls={false} activeIndex={bookIndexes[bookNumber]} indicators={false} pause={false} className={home ? "home-carousel" : "non-home-carousel"}>
+        <Carousel fade controls={false} activeIndex={(home || !home && !bookNumber && !pageNumber) ? undefined : randomIndex} indicators={false} pause={false} className={home ? "home-carousel" : "non-home-carousel"}>
             {images.map((image, i) => (
                 <Carousel.Item key={i} className="carousel-item-hero">
                     <img src={image} alt={`Kuva ${i + 1}`} className="carousel-image" />

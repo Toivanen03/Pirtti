@@ -1,10 +1,24 @@
 import {Form, Row, Col, Button } from 'react-bootstrap'
 import { useRef, useEffect, useState } from 'react'
 import QuotesModal from '../../../../modals/QuotesModal'
+import { GET_QUOTES } from '../../../../queries/queries'
+import { useQuery } from '@apollo/client/react'
 
 const UpdateQuotes = ({ handleSubmit, handleChange, formData, setFormData, quotesFields, setConfirmTitle, portrait }) => {
     const quotesFormRef = useRef()
     const [showModal, setShowModal] = useState(false)
+    const { data, loading, refetch } = useQuery(GET_QUOTES)
+    const [headline_1, setHeadline_1] = useState("")
+    const [headline_2, setHeadline_2] = useState("")
+    const [headline_3, setHeadline_3] = useState("")
+
+    useEffect(() => {
+        if (!loading && data?.quotes) {
+            setHeadline_1(data.quotes.quotes_lohkot.lohko_1?.quotes_otsikko)
+            setHeadline_2(data.quotes.quotes_lohkot.lohko_2?.quotes_otsikko)
+            setHeadline_3(data.quotes.quotes_lohkot.lohko_3?.quotes_otsikko)
+        }
+    }, [data, loading])
 
     useEffect(() => {
         if (formData.quotes_kuvaus) {
@@ -14,6 +28,8 @@ const UpdateQuotes = ({ handleSubmit, handleChange, formData, setFormData, quote
             }))
         }
     }, [formData.quotes_kuvaus])
+
+    const headlines = [null, headline_1, headline_2, headline_3]
 
     return (
         <Col className="d-flex flex-column justify-content-center align-items-center mt-4 mb-5">
@@ -67,12 +83,17 @@ const UpdateQuotes = ({ handleSubmit, handleChange, formData, setFormData, quote
                                             name="quotes_otsikko"
                                             value={formData.quotes_otsikko}
                                             onChange={handleChange}
-                                            placeholder={portrait ? "Valitse lohko muokataksesi sen alaotsikkoa." : "Muokkaa vain, jos haluat vaihtaa valitun lohkon alaotsikkoa. Valitse ensin muokattava lohko."}
+                                            placeholder={portrait 
+                                                ? "Valitse lohko muokataksesi sen alaotsikkoa." 
+                                                : "Muokkaa vain, jos haluat vaihtaa valitun lohkon alaotsikkoa. Valitse ensin muokattava lohko."}
                                             disabled={!formData.quotes_lohko || formData.quote || formData.quotes_kuvaus}
                                             maxLength={100}
                                         />
                                     </Row>
-                                    <Row className="text-start mb-3"><small>{`${formData.quotes_otsikko.length}/100`}</small></Row>
+                                    <Row className="text-start mb-3">
+                                        <Col className='col-4'><small>{`${formData.quotes_otsikko.length}/100`}</small></Col>
+                                        {formData.quotes_lohko !== 0 && <Col><small>Valitun lohkon nykyinen otsikko: <i>{headlines[formData.quotes_lohko]}</i></small></Col>}
+                                    </Row>
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -87,7 +108,7 @@ const UpdateQuotes = ({ handleSubmit, handleChange, formData, setFormData, quote
                                             value={formData.quote}
                                             onChange={handleChange}
                                             placeholder={portrait ? "Valitse lohko lisätäksesi lainauksen." : "Tähän voit kirjoittaa haluamasi lainauksen, ja se asetetaan valitun lohkon otsikon alle. Otsikkoa ei tarvitse antaa erikseen, vaan pelkkä lohkon valinta määrittää siteerauksen sijainnin sivulla. Valitse ensin lohko, johon haluat sijoittaa uuden lainauksen."}
-                                            disabled={!formData.quotes_lohko || formData.quotes_otsikko || formData.quotes_kuvaus}
+                                            disabled={!formData.quotes_lohko || formData.quotes_otsikko || formData.quotes_kuvaus || !headlines[formData.quotes_lohko]}
                                             rows={2}
                                             maxLength={300}
                                         />
@@ -110,7 +131,7 @@ const UpdateQuotes = ({ handleSubmit, handleChange, formData, setFormData, quote
                         </Row>
                     </div>
                 </Form>
-                <QuotesModal showModal={showModal} setShowModal={setShowModal} setConfirmTitle={setConfirmTitle} />
+                <QuotesModal showModal={showModal} setShowModal={setShowModal} setConfirmTitle={setConfirmTitle} headlines={headlines} data={data} refetch={refetch} />
             </Col>
     )
 }
