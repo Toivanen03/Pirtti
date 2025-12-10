@@ -5,7 +5,7 @@ import Puu from "../assets/images/puu.jpg"
 import ICModal from "../modals/ICModal"
 import { useState } from "react"
 
-const MobileHome = ({ width, data, loading }) => {
+const MobileHome = ({ width, data, loading, isFB }) => {
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
 
@@ -79,7 +79,7 @@ const MobileHome = ({ width, data, loading }) => {
                 </div>
             </div>
 
-            <ICModal showModal={showModal} setShowModal={setShowModal} mobile={true} width={width} data={data} loading={loading} />
+            <ICModal showModal={showModal} setShowModal={setShowModal} mobile={true} width={width} data={data} loading={loading} isFB={isFB} />
         </>
     )
 }

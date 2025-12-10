@@ -12,7 +12,7 @@ import { useState } from "react"
 import { useQuery } from "@apollo/client/react"
 import { GET_INTERNAL_CONTROL_PDF } from "../queries/queries"
 
-const Home = ({ consent, mobile, portrait }) => {
+const Home = ({ consent, mobile, portrait, isFB }) => {
     const width = useWindowWidth()
     const height = useWindowHeight()
     const navigate = useNavigate()
@@ -130,7 +130,7 @@ const Home = ({ consent, mobile, portrait }) => {
                     </div>
                 </>
             ) : (
-                <MobileHome width={width} data={data} loading={loading} />
+                <MobileHome width={width} data={data} loading={loading} isFB={isFB} />
             )}
             <ICModal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} data={data} loading={loading} />
         </>

@@ -7,7 +7,7 @@ import { useState, useEffect } from "react"
 import { useQuery } from "@apollo/client/react"
 import { GET_BYLAWS } from "../queries/queries"
 
-const Association = ({ mobile, portrait }) => {
+const Association = ({ mobile, portrait, isFB }) => {
     const [showBossModal, setShowBossModal] = useState(false)
     const { data, loading } = useQuery(GET_BYLAWS)
     const [showModal, setShowModal] = useState(false)
@@ -147,7 +147,7 @@ const Association = ({ mobile, portrait }) => {
                 </div>
             )}
             <BossModal showModal={showBossModal} setShowModal={setShowBossModal} mobile={mobile} />
-            <BylawsModal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} data={data} loading={loading} />
+            <BylawsModal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} data={data} loading={loading} isFB={isFB} />
         </>
     )
 }

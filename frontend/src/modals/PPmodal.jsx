@@ -1,7 +1,7 @@
-import { Form, Modal, Button } from 'react-bootstrap'
+import { Form, Modal, Button, Row } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 
-const PPmodal = ({ showModal, setShowModal, mobile, portrait, data, loading }) => {
+const PPmodal = ({ showModal, setShowModal, mobile, portrait, data, loading, isFB }) => {
     const [fileName, setFileName] = useState("")
     const [pdfData, setPdfData] = useState("")
     const [pdf, setPdf] = useState("")
@@ -61,14 +61,18 @@ const PPmodal = ({ showModal, setShowModal, mobile, portrait, data, loading }) =
                     >
                         Tallenna
                     </Button>
+                ) : !isFB ? (
+                        <Button variant='success' style={buttonStyle} onClick={() => {
+                            setShowModal(false)
+                            window.open(pdf, "_blank")
+                        }}
+                        >
+                            Avaa
+                        </Button>
                 ) : (
-                    <Button variant='success' style={buttonStyle} onClick={() => {
-                        setShowModal(false)
-                        window.open(pdf, "_blank")
-                    }}
-                    >
-                        Avaa
-                    </Button>
+                    <Row>
+                        <p>Tiedostolinkit eivät toimi Facebook-sovelluksessa. Avaa sivu selaimessa tarkastellaksesi tiedostoa.</p>
+                    </Row>
                 )}
 
                 <Button variant='warning' onClick={() => setShowModal(false)} style={buttonStyle}>Sulje</Button>

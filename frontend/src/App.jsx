@@ -36,6 +36,9 @@ function App() {
   const mobile = useIsMobile()
   const portrait = useIsPortrait()
 
+  const ua = navigator.userAgent || ""
+  const isFB = ua.includes("FBAN") || ua.includes("FBAV")
+
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem(COOKIE_KEY))
     if (stored?.consent) {
@@ -91,17 +94,17 @@ function App() {
             <Header setConfirmTitle={setConfirmTitle} setOnConfirm={setOnConfirm} mobile={mobile} portrait={portrait} scrolling={scrolling} />
             <Routes>
               {!mobile && <Route path="/admin" element={<RequireAdmin><Admin setConfirmTitle={setConfirmTitle} setOnConfirm={setOnConfirm} portrait={portrait} /></RequireAdmin>} />}
-              <Route path="/" element={<Home mobile={mobile} consent={consent} portrait={portrait} />} />
+              <Route path="/" element={<Home mobile={mobile} consent={consent} portrait={portrait} isFB={isFB} />} />
               {!mobile && <Route path="/login" element={<Login setConfirmTitle={setConfirmTitle} />} />}
               <Route path="/arvot" element={<Values mobile={mobile} portrait={portrait} />} />
-              <Route path='/yhdistys' element={<Association mobile={mobile} portrait={portrait} />} />
+              <Route path='/yhdistys' element={<Association mobile={mobile} portrait={portrait} isFB={isFB} />} />
               <Route path="/yhteystiedot" element={<Contacts mobile={mobile} portrait={portrait} />} />
               <Route path="/hakemukset" element={<Applications setConfirmTitle={setConfirmTitle} setOnConfirm={setOnConfirm} mobile={mobile} portrait={portrait} />} />
               <Route path="/lasten_suusta" element={<Quotes mobile={mobile} portrait={portrait} />} />
               <Route path="*" element={<NotFound mobile={mobile} />} />
             </Routes>
           </main>
-          <Footer mobile={mobile} scrolling={scrolling} portrait={portrait} />
+          <Footer mobile={mobile} scrolling={scrolling} portrait={portrait} isFB={isFB} />
           {(!mobile && !portrait) &&  <Consent setCookieChoiceMade={setCookieChoiceMade} setConsent={setConsent} mobile={mobile} portrait={portrait} />}    {/* Mobiilissa evästekysely poistettu tarpeettomana*/}
         </div>
         <ConfirmModal title={confirmTitle} setConfirmTitle={setConfirmTitle} onConfirm={onConfirm} />

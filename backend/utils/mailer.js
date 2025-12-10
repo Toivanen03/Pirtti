@@ -26,7 +26,7 @@ const MailSender = async (formType, receivers, application) => {
         const template = fs.readFileSync(path.resolve('emailTemplate', 'newApplication.html'), 'utf-8')
         const sendResults = await Promise.allSettled(
         receivers.map(receiver => {
-            console.log(receiver)
+
             const personalizedHtml = template
             .replace('{{FORM_TYPE}}', formType === 'vkh' ? 'varhaiskasvatushakemus' : 'esikasvatushakemus')
             .replace('{{CHILD_LASTNAME}}', application.sukunimi_lapsi || '')
@@ -40,7 +40,7 @@ const MailSender = async (formType, receivers, application) => {
             })
         }).filter(Boolean)
         )
-console.log(sendResults)
+
         const failures = sendResults.filter(r => r?.status === 'rejected')
         if (failures.length > 0) {
             failures.forEach(f => console.error(failures.length, ' Sähköpostin lähetys epäonnistui:', f.reason))

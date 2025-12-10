@@ -1,7 +1,4 @@
 import { Row, Col, Container, Button } from 'react-bootstrap'
-import pollo from '../assets/images/pollo.jpg'
-import vesileikkeja from '../assets/images/vesileikkeja.jpg'
-import hiekkalaatikko from '../assets/images/hiekkalaatikko.jpg'
 import { GET_QUOTES } from '../queries/queries'
 import { useQuery } from '@apollo/client/react'
 import { useState, useEffect } from 'react'
@@ -17,7 +14,6 @@ const Quotes = ({ mobile, portrait }) => {
   const [currentPage_2, setCurrentPage_2] = useState(0)
   const [currentPage_3, setCurrentPage_3] = useState(0)
   const [header, setHeader] = useState("")
-  const [activeBook, setActiveBook] = useState(1)
 
   useEffect(() => {
     if (!loading && data?.quotes) {

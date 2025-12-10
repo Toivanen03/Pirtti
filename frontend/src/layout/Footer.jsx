@@ -6,7 +6,7 @@ import { FaArrowUp } from 'react-icons/fa'
 import { useQuery } from '@apollo/client/react'
 import { GET_PRIVACY_POLICY } from '../queries/queries'
 
-const Footer = ({ mobile, portrait }) => {
+const Footer = ({ mobile, portrait, isFB }) => {
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const { data, loading } = useQuery(GET_PRIVACY_POLICY)
@@ -159,7 +159,7 @@ const Footer = ({ mobile, portrait }) => {
           </div>
         </footer>
       )}
-      <PPmodal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} data={data} loading={loading} />
+      <PPmodal showModal={showModal} setShowModal={setShowModal} mobile={mobile} portrait={portrait} data={data} loading={loading} isFB={isFB} />
     </>
   )
 }
