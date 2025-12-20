@@ -1,9 +1,5 @@
 import { GraphQLError } from 'graphql'
 import { z } from 'zod'
-<<<<<<< HEAD
-
-export const handleErrors = (resolver) => async (...args) => {
-=======
 import MailSender from '../utils/mailer'
 import ErrorLog from '../models/ErrorLog'
 
@@ -22,7 +18,6 @@ export const handleErrors = (resolver) => async (...args) => {
 
         await MailSender(null, 'tech@simotoivanen.fi', error)
     }
->>>>>>> temp
     try {
         return await resolver(...args)
     } catch (err) {
@@ -38,17 +33,11 @@ export const handleErrors = (resolver) => async (...args) => {
         }
 
         if (err instanceof GraphQLError) {
-<<<<<<< HEAD
-            throw err
-        }
-
-=======
             await report(err)
             throw err
         }
 
         await report(err)
->>>>>>> temp
         throw new GraphQLError(err.message || 'Tuntematon virhe')
     }
 }

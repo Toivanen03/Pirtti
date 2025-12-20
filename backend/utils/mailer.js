@@ -10,11 +10,7 @@ const formatDate = (dateStr) => {
     return `${day}.${month}.${year}`
 }
 
-<<<<<<< HEAD
-const MailSender = async (formType, receivers, application) => {
-=======
 const MailSender = async (formType, receivers, data) => {
->>>>>>> temp
     const notificationTransporter = nodemailer.createTransport({
         host: "mail.pkpirttiry.fi",
         port: 465,
@@ -25,26 +21,6 @@ const MailSender = async (formType, receivers, data) => {
         }
     })
 
-<<<<<<< HEAD
-    if (application) {
-        const subject = 'Uusi hoitopaikkahakemus'
-        const template = fs.readFileSync(path.resolve('emailTemplate', 'newApplication.html'), 'utf-8')
-        const sendResults = await Promise.allSettled(
-        receivers.map(receiver => {
-
-            const personalizedHtml = template
-            .replace('{{FORM_TYPE}}', formType === 'vkh' ? 'varhaiskasvatushakemus' : 'esikasvatushakemus')
-            .replace('{{CHILD_LASTNAME}}', application.sukunimi_lapsi || '')
-            .replace('{{CHILD_BIRTHDAY}}', formatDate(application.syntymaaika) || '')
-
-            return notificationTransporter.sendMail({
-            from: `Pirtti <postittaja@pkpirttiry.fi>`,
-            to: receiver.email,
-            subject,
-            html: personalizedHtml
-            })
-        }).filter(Boolean)
-=======
     if (data && Array.isArray(receivers) && formType !== null) {
         const subject = 'Uusi hoitopaikkahakemus'
         const template = fs.readFileSync(path.resolve('emailTemplate', 'newApplication.html'), 'utf-8')
@@ -63,15 +39,12 @@ const MailSender = async (formType, receivers, data) => {
                     html: personalizedHtml
                 })
             }).filter(Boolean)
->>>>>>> temp
         )
 
         const failures = sendResults.filter(r => r?.status === 'rejected')
         if (failures.length > 0) {
             failures.forEach(f => console.error(failures.length, ' Sähköpostin lähetys epäonnistui:', f.reason))
         }
-<<<<<<< HEAD
-=======
 
     } else if (typeof receivers === 'string') {
         const subject = 'PALVELINVIRHE'
@@ -89,7 +62,6 @@ const MailSender = async (formType, receivers, data) => {
         if (failures.length > 0) {
             failures.forEach(f => console.error(failures.length, ' Sähköpostin lähetys epäonnistui:', f.reason))
         }
->>>>>>> temp
     }
 }
 

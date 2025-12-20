@@ -496,18 +496,6 @@ const resolvers = {
                 if (!result.success) {
                     let messages = []
 
-<<<<<<< HEAD
-                if (Array.isArray(result.error?.issues)) {
-                    messages = result.error.issues.map(issue => issue.message)
-                } else if (typeof result.error === 'string') {
-                    messages = [result.error]
-                } else {
-                    messages = ['Unknown error']
-                }
-
-                throw new GraphQLError(messages.join('\n'))
-            }
-=======
                     if (Array.isArray(result.error?.issues)) {
                         messages = result.error.issues.map(issue => issue.message)
                     } else if (typeof result.error === 'string') {
@@ -518,7 +506,6 @@ const resolvers = {
 
                     throw new GraphQLError(messages.join('\n'))
                 }
->>>>>>> temp
 
                 const sensitiveKeys = Object.keys(formattedInput).filter(
                     key => !['sukunimi_lapsi', 'syntymaaika', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn'].includes(key)
@@ -535,30 +522,6 @@ const resolvers = {
                 return encryptedInput
             }
 
-<<<<<<< HEAD
-            const receivers = await User.find({ notifications: true })
-
-            MailSender(formType, receivers, formattedInput)
-
-            if (formType === 'vkh') {
-                const encryptedInput = encryptForm(createDayCareFormSchema.safeParse(formattedInput))
-
-                const form = new DayCareForm({...encryptedInput, formType: formType, read: false})
-                await form.save()
-
-                return form.id
-
-            } else if (formType === 'ekh') {
-                const encryptedInput = encryptForm(createPreSchoolFormSchema.safeParse(formattedInput))
-
-                const form = new PreSchoolForm({...encryptedInput, formType: formType, read: false})
-                await form.save()
-
-                return form.id
-            } else {
-                throw new Error('Tuntematon lomaketyyppi: ' + formType)
-            }
-=======
             let form
 
             if (formType === 'vkh') {
@@ -579,7 +542,6 @@ const resolvers = {
             }
 
             return form.id
->>>>>>> temp
         }),
 
         markFormRead: handleErrors(async (_, { id, formType }, context) => {
