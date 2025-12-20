@@ -1,0 +1,65 @@
+@use "sass:list";
+@use "sass:math";
+@use "sass:color";
+
+$colors: (
+    rgb(248, 225, 17),
+    rgb(6, 221, 17),
+    rgb(255, 138, 28)
+);
+
+@keyframes color-fade {
+  0%   { --cycle-opacity: 0; }
+  50%  { --cycle-opacity: 1; }
+  100% { --cycle-opacity: 0; }
+}
+
+@function gradient-dynamic() {
+  @return conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #ffcd8a 10% 30%,
+    transparent 50%
+  );
+}
+
+.shiny-button,
+.shiny-button-passive:hover {
+    position: relative;
+    transition: all 0.3s ease;
+    padding: 20px 32px;
+    text-decoration: none;
+
+    .border-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 24px;
+        width: 100%;
+        height: 100%;
+        padding: 3px;
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) border-box;
+        mask-composite: exclude;
+        overflow: hidden;
+
+        .border-glow {
+            background: gradient-dynamic();
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            transform: translate(-50%, -50%);
+            transform-origin: 0 0;
+            filter: blur(2px);
+            animation: 
+                rotate 4s linear infinite,
+                color-fade 4s ease-out infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg) translate(-50%, -50%); }
+            100% { transform: rotate(360deg) translate(-50%, -50%); }
+        }
+    }
+}
