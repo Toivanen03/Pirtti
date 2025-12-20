@@ -1,7 +1,7 @@
 import { GraphQLError } from 'graphql'
 import { z } from 'zod'
-import MailSender from '../utils/mailer'
-import ErrorLog from '../models/ErrorLog'
+import MailSender from '../utils/mailer.js'
+import ErrorLog from '../models/ErrorLog.js'
 
 export const handleErrors = (resolver) => async (...args) => {
     async function report(error) {
