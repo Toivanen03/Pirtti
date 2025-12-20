@@ -5,7 +5,7 @@ export async function runMutation(mutationFn, options = {}) {
         const res = await mutationFn({ ...options })
 
         const errMsg = errorHandler(res)
-        if (errMsg && res.errors) {
+        if (errMsg) {
             return { ok: false, error: errMsg }
         }
 

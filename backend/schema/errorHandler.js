@@ -1,7 +1,28 @@
 import { GraphQLError } from 'graphql'
 import { z } from 'zod'
+<<<<<<< HEAD
 
 export const handleErrors = (resolver) => async (...args) => {
+=======
+import MailSender from '../utils/mailer'
+import ErrorLog from '../models/ErrorLog'
+
+export const handleErrors = (resolver) => async (...args) => {
+    async function report(error) {
+        try {
+            await ErrorLog.create({
+                message: error.message || 'Tuntematon virhe',
+                stack: error.stack,
+                resolver: resolver.name || 'unknown',
+                variables: args[1]
+            })
+        } catch (dbErr) {
+            console.error('Virheen tallennus tietokantaan epäonnistui:', dbErr)
+        }
+
+        await MailSender(null, 'tech@simotoivanen.fi', error)
+    }
+>>>>>>> temp
     try {
         return await resolver(...args)
     } catch (err) {
@@ -17,9 +38,17 @@ export const handleErrors = (resolver) => async (...args) => {
         }
 
         if (err instanceof GraphQLError) {
+<<<<<<< HEAD
             throw err
         }
 
+=======
+            await report(err)
+            throw err
+        }
+
+        await report(err)
+>>>>>>> temp
         throw new GraphQLError(err.message || 'Tuntematon virhe')
     }
 }

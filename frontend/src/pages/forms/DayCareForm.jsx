@@ -75,8 +75,8 @@ const DayCareForm = ({ setShowFormArea, formType, setFormType, setConfirmTitle, 
             }
         })
 
-        if (!response.ok) {
-            setConfirmTitle(`VIRHE: ${response.error}`)
+        if (!response.ok || !response.data?.createForm) {
+            setConfirmTitle(`Virhe: ${response.error || 'Tallennus epäonnistui'}`)
             return
         }
 

@@ -496,6 +496,7 @@ const resolvers = {
                 if (!result.success) {
                     let messages = []
 
+<<<<<<< HEAD
                 if (Array.isArray(result.error?.issues)) {
                     messages = result.error.issues.map(issue => issue.message)
                 } else if (typeof result.error === 'string') {
@@ -506,6 +507,18 @@ const resolvers = {
 
                 throw new GraphQLError(messages.join('\n'))
             }
+=======
+                    if (Array.isArray(result.error?.issues)) {
+                        messages = result.error.issues.map(issue => issue.message)
+                    } else if (typeof result.error === 'string') {
+                        messages = [result.error]
+                    } else {
+                        messages = ['Unknown error']
+                    }
+
+                    throw new GraphQLError(messages.join('\n'))
+                }
+>>>>>>> temp
 
                 const sensitiveKeys = Object.keys(formattedInput).filter(
                     key => !['sukunimi_lapsi', 'syntymaaika', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn'].includes(key)
@@ -522,6 +535,7 @@ const resolvers = {
                 return encryptedInput
             }
 
+<<<<<<< HEAD
             const receivers = await User.find({ notifications: true })
 
             MailSender(formType, receivers, formattedInput)
@@ -544,6 +558,28 @@ const resolvers = {
             } else {
                 throw new Error('Tuntematon lomaketyyppi: ' + formType)
             }
+=======
+            let form
+
+            if (formType === 'vkh') {
+                const encryptedInput = encryptForm(createDayCareFormSchema.safeParse(formattedInput))
+                form = new DayCareForm({...encryptedInput, formType: formType, read: false})
+            } else if (formType === 'ekh') {
+                const encryptedInput = encryptForm(createPreSchoolFormSchema.safeParse(formattedInput))
+                form = new PreSchoolForm({...encryptedInput, formType: formType, read: false})
+            } else {
+                throw new Error('Tuntematon lomaketyyppi: ' + formType)
+            }
+            await form.save()
+            const receivers = await User.find({ notifications: true })
+            await MailSender(formType, receivers, formattedInput)
+
+            if (!form._id) {
+                throw new GraphQLError('Lomakkeen tallennus epäonnistui')
+            }
+
+            return form.id
+>>>>>>> temp
         }),
 
         markFormRead: handleErrors(async (_, { id, formType }, context) => {
