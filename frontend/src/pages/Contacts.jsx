@@ -36,7 +36,7 @@ const Contacts = ({ mobile, portrait }) => {
     const clockIcon = <FaClock size={iconSize} />
 
     const mapsLink = `https://maps.google.com/maps/dir//Telk%C3%A4nkatu+2+50190+Mikkeli/@61.6883269,27.3015419,13z/data=!4m5!4m4!1m0!1m2!1m1!1s0x469aa19aa9538961:0x20eedce9abadc1b7`
-    const email = `mailto:${data?.getContacts?.sahkoposti}`
+    const email = data?.getContacts?.sahkoposti ? `mailto:${data?.getContacts?.sahkoposti}` : `:Ladataan...`
 
     const map = true
 
@@ -56,7 +56,15 @@ const Contacts = ({ mobile, portrait }) => {
                             </div>
 
                             <div className={mobile ? "col-5" : "col-3"}>
-                                <span><a href={'tel:' + getPhone(data?.getContacts?.puhelin_1, 'int')} className="text-decoration-none" style={{ color: 'inherit' }}>{getPhone(data?.getContacts?.puhelin_1, 'clean')}</a></span>
+                                <span>
+                                <a 
+                                    href={data?.getContacts?.puhelin_1 ? 'tel:' + getPhone(data.getContacts.puhelin_1, 'int') : '#'} 
+                                    className="text-decoration-none" 
+                                    style={{ color: 'inherit' }}
+                                >
+                                    {data?.getContacts?.puhelin_1 ? getPhone(data.getContacts.puhelin_1, 'clean') : 'Ladataan...'}
+                                </a>
+                                </span>
                             </div>
                         </div>
 
@@ -66,7 +74,15 @@ const Contacts = ({ mobile, portrait }) => {
                             </div>
 
                             <div className={mobile ? "col-5 mt-2" : "col-3 offset-2"}>
-                                <span><a href={'tel:' + getPhone(data?.getContacts?.puhelin_2, 'int')} className="text-decoration-none" style={{ color: 'inherit' }}>{getPhone(data?.getContacts?.puhelin_2, 'clean')}</a></span>
+                                <span>
+                                <a
+                                    href={data?.getContacts?.puhelin_2 ? 'tel:' + getPhone(data?.getContacts?.puhelin_2, 'int') : '#'}
+                                    className="text-decoration-none"
+                                    style={{ color: 'inherit' }}
+                                >
+                                    {data?.getContacts?.puhelin_2 ? getPhone(data?.getContacts?.puhelin_2, 'clean') : 'Ladataan...'}
+                                </a>
+                                </span>
                             </div>
                         </div>
 
@@ -76,21 +92,29 @@ const Contacts = ({ mobile, portrait }) => {
                             </div>
 
                             <div className={mobile ? "col-5 offset-3" : "col-3 offset-2"}>
-                                <span><a href={'tel:' + getPhone(data?.getContacts?.puhelin_3, 'int')} className="text-decoration-none" style={{ color: 'inherit' }}>{getPhone(data?.getContacts?.puhelin_3, 'clean')}</a></span>
+                                <span>
+                                <a 
+                                    href={data?.getContacts?.puhelin_3 ? 'tel:' + getPhone(data?.getContacts?.puhelin_3, 'int') : '#'}
+                                    className="text-decoration-none"
+                                    style={{ color: 'inherit' }}
+                                >
+                                    {data?.getContacts?.puhelin_3 ? getPhone(data?.getContacts?.puhelin_3, 'clean') : 'Ladataan...'}
+                                </a>
+                                </span>
                             </div>
                         </div>
 
                         <div className={mobile ? "row mt-4" : "row mt-5"}>
                             <div className="col-1">
-                                <a href={email} style={{ textDecoration: 'none', color: 'inherit' }}>{envelopeIcon}</a>
+                                <a href={email !== ':Ladataan...' ? email : '#'} style={{ textDecoration: 'none', color: 'inherit' }}>{envelopeIcon}</a>
                             </div>
 
                             <div className="col-3">
-                                <a href={email} style={{ textDecoration: 'none', color: 'inherit' }}><span>Sähköposti</span></a>
+                                <a href={email !== ':Ladataan...' ? email : '#'} style={{ textDecoration: 'none', color: 'inherit' }}><span>Sähköposti</span></a>
                             </div>
 
                             <div className={mobile ? "col-3 offset-3" : "col-3 offset-2"}>
-                                <a href={email} style={{ textDecoration: 'none', color: 'inherit' }}><span>{email.split(':')[1]}</span></a>
+                                <a href={email !== ':Ladataan...' ? email : '#'} style={{ textDecoration: 'none', color: 'inherit' }}><span>{email.split(':')[1]}</span></a>
                             </div>
                         </div>
 

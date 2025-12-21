@@ -18,7 +18,7 @@ const DayCareForm = ({ setShowFormArea, formType, setFormType, setConfirmTitle, 
     const [allFilled, setAllFilled] = useState(false)
     const dayCareFormRef = useRef(null)
     const [application, setApplication] = useState()
-    const [createForm] = useMutation(CREATE_FORM)
+    const [createForm, {loading}] = useMutation(CREATE_FORM)
     const [onlyChild, setOnlyChild] = useState('')
 
     useEffect(() => {
@@ -370,7 +370,7 @@ const DayCareForm = ({ setShowFormArea, formType, setFormType, setConfirmTitle, 
                     </div>
                 </Form>
             </div>
-            <ApplicationModal application={application} setApplication={setApplication} handleSubmit={handleSubmit} mobile={mobile} portrait={portrait} />
+            <ApplicationModal application={application} setApplication={setApplication} handleSubmit={handleSubmit} mobile={mobile} portrait={portrait} loading={loading} />
         </>
     )
 }

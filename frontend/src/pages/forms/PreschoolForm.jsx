@@ -18,7 +18,7 @@ const PreSchoolForm = ({ setShowFormArea, formType, setFormType, setConfirmTitle
     const [application, setApplication] = useState()
     const [allFilled, setAllFilled] = useState(false)
     const preSchoolFormRef = useRef(null)
-    const [createForm] = useMutation(CREATE_FORM)
+    const [createForm, {loading}] = useMutation(CREATE_FORM)
     const [onlyChild, setOnlyChild] = useState('')
 
     useEffect(() => {
@@ -267,7 +267,7 @@ const PreSchoolForm = ({ setShowFormArea, formType, setFormType, setConfirmTitle
                 </div>
             </Form>
             </div>
-            <ApplicationModal application={application} setApplication={setApplication} handleSubmit={handleSubmit} mobile={mobile} portrait={portrait} />
+            <ApplicationModal application={application} setApplication={setApplication} handleSubmit={handleSubmit} mobile={mobile} portrait={portrait} loading={loading} />
         </>
     )
 }
