@@ -13,11 +13,19 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const savedToken = sessionStorage.getItem('token')
+
     if (savedToken) {
-      setToken(savedToken)
       const decoded = jwtDecode(savedToken)
-      setCurrentUser(decoded)
+
+      const now = Date.now() / 1000
+      if (decoded.exp && decoded.exp < now) {
+        sessionStorage.removeItem('token')
+      } else {
+        setToken(savedToken)
+        setCurrentUser(decoded)
+      }
     }
+
     setIsLoading(false)
   }, [])
 
@@ -36,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     navigate('/')
   }
 
-  const isLoggedIn = !!token
+  const isLoggedIn = !!token && !!currentUser
 
   return (
     <AuthContext.Provider value={{ token, isLoggedIn, isLoading, login, logout, currentUser }}>

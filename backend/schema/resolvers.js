@@ -46,8 +46,16 @@ function decryptField(encryptedText) {
 }
 
 const requireAdmin = (user) => {
+  if (!user) {
+    throw new GraphQLError("Kirjaudu sisään", {
+      extensions: { code: "UNAUTHENTICATED" }
+    })
+  }
+
   if (!user.admin) {
-    throw new Error("Ei valtuuksia!")
+    throw new GraphQLError("Ei valtuuksia", {
+      extensions: { code: "FORBIDDEN" }
+    })
   }
 }
 
