@@ -108,7 +108,7 @@ const resolvers = {
             }
 
             const sensitiveKeys = Object.keys(form._doc).filter(
-                key => !['sukunimi_lapsi', 'syntymaaika', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn', '_id', '__v', 'formType', 'read'].includes(key)
+                key => !['sukunimi_lapsi', 'syntymaaika', 'puhelinnumero_aikuinen_1', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn', '_id', '__v', 'formType', 'read'].includes(key)
             )
 
             const decryptedForm = { ...form._doc }
@@ -125,6 +125,7 @@ const resolvers = {
                 read: form.read,
                 sukunimi_lapsi: form.sukunimi_lapsi,
                 syntymaaika: form.syntymaaika,
+                puhelinnumero_aikuinen_1: form.puhelinnumero_aikuinen_1,
                 ...decryptedForm
             }
         }),
@@ -516,7 +517,7 @@ const resolvers = {
                 }
 
                 const sensitiveKeys = Object.keys(formattedInput).filter(
-                    key => !['sukunimi_lapsi', 'syntymaaika', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn'].includes(key)
+                    key => !['sukunimi_lapsi', 'syntymaaika', 'puhelinnumero_aikuinen_1', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn'].includes(key)
                 )
 
                 const encryptedInput = { ...formattedInput }

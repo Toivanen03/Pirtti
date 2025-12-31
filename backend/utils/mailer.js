@@ -31,6 +31,7 @@ const MailSender = async (formType, receivers, data) => {
                 .replace('{{FORM_TYPE}}', formType === 'vkh' ? 'varhaiskasvatushakemus' : 'esikasvatushakemus')
                 .replace('{{CHILD_LASTNAME}}', data.sukunimi_lapsi || '')
                 .replace('{{CHILD_BIRTHDAY}}', formatDate(data.syntymaaika) || '')
+                .replace('{{PHONE}}', data.puhelinnumero_aikuinen_1 || '')
 
                 return notificationTransporter.sendMail({
                     from: `Pirtti <postittaja@pkpirttiry.fi>`,
