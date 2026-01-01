@@ -1,4 +1,4 @@
-export function errorHandler(errOrResponse, fallback = 'Tuntematon virhe') {
+export function errorHandler(errOrResponse, fallback = 'Oletusvirhe selaimessa') {
 
     if (errOrResponse?.errors && Array.isArray(errOrResponse.errors)) {
         return errOrResponse.errors.map(e => e.message).join(' ')

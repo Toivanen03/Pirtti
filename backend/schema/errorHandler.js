@@ -38,6 +38,6 @@ export const handleErrors = (resolver) => async (...args) => {
         }
 
         await report(err)
-        throw new GraphQLError(err.message || 'Tuntematon virhe')
+        throw new GraphQLError(err.message || 'Tuntematon virhe palvelimella')
     }
 }

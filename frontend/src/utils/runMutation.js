@@ -11,8 +11,8 @@ export async function runMutation(mutationFn, options = {}) {
             }
         }
 
-        if (!res.data) {
-            return { ok: false, error: 'Tuntematon virhe' }
+        if (!res.data && !res.errors) {
+            return { ok: false, error: 'Tuntematon virhe selaimessa' }
         }
 
         return { ok: true, data: res.data }

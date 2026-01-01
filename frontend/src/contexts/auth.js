@@ -20,7 +20,7 @@ const authLink = new ApolloLink((operation, forward) => {
 })
 
 const client = new ApolloClient({
-  link: authLink.concat(authLink, uploadHttpLink),
+  link: ApolloLink.from([authLink, uploadHttpLink]),
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: { fetchPolicy: 'cache-and-network', errorPolicy: 'ignore' },
