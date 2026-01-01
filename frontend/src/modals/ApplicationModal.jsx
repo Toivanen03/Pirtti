@@ -649,7 +649,7 @@ const ApplicationModal = ({ application, setApplication, handler, handleSubmit, 
                                         onClick={handleClose}
                                         disabled={loading}
                                     >
-                                    Peruuta
+                                    Muokkaa
                                 </Button>
                             </Col>
                         </Row>}
