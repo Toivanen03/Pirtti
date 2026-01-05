@@ -2,6 +2,10 @@ import fs from 'fs'
 import path from 'path'
 import nodemailer from 'nodemailer'
 
+const formatStringToReplace = (string) => {
+    return new RegExp(`{{\\s*${string}\\s*}}`, 'g')
+}
+
 const formatDate = (dateStr) => {
     const d = new Date(dateStr)
     const day = String(d.getDate()).padStart(2, "0")
@@ -28,10 +32,10 @@ const MailSender = async (formType, receivers, data) => {
             receivers.map(receiver => {
 
                 const personalizedHtml = template
-                .replace('{{FORM_TYPE}}', formType === 'vkh' ? 'varhaiskasvatushakemus' : 'esikasvatushakemus')
-                .replace('{{CHILD_LASTNAME}}', data.sukunimi_lapsi || '')
-                .replace('{{CHILD_BIRTHDAY}}', formatDate(data.syntymaaika) || '')
-                .replace('{{PHONE}}', data.puhelinnumero_aikuinen_1 || '')
+                .replace(formatStringToReplace('FORM_TYPE'), formType === 'vkh' ? 'varhaiskasvatushakemus' : 'esikasvatushakemus')
+                .replace(formatStringToReplace('CHILD_LASTNAME'), data.sukunimi_lapsi || '')
+                .replace(formatStringToReplace('CHILD_BIRTHDAY'), formatDate(data.syntymaaika) || '')
+                .replace(formatStringToReplace('PHONE'), data.puhelinnumero_aikuinen_1 ?? '')
 
                 return notificationTransporter.sendMail({
                     from: `Pirtti <postittaja@pkpirttiry.fi>`,
@@ -49,9 +53,9 @@ const MailSender = async (formType, receivers, data) => {
 
     } else if (typeof receivers === 'string') {
         const subject = 'PALVELINVIRHE'
-        const message = fs.readFileSync(path.resolve('emailTemplate', 'errorTemplate.html'), 'utf-8').replace('{{ERROR}}', data)
+        const message = fs.readFileSync(path.resolve('emailTemplate', 'errorTemplate.html'), 'utf-8').replace(formatStringToReplace('ERROR'), data)
         const sendResults = await Promise.allSettled([
-                notificationTransporter.sendMail({
+            notificationTransporter.sendMail({
                 from: `Pirtti <postittaja@pkpirttiry.fi>`,
                 to: receivers,
                 subject,
