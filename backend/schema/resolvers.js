@@ -503,54 +503,33 @@ const resolvers = {
         createForm: handleErrors(async (_, { formType, input }) => {
             const formattedInput = formatNames(input)
 
-            const encryptForm = (result) => {
-                if (!result.success) {
-                    let messages = []
-
-                    if (Array.isArray(result.error?.issues)) {
-                        messages = result.error.issues.map(issue => issue.message)
-                    } else if (typeof result.error === 'string') {
-                        messages = [result.error]
-                    } else {
-                        messages = ['Unknown error']
-                    }
-
-                    throw new GraphQLError(messages.join('\n'))
-                }
-
-                const sensitiveKeys = Object.keys(formattedInput).filter(
-                    key => !['sukunimi_lapsi', 'syntymaaika', 'puhelinnumero_aikuinen_1', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn'].includes(key)
-                )
-
-                const encryptedInput = { ...formattedInput }
-
-                sensitiveKeys.forEach(key => {
-                    if (formattedInput[key] != null) {
-                        encryptedInput[key] = encryptField(String(formattedInput[key]))
-                    }
-                })
-
-                return encryptedInput
-            }
-
-            let form
+            let parsed
 
             if (formType === 'vkh') {
-                const encryptedInput = encryptForm(createDayCareFormSchema.safeParse(formattedInput))
-                form = new DayCareForm({...encryptedInput, formType: formType, read: false})
+                parsed = createDayCareFormSchema.safeParse(formattedInput)
             } else if (formType === 'ekh') {
-                const encryptedInput = encryptForm(createPreSchoolFormSchema.safeParse(formattedInput))
-                form = new PreSchoolForm({...encryptedInput, formType: formType, read: false})
+                parsed = createPreSchoolFormSchema.safeParse(formattedInput)
             } else {
-                throw new Error('Tuntematon lomaketyyppi: ' + formType)
+                throw new Error('Tuntematon lomaketyyppi')
             }
-            await form.save()
-            const receivers = await User.find({ notifications: true })
-            await MailSender(formType, receivers, formattedInput)
 
-            if (!form._id) {
-                throw new GraphQLError('Lomakkeen tallennus epäonnistui')
+            if (!parsed.success) {
+                throw new GraphQLError(
+                    parsed.error.issues.map(i => i.message).join('\n')
+                )
             }
+
+            const encryptedInput = encryptForm(parsed.data)
+
+            const form =
+                formType === 'vkh'
+                ? new DayCareForm({ ...encryptedInput, formType, read: false })
+                : new PreSchoolForm({ ...encryptedInput, formType, read: false })
+
+            await form.save()
+
+            const receivers = await User.find({ notifications: true })
+            await MailSender(formType, receivers, parsed.data)
 
             return form.id
         }),
