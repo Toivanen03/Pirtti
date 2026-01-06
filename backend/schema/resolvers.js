@@ -108,8 +108,13 @@ const resolvers = {
             }
 
             const sensitiveKeys = Object.keys(form._doc).filter(
-                key => !['sukunimi_lapsi', 'syntymaaika', 'puhelinnumero_aikuinen_1', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn', '_id', '__v', 'formType', 'read'].includes(key)
+                key => !['sukunimi_lapsi', 'syntymaaika', 'suostumus', 'allergiat', 'sairaalahoito', 'ulkomainen_ssn', '_id', '__v', 'formType', 'read'].includes(key)
             )
+
+            const phoneKey = 'puhelinnumero_aikuinen_1'
+            if (form._doc[phoneKey] && typeof form._doc[phoneKey] === 'string' && form._doc[phoneKey].includes(':')) {
+                form._doc[phoneKey] = decryptField(form._doc[phoneKey])
+            }
 
             const decryptedForm = { ...form._doc }
 
@@ -123,9 +128,6 @@ const resolvers = {
                 id: form._id,
                 formType,
                 read: form.read,
-                sukunimi_lapsi: form.sukunimi_lapsi,
-                syntymaaika: form.syntymaaika,
-                puhelinnumero_aikuinen_1: form.puhelinnumero_aikuinen_1,
                 ...decryptedForm
             }
         }),
